@@ -38,7 +38,7 @@ _rotationSpeed = 2.0
 quantization = 22.5
 distanceSpeed = 32.0
 minDistance = 8.0
-maxDistance = 38.0
+maxDistance = 34.0
 _maxSpeed = 100.0
 _minSpeed = 32.0
 slipInfluence = 0.4
@@ -130,6 +130,7 @@ collision_mask = 2
 collide_with_areas = true
 
 [node name="Mid Point" type="Sprite2D" parent="Shifter"]
+visible = false
 z_index = -1
 texture = ExtResource("6_pdekc")
 script = ExtResource("7_x21q5")
