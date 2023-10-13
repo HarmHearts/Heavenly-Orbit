@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://dtxckn4yqoad6"]
+
+[ext_resource type="PackedScene" uid="uid://b8j4utj6b8lrb" path="res://Scenes/background.tscn" id="1_t17f7"]
+[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="2_2u4qp"]
+[ext_resource type="Texture2D" uid="uid://7dwpwcpt37pp" path="res://Assets/Backgrounds/grid bg 1.png" id="3_dsa3r"]
+[ext_resource type="Texture2D" uid="uid://bcnnwmr0pbo7k" path="res://Assets/Backgrounds/grid bg 2.png" id="4_bpj0s"]
+[ext_resource type="Texture2D" uid="uid://wclao2jf0cye" path="res://Assets/Backgrounds/grid bg 3.png" id="5_hbavn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pivwn"]
+resource_local_to_scene = true
+shader = ExtResource("2_2u4qp")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dsp3e"]
+resource_local_to_scene = true
+shader = ExtResource("2_2u4qp")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f17ra"]
+resource_local_to_scene = true
+shader = ExtResource("2_2u4qp")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[node name="Background" instance=ExtResource("1_t17f7")]
+
+[node name="Layer1" parent="." index="0"]
+material = SubResource("ShaderMaterial_pivwn")
+texture = ExtResource("3_dsa3r")
+
+[node name="Layer2" parent="." index="1"]
+material = SubResource("ShaderMaterial_dsp3e")
+texture = ExtResource("4_bpj0s")
+
+[node name="Layer3" parent="." index="2"]
+material = SubResource("ShaderMaterial_f17ra")
+texture = ExtResource("5_hbavn")

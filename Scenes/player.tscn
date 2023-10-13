@@ -1,0 +1,139 @@
+[gd_scene load_steps=19 format=3 uid="uid://cu7x7xk1argu5"]
+
+[ext_resource type="Texture2D" uid="uid://bn3n1fwtuw88s" path="res://Assets/Sprites/sun.png" id="1_1e3ep"]
+[ext_resource type="Script" path="res://Code/Player.cs" id="1_n51g8"]
+[ext_resource type="Script" path="res://Code/PlayerPlanet.cs" id="2_1wwcp"]
+[ext_resource type="Texture2D" uid="uid://df82x2oukibo4" path="res://Assets/Sprites/moon.png" id="2_lhbqr"]
+[ext_resource type="Texture2D" uid="uid://c10xbur6i7ccn" path="res://Assets/Sprites/mid dot.png" id="3_0wj7l"]
+[ext_resource type="Texture2D" uid="uid://bdd6p56hcdfu2" path="res://Assets/Sprites/sun locked.png" id="4_gl447"]
+[ext_resource type="Script" path="res://Code/SpritePixelAlign.cs" id="4_haeyg"]
+[ext_resource type="Texture2D" uid="uid://dhiymltefay0p" path="res://Assets/Particles/sparkle.png" id="6_3uxkg"]
+[ext_resource type="Material" uid="uid://cl5nj4cuu64n8" path="res://Assets/Particles/planet sparkle process.tres" id="6_7ttlt"]
+[ext_resource type="Texture2D" uid="uid://ckaf710l3p524" path="res://Assets/Sprites/mid arrow.png" id="6_pdekc"]
+[ext_resource type="Texture2D" uid="uid://bsm877hjkh6be" path="res://Assets/Sprites/moon locked.png" id="7_r8o2w"]
+[ext_resource type="Script" path="res://Code/GuideDot.cs" id="7_x21q5"]
+[ext_resource type="Texture2D" uid="uid://dnahds7fassb4" path="res://Assets/Sprites/shadow.png" id="8_3r75p"]
+[ext_resource type="Script" path="res://Scenes/PlayerCollide.cs" id="8_fipn0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_doqu3"]
+resource_local_to_scene = true
+radius = 4.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8ne21"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nha4a"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jv4h"]
+radius = 4.0
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("sun", "sunCast", "moon", "moonCast", "shifter")]
+script = ExtResource("1_n51g8")
+rotationSpeed = 1.8
+quantization = 22.5
+distanceSpeed = 32.0
+minDistance = 8.0
+maxDistance = 38.0
+sun = NodePath("Shifter/Sun")
+sunCast = NodePath("Shifter/Sun/FloorChecker")
+moon = NodePath("Shifter/Moon")
+moonCast = NodePath("Shifter/Moon/FloorChecker")
+shifter = NodePath("Shifter")
+
+[node name="Shifter" type="Node2D" parent="."]
+
+[node name="Sun" type="Node2D" parent="Shifter"]
+position = Vector2(24, 0)
+script = ExtResource("2_1wwcp")
+normalPlanet = ExtResource("1_1e3ep")
+lockedPlanet = ExtResource("4_gl447")
+planetToggle = true
+
+[node name="Sun Sprite" type="Sprite2D" parent="Shifter/Sun"]
+texture = ExtResource("1_1e3ep")
+script = ExtResource("4_haeyg")
+
+[node name="WallCollide" type="AnimatableBody2D" parent="Shifter/Sun"]
+collision_mask = 28
+sync_to_physics = false
+script = ExtResource("8_fipn0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Sun/WallCollide"]
+shape = SubResource("CircleShape2D_doqu3")
+
+[node name="Planet Sparkles" type="GPUParticles2D" parent="Shifter/Sun"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_8ne21")
+amount = 12
+process_material = ExtResource("6_7ttlt")
+texture = ExtResource("6_3uxkg")
+lifetime = 0.8
+
+[node name="Shadow" type="Sprite2D" parent="Shifter/Sun"]
+modulate = Color(1, 1, 1, 0.576471)
+z_index = -2
+texture = ExtResource("8_3r75p")
+
+[node name="FloorChecker" type="ShapeCast2D" parent="Shifter/Sun"]
+shape = SubResource("CircleShape2D_nha4a")
+target_position = Vector2(0, 0)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="Moon" type="Node2D" parent="Shifter"]
+position = Vector2(-24, 0)
+script = ExtResource("2_1wwcp")
+normalPlanet = ExtResource("2_lhbqr")
+lockedPlanet = ExtResource("7_r8o2w")
+
+[node name="Moon Sprite" type="Sprite2D" parent="Shifter/Moon"]
+texture = ExtResource("2_lhbqr")
+script = ExtResource("4_haeyg")
+
+[node name="WallCollide" type="AnimatableBody2D" parent="Shifter/Moon"]
+collision_mask = 28
+sync_to_physics = false
+script = ExtResource("8_fipn0")
+moon = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Moon/WallCollide"]
+shape = SubResource("CircleShape2D_doqu3")
+
+[node name="Planet Sparkles" type="GPUParticles2D" parent="Shifter/Moon"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_8ne21")
+amount = 12
+process_material = ExtResource("6_7ttlt")
+texture = ExtResource("6_3uxkg")
+lifetime = 0.8
+
+[node name="Shadow" type="Sprite2D" parent="Shifter/Moon"]
+modulate = Color(1, 1, 1, 0.576471)
+z_index = -2
+texture = ExtResource("8_3r75p")
+
+[node name="FloorChecker" type="ShapeCast2D" parent="Shifter/Moon"]
+shape = SubResource("CircleShape2D_6jv4h")
+exclude_parent = false
+target_position = Vector2(0, 0)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="Mid Point" type="Sprite2D" parent="Shifter" node_paths=PackedStringArray("player")]
+z_index = -1
+texture = ExtResource("6_pdekc")
+script = ExtResource("7_x21q5")
+dot = ExtResource("3_0wj7l")
+arrow = ExtResource("6_pdekc")
+player = NodePath("../..")
+
+[connection signal="MoonLocked" from="." to="Shifter/Moon" method="LockSprite"]
+[connection signal="SunLocked" from="." to="Shifter/Sun" method="LockSprite"]
+[connection signal="Unlock" from="." to="Shifter/Sun" method="UnlockSprite"]
+[connection signal="Unlock" from="." to="Shifter/Moon" method="UnlockSprite"]
+[connection signal="OnCollide" from="Shifter/Sun/WallCollide" to="." method="Die"]
+[connection signal="OnCollide" from="Shifter/Moon/WallCollide" to="." method="Die"]

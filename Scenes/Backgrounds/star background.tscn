@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bllegi12ujyv"]
+
+[ext_resource type="PackedScene" uid="uid://b8j4utj6b8lrb" path="res://Scenes/background.tscn" id="1_bbmwq"]
+[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="2_iibky"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lm2tg"]
+resource_local_to_scene = true
+shader = ExtResource("2_iibky")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8xffm"]
+resource_local_to_scene = true
+shader = ExtResource("2_iibky")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p12ps"]
+resource_local_to_scene = true
+shader = ExtResource("2_iibky")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[node name="Background" instance=ExtResource("1_bbmwq")]
+
+[node name="Layer1" parent="." index="0"]
+material = SubResource("ShaderMaterial_lm2tg")
+
+[node name="Layer2" parent="." index="1"]
+material = SubResource("ShaderMaterial_8xffm")
+
+[node name="Layer3" parent="." index="2"]
+material = SubResource("ShaderMaterial_p12ps")

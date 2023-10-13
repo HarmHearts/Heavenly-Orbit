@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://b8j4utj6b8lrb"]
+
+[ext_resource type="Material" uid="uid://b8f35mcrscvyx" path="res://Shaders/background1.tres" id="1_6olt8"]
+[ext_resource type="Texture2D" uid="uid://ex6gtjjc1roe" path="res://Assets/Backgrounds/starbg1.png" id="2_gmjkh"]
+[ext_resource type="Script" path="res://Code/ParallaxScroll.cs" id="3_2pk6t"]
+[ext_resource type="Material" uid="uid://uo6m5ip1faq4" path="res://Shaders/background2.tres" id="4_btds5"]
+[ext_resource type="Texture2D" uid="uid://dqbsga2iks6ft" path="res://Assets/Backgrounds/starbg2.png" id="5_wanvo"]
+[ext_resource type="Material" uid="uid://bsauany1we34d" path="res://Shaders/background3.tres" id="6_e4ybx"]
+[ext_resource type="Texture2D" uid="uid://cxiruxj8u270g" path="res://Assets/Backgrounds/starbg3.png" id="7_jgvqd"]
+
+[node name="Background" type="Node2D"]
+
+[node name="Layer1" type="Sprite2D" parent="."]
+z_index = -102
+texture_repeat = 2
+material = ExtResource("1_6olt8")
+texture = ExtResource("2_gmjkh")
+script = ExtResource("3_2pk6t")
+scroll = 0.1
+width = 256
+
+[node name="Layer2" type="Sprite2D" parent="."]
+z_index = -101
+texture_repeat = 2
+material = ExtResource("4_btds5")
+texture = ExtResource("5_wanvo")
+script = ExtResource("3_2pk6t")
+scroll = 0.3
+width = 256
+
+[node name="Layer3" type="Sprite2D" parent="."]
+z_index = -100
+texture_repeat = 2
+material = ExtResource("6_e4ybx")
+texture = ExtResource("7_jgvqd")
+script = ExtResource("3_2pk6t")
+scroll = 0.6
+width = 256

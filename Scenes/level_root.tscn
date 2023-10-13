@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjbs78alm5pt6"]
+
+[ext_resource type="PackedScene" uid="uid://cc3des3p24ur2" path="res://Levels/Level Test 2/test_level_2.tscn" id="1_71fng"]
+[ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="1_yjnot"]
+[ext_resource type="Script" path="res://Code/CameraFollow.cs" id="2_njdxo"]
+[ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
+[ext_resource type="Texture2D" uid="uid://diw630bvujx7h" path="res://Assets/Palettes/warmlight-1x.png" id="4_on4w2"]
+[ext_resource type="PackedScene" uid="uid://dtxckn4yqoad6" path="res://Scenes/Backgrounds/grid background.tscn" id="5_e7du3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ok7mo"]
+shader = ExtResource("1_yjnot")
+shader_parameter/palette_size = 4
+shader_parameter/offset = 0.5
+shader_parameter/palette = ExtResource("4_on4w2")
+
+[node name="Level Root" type="Node2D"]
+
+[node name="test level 2" parent="." instance=ExtResource("1_71fng")]
+
+[node name="Main Camera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(160, 160)
+editor_draw_limits = true
+script = ExtResource("2_njdxo")
+target = NodePath("../Player")
+interpolation = 3.0
+baseSpeed = 12.0
+lookAhead = 0.75
+rotationReach = 28.0
+
+[node name="Palette Filter" type="ColorRect" parent="Main Camera"]
+z_index = 100
+texture_filter = 2
+texture_repeat = 1
+material = SubResource("ShaderMaterial_ok7mo")
+offset_left = -80.0
+offset_top = -72.0
+offset_right = 80.0
+offset_bottom = 72.0
+
+[node name="Background" parent="Main Camera" instance=ExtResource("5_e7du3")]
+
+[node name="Player" parent="." instance=ExtResource("3_weuc1")]
+position = Vector2(160, 160)
+rotationSpeed = 1.9

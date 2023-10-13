@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc3des3p24ur2"]
+
+[ext_resource type="PackedScene" uid="uid://0bb7uxesqk6j" path="res://Levels/Level Test 2/test level 2.ldtk" id="1_b1vjc"]
+
+[node name="test level 2" instance=ExtResource("1_b1vjc")]
+
+[node name="Floor" parent="Level_0" index="0" groups=["Floor"]]
+z_index = -10
+
+[node name="Walls" parent="Level_0" index="1" groups=["Wall"]]
+z_index = -10
+
+[node name="Wall_Curves" parent="Level_0" index="2" groups=["Wall"]]
+z_index = -10
+
+[node name="Level_Border" parent="Level_0" index="3" groups=["Wall"]]
+z_index = -10
