@@ -33,11 +33,13 @@ radius = 4.0
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("sun", "sunCast", "moon", "moonCast", "shifter")]
 script = ExtResource("1_n51g8")
-rotationSpeed = 1.8
+_rotationSpeed = 2.0
 quantization = 22.5
 distanceSpeed = 32.0
 minDistance = 8.0
 maxDistance = 38.0
+_maxSpeed = 100.0
+slipInfluence = 0.4
 sun = NodePath("Shifter/Sun")
 sunCast = NodePath("Shifter/Sun/FloorChecker")
 moon = NodePath("Shifter/Moon")

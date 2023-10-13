@@ -28,14 +28,14 @@ public partial class CameraFollow : Node2D
 		//calculate target point
 		Vector2 targetPoint = target.Position;
 		//lookahead
-		if(!playerScript.locked)
+		if(!playerScript.Locked)
 		{
-            targetPoint += playerScript.moveDirection * (playerScript.moveSpeed * lookAhead);
+            targetPoint += playerScript.MoveDirection * (playerScript.MoveSpeed * lookAhead);
 		}
 		else
 		{
-			if(!playerScript.lockedBody) targetPoint += target.Transform.X * rotationReach * (playerScript.bodyDistance / playerScript.maxDistance);
-			else targetPoint += -target.Transform.X * rotationReach * (playerScript.bodyDistance / playerScript.maxDistance);
+			if(!playerScript.LockedBody) targetPoint += target.Transform.X * rotationReach * playerScript.BodyDistanceNormalized;
+			else targetPoint += -target.Transform.X * rotationReach * playerScript.BodyDistanceNormalized;
         }
 		//move camera
         this.Position = this.Position.MoveToward(targetPoint, baseSpeed * (float)delta);

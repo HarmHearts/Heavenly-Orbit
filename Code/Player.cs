@@ -5,36 +5,77 @@ using System.Reflection.Metadata.Ecma335;
 public partial class Player : Node2D
 {
 	[Export]
-	public float rotationSpeed;
+	private float _rotationSpeed;
 	[Export]
-	public float quantization;
+    private float quantization;
 	[Export]
-	public float distanceSpeed;
+    private float distanceSpeed;
 	[Export]
-	public float minDistance;
+    private float minDistance;
 	[Export]
-	public float maxDistance;
+    private float maxDistance;
 	[Export]
-	public Node2D sun;
-	[Export] 
-	public ShapeCast2D sunCast;
+	private float _maxSpeed;
 	[Export]
-	public Node2D moon;
+	private Vector2 _gravity;
+	[Export]
+	private float _floorFriction;
+	[Export]
+	private float slipInfluence;
+	[Export]
+    private Node2D sun;
+	[Export]
+    private ShapeCast2D sunCast;
+	[Export]
+    private Node2D moon;
     [Export]
-    public ShapeCast2D moonCast;
+    private ShapeCast2D moonCast;
     [Export]
-	public Node2D shifter;
-
-	public float bodyDistance = 24;
-
-	public bool locked;
+    private Node2D shifter;
 	/// <summary>
-	/// true for sun false for moon
+	/// represents radius not diameter, each body is _bodyDistance pixels away from the center
 	/// </summary>
-	public bool lockedBody;
+    private float _bodyDistance = 24;
+    private bool _locked;
+    /// <summary>
+    /// true for sun false for moon
+    /// </summary>
+    private bool _lockedBody;
+    private Vector2 _moveDirection;
+    private float _moveSpeed;
+	private Vector2 slipMovement;
 
-	public Vector2 moveDirection;
-	public float moveSpeed;
+	//properties
+	public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
+    /// <summary>
+    /// represents radius not diameter, each body is _bodyDistance pixels away from the center
+    /// </summary>
+    public float BodyDistance { get => _bodyDistance; set => _bodyDistance = Mathf.Clamp(value, minDistance, maxDistance); }
+	/// <summary>
+	/// body distance as a 0-1 float relative to the min and max
+	/// </summary>
+	public float BodyDistanceNormalized { get => (_bodyDistance - minDistance) / (maxDistance - minDistance); }
+	public Vector2 MoveDirection { get => _moveDirection; set => _moveDirection = value.Normalized(); }
+	public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
+	/// <summary>
+	/// movement speed and direction combined into one vector
+	/// </summary>
+	public Vector2 Velocity 
+	{ 
+		get => _moveDirection * _moveSpeed;
+		set
+		{
+			_moveDirection = value.Normalized();
+			_moveSpeed = value.Length();
+		}
+	}
+	public bool Locked { get => _locked; set => _locked = value; }
+    /// <summary>
+    /// true for sun false for moon
+    /// </summary>
+    public bool LockedBody { get => _lockedBody; set => _lockedBody = value; }
+	public Vector2 Gravity { get => _gravity; set => _gravity = value; }
+	public float FloorFriction { get => _floorFriction; set => _floorFriction = value; }
 
 	//input stuff
 	private bool upHeld;
@@ -46,6 +87,8 @@ public partial class Player : Node2D
 	public delegate void MoonLockedEventHandler();
 	[Signal]
 	public delegate void UnlockEventHandler();
+	[Signal]
+	public delegate void PlayerDeathEventHandler();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -56,37 +99,85 @@ public partial class Player : Node2D
     public override void _Process(double delta)
 	{
 		//always be rotating
-		this.Rotation += rotationSpeed * (float)delta;
-		//do distancing
-		if(upHeld)
-		{
-			bodyDistance = Mathf.MoveToward(bodyDistance, maxDistance, distanceSpeed * (float)delta);
-		}
-        if (downHeld)
-        {
-            bodyDistance = Mathf.MoveToward(bodyDistance, minDistance, distanceSpeed * (float)delta);
-        }
+		this.Rotation += _rotationSpeed * (float)delta;
 		//set distance between bodies
-		sun.Position = new Vector2(bodyDistance, 0);
-        moon.Position = new Vector2(-bodyDistance, 0);
+		PositionBodies((float)delta);
 		//locked behaviors
-		if(locked)
+		if(_locked)
 		{
-            //set shifter position
-            if (lockedBody) shifter.Position = new Vector2(-bodyDistance, 0);
-			else shifter.Position = new Vector2(bodyDistance, 0);
-			//calculate launch direction
-			float launchAngle = Mathf.DegToRad(Mathf.Round(this.RotationDegrees / quantization) * quantization);
-			if(rotationSpeed > 0) moveDirection = Vector2.FromAngle(launchAngle + 1.570796f);
-			else moveDirection = Vector2.FromAngle(launchAngle - 1.570796f);
-			if (lockedBody) moveDirection *= -1;
-			moveSpeed = Mathf.Abs(rotationSpeed * (bodyDistance));
+			SetShifter();
+			CalculateLaunchVector();
+			SlipMovement((float)delta);
         }
 		//unlocked behaviors
 		else
 		{
-			this.Position += moveDirection * (moveSpeed * (float)delta);
+            FreeMovement((float)delta);
+        }
+    }
+
+	private void PositionBodies(float delta)
+    {
+        //do distancing
+        if (upHeld)
+        {
+            _bodyDistance = Mathf.MoveToward(_bodyDistance, maxDistance, distanceSpeed * delta);
+        }
+        if (downHeld)
+        {
+            _bodyDistance = Mathf.MoveToward(_bodyDistance, minDistance, distanceSpeed * delta);
+        }
+		//position elements
+        sun.Position = new Vector2(_bodyDistance, 0);
+        moon.Position = new Vector2(-_bodyDistance, 0);
+    }
+
+	private void CalculateLaunchVector()
+	{
+        //set shifter position
+        if (_lockedBody) shifter.Position = new Vector2(-_bodyDistance, 0);
+        else shifter.Position = new Vector2(_bodyDistance, 0);
+        //quantize launch direction
+        float launchAngle = Mathf.DegToRad(Mathf.Round(this.RotationDegrees / quantization) * quantization);
+		//calculate launch vector
+        if (_rotationSpeed > 0) _moveDirection = Vector2.FromAngle(launchAngle + 1.570796f);
+        else _moveDirection = Vector2.FromAngle(launchAngle - 1.570796f);
+        if (_lockedBody) _moveDirection *= -1;
+        _moveSpeed = Mathf.Abs(_rotationSpeed * (_bodyDistance));
+    }
+
+	private void SetShifter()
+	{
+        //set shifter position
+		if(_locked)
+		{
+            if (_lockedBody) shifter.Position = new Vector2(-_bodyDistance, 0);
+            else shifter.Position = new Vector2(_bodyDistance, 0);
+        }
+		else
+		{
+			shifter.Position = Vector2.Zero;
 		}
+    }
+
+	private void SlipMovement(float delta)
+	{
+		//don't do slippery movement if friction is turned off
+		if (_floorFriction <= 0) return;
+		//do slipping
+		slipMovement += _moveDirection * slipInfluence * (_bodyDistance / maxDistance);
+		slipMovement = slipMovement.MoveToward(Vector2.Zero, _floorFriction * delta);
+		this.Position += slipMovement * delta;
+	}
+
+	private void FreeMovement(float delta)
+	{
+        //apply gravity to movement vector
+        this.Velocity += _gravity * delta;
+		//maintain max speed
+		if(_moveSpeed > _maxSpeed) _moveSpeed = _maxSpeed;
+        //move player launchways
+        this.Position += _moveDirection * (_moveSpeed * delta);
     }
 
     public override void _Input(InputEvent @event)
@@ -94,38 +185,28 @@ public partial class Player : Node2D
 		//get lock actions
 		if(@event.IsActionPressed("Btn_A"))
 		{
-			if(!locked)
+			if(!_locked || (_locked && !_lockedBody))
 			{
-				LockSun();
-			}
-			else if(locked && !lockedBody)
-			{
-				UnlockBody();
 				LockSun();
 			}
 		}
 		if(@event.IsActionReleased("Btn_A"))
 		{
-			if(locked && lockedBody)
+			if(_locked && _lockedBody)
 			{
 				UnlockBody();
 			}
 		}
         if (@event.IsActionPressed("Btn_B"))
         {
-            if (!locked)
+            if (!_locked || (_locked && _lockedBody))
             {
-                LockMoon();
-            }
-            else if (locked && lockedBody)
-            {
-                UnlockBody();
                 LockMoon();
             }
         }
         if (@event.IsActionReleased("Btn_B"))
         {
-            if (locked && !lockedBody)
+            if (_locked && !_lockedBody)
             {
                 UnlockBody();
             }
@@ -155,7 +236,7 @@ public partial class Player : Node2D
 	{
         this.Position = sun.GlobalPosition.Lerp(moon.GlobalPosition, 0.5f);
         shifter.Position = Vector2.Zero;
-		locked = false;
+		_locked = false;
 		EmitSignal(SignalName.Unlock);
 	}
 
@@ -165,10 +246,15 @@ public partial class Player : Node2D
 		Node2D floor = CheckFloor(false);
 		if (floor == null) return;
 
-		locked = true;
-		lockedBody = true;
+		if(_locked)
+		{
+			UnlockBody();
+		}
+		_locked = true;
+		_lockedBody = true;
 		this.Position = sun.GlobalPosition;
-		EmitSignal(SignalName.SunLocked);
+        slipMovement = Velocity;
+        EmitSignal(SignalName.SunLocked);
 	}
 
     private void LockMoon()
@@ -177,17 +263,24 @@ public partial class Player : Node2D
         Node2D floor = CheckFloor(true);
         if (floor == null) return;
 
-        locked = true;
-        lockedBody = false;
+        if (_locked)
+        {
+            UnlockBody();
+        }
+        _locked = true;
+        _lockedBody = false;
         this.Position = moon.GlobalPosition;
+		slipMovement = Velocity;
         EmitSignal(SignalName.MoonLocked);
     }
 
 	public void Die(KinematicCollision2D coll, bool moon)
 	{
+		EmitSignal(SignalName.PlayerDeath);
 		GD.Print("Oopsy daisy");
 	}
 
+	//TODO: WE ALWAYS DO TRUE FOR SUN FALSE FOR MOON WHEN WE DO BOOLS TO DISTINGUISH BODIES
 	private Node2D CheckFloor(bool moon)
 	{
         ShapeCast2D shape = moon ? moonCast : sunCast;
