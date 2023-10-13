@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cu7x7xk1argu5"]
+[gd_scene load_steps=20 format=3 uid="uid://cu7x7xk1argu5"]
 
 [ext_resource type="Texture2D" uid="uid://bn3n1fwtuw88s" path="res://Assets/Sprites/sun.png" id="1_1e3ep"]
 [ext_resource type="Script" path="res://Code/Player.cs" id="1_n51g8"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Code/GuideDot.cs" id="7_x21q5"]
 [ext_resource type="Texture2D" uid="uid://dnahds7fassb4" path="res://Assets/Sprites/shadow.png" id="8_3r75p"]
 [ext_resource type="Script" path="res://Scenes/PlayerCollide.cs" id="8_fipn0"]
+[ext_resource type="Script" path="res://Code/PlanetSparkles.cs" id="9_0ljh3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_doqu3"]
 resource_local_to_scene = true
@@ -39,6 +40,7 @@ distanceSpeed = 32.0
 minDistance = 8.0
 maxDistance = 38.0
 _maxSpeed = 100.0
+_minSpeed = 32.0
 slipInfluence = 0.4
 sun = NodePath("Shifter/Sun")
 sunCast = NodePath("Shifter/Sun/FloorChecker")
@@ -74,6 +76,7 @@ amount = 12
 process_material = ExtResource("6_7ttlt")
 texture = ExtResource("6_3uxkg")
 lifetime = 0.8
+script = ExtResource("9_0ljh3")
 
 [node name="Shadow" type="Sprite2D" parent="Shifter/Sun"]
 modulate = Color(1, 1, 1, 0.576471)
@@ -112,6 +115,7 @@ amount = 12
 process_material = ExtResource("6_7ttlt")
 texture = ExtResource("6_3uxkg")
 lifetime = 0.8
+script = ExtResource("9_0ljh3")
 
 [node name="Shadow" type="Sprite2D" parent="Shifter/Moon"]
 modulate = Color(1, 1, 1, 0.576471)
@@ -125,13 +129,12 @@ target_position = Vector2(0, 0)
 collision_mask = 2
 collide_with_areas = true
 
-[node name="Mid Point" type="Sprite2D" parent="Shifter" node_paths=PackedStringArray("player")]
+[node name="Mid Point" type="Sprite2D" parent="Shifter"]
 z_index = -1
 texture = ExtResource("6_pdekc")
 script = ExtResource("7_x21q5")
 dot = ExtResource("3_0wj7l")
 arrow = ExtResource("6_pdekc")
-player = NodePath("../..")
 
 [connection signal="MoonLocked" from="." to="Shifter/Moon" method="LockSprite"]
 [connection signal="SunLocked" from="." to="Shifter/Sun" method="LockSprite"]

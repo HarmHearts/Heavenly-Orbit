@@ -1,32 +1,20 @@
 using Godot;
 using System;
 
-public partial class GuideDot : Sprite2D
+public partial class PlanetSparkles : GpuParticles2D
 {
-	[Export]
-	public Texture2D dot;
-	[Export]
-	public Texture2D arrow;
-
+	private ParticleProcessMaterial particle;
 	private Player player;
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		particle = this.ProcessMaterial as ParticleProcessMaterial;
         player = this.GetTree().CurrentScene.FindChild("Player") as Player;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        this.GlobalRotation = player.MoveDirection.Angle();
-        if (player.Locked) this.Texture = arrow;
-		else
-		{
-			this.Texture = dot;
-			this.GlobalRotation = 0;
-		}
-		if (player.LockedBody) this.FlipV = true;
-		else this.FlipV = false;
+		particle.Direction = new Vector3(player.MoveDirection.X, player.MoveDirection.Y, 0);
 	}
 }

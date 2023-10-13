@@ -17,6 +17,8 @@ public partial class Player : Node2D
 	[Export]
 	private float _maxSpeed;
 	[Export]
+	private float _minSpeed;
+	[Export]
 	private Vector2 _gravity;
 	[Export]
 	private float _floorFriction;
@@ -43,7 +45,7 @@ public partial class Player : Node2D
     private bool _lockedBody;
     private Vector2 _moveDirection;
     private float _moveSpeed;
-	private Vector2 slipMovement;
+	private Vector2 frictionMovement;
 
 	//properties
 	public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
@@ -107,7 +109,7 @@ public partial class Player : Node2D
 		{
 			SetShifter();
 			CalculateLaunchVector();
-			SlipMovement((float)delta);
+			FrictionMovement((float)delta);
         }
 		//unlocked behaviors
 		else
@@ -144,6 +146,7 @@ public partial class Player : Node2D
         else _moveDirection = Vector2.FromAngle(launchAngle - 1.570796f);
         if (_lockedBody) _moveDirection *= -1;
         _moveSpeed = Mathf.Abs(_rotationSpeed * (_bodyDistance));
+		if(_moveSpeed < _minSpeed) _moveSpeed = _minSpeed;
     }
 
 	private void SetShifter()
@@ -160,14 +163,21 @@ public partial class Player : Node2D
 		}
     }
 
-	private void SlipMovement(float delta)
+	private void FrictionMovement(float delta)
 	{
 		//don't do slippery movement if friction is turned off
 		if (_floorFriction <= 0) return;
 		//do slipping
-		slipMovement += _moveDirection * slipInfluence * (_bodyDistance / maxDistance);
-		slipMovement = slipMovement.MoveToward(Vector2.Zero, _floorFriction * delta);
-		this.Position += slipMovement * delta;
+		frictionMovement += _moveDirection * slipInfluence * (_bodyDistance / maxDistance);
+		frictionMovement = frictionMovement.MoveToward(Vector2.Zero, _floorFriction * delta);
+		this.Position += frictionMovement * delta;
+		//do ground check
+		Node2D floor = CheckFloor(LockedBody);
+		if(floor == null)
+		{
+			UnlockBody();
+			Velocity = frictionMovement;
+		}
 	}
 
 	private void FreeMovement(float delta)
@@ -243,7 +253,7 @@ public partial class Player : Node2D
 	private void LockSun()
 	{
 		//do lockability check here
-		Node2D floor = CheckFloor(false);
+		Node2D floor = CheckFloor(true);
 		if (floor == null) return;
 
 		if(_locked)
@@ -253,14 +263,14 @@ public partial class Player : Node2D
 		_locked = true;
 		_lockedBody = true;
 		this.Position = sun.GlobalPosition;
-        slipMovement = Velocity;
+        frictionMovement = Velocity;
         EmitSignal(SignalName.SunLocked);
 	}
 
     private void LockMoon()
     {
         //do lockability check here
-        Node2D floor = CheckFloor(true);
+        Node2D floor = CheckFloor(false);
         if (floor == null) return;
 
         if (_locked)
@@ -270,7 +280,7 @@ public partial class Player : Node2D
         _locked = true;
         _lockedBody = false;
         this.Position = moon.GlobalPosition;
-		slipMovement = Velocity;
+		frictionMovement = Velocity;
         EmitSignal(SignalName.MoonLocked);
     }
 
@@ -281,9 +291,9 @@ public partial class Player : Node2D
 	}
 
 	//TODO: WE ALWAYS DO TRUE FOR SUN FALSE FOR MOON WHEN WE DO BOOLS TO DISTINGUISH BODIES
-	private Node2D CheckFloor(bool moon)
+	private Node2D CheckFloor(bool sun)
 	{
-        ShapeCast2D shape = moon ? moonCast : sunCast;
+        ShapeCast2D shape = sun ? sunCast : moonCast;
 		Node2D res = null;
 
 		shape.ForceShapecastUpdate();

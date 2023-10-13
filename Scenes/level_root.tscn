@@ -4,14 +4,14 @@
 [ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="1_yjnot"]
 [ext_resource type="Script" path="res://Code/CameraFollow.cs" id="2_njdxo"]
 [ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
-[ext_resource type="Texture2D" uid="uid://bbq12hmes1lrc" path="res://Assets/Palettes/cosmic-cream-gb-1x.png" id="4_d6vvv"]
+[ext_resource type="Texture2D" uid="uid://cufr77ga0drhx" path="res://Assets/Palettes/purpledawn-1x.png" id="4_uy41c"]
 [ext_resource type="PackedScene" uid="uid://dtxckn4yqoad6" path="res://Scenes/Backgrounds/grid background.tscn" id="5_e7du3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ok7mo"]
 shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
-shader_parameter/palette = ExtResource("4_d6vvv")
+shader_parameter/palette = ExtResource("4_uy41c")
 
 [node name="Level Root" type="Node2D"]
 
