@@ -17,7 +17,7 @@
 [ext_resource type="Script" path="res://Code/PlanetSparkles.cs" id="9_0ljh3"]
 [ext_resource type="Shader" uid="uid://v8ah7ioi5d3w" path="res://Assets/Particles/spread burst particles.tres" id="11_ow4id"]
 [ext_resource type="Texture2D" uid="uid://bpykfj4wc17w8" path="res://Assets/Particles/sparkles.png" id="12_h6bdw"]
-[ext_resource type="Script" path="res://Code/LockEffect.cs" id="13_axnep"]
+[ext_resource type="Script" path="res://Code/ParticleBurstEffect.cs" id="13_vggmq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_doqu3"]
 resource_local_to_scene = true
@@ -36,7 +36,7 @@ radius = 4.0
 particles_animation = true
 particles_anim_h_frames = 4
 particles_anim_v_frames = 1
-particles_anim_loop = false
+particles_anim_loop = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2vo4t"]
 shader = ExtResource("11_ow4id")
@@ -119,11 +119,14 @@ shape = SubResource("CircleShape2D_doqu3")
 [node name="Planet Sparkles" type="GPUParticles2D" parent="Shifter/Sun"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_8ne21")
-amount = 12
+amount = 18
 process_material = ExtResource("6_7ttlt")
 texture = ExtResource("6_3uxkg")
 lifetime = 0.8
 script = ExtResource("9_0ljh3")
+speedInfluence = 30.0
+speedVariance = 6.0
+bodyToggle = true
 
 [node name="Shadow" type="Sprite2D" parent="Shifter/Sun"]
 modulate = Color(1, 1, 1, 0.576471)
@@ -139,15 +142,14 @@ collide_with_areas = true
 [node name="Lock Effect" type="GPUParticles2D" parent="Shifter/Sun"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_tlaso")
-rotation = 0.785398
 emitting = false
 amount = 4
 process_material = SubResource("ShaderMaterial_2vo4t")
 texture = ExtResource("12_h6bdw")
-lifetime = 0.4
+lifetime = 0.48
 one_shot = true
 explosiveness = 1.0
-script = ExtResource("13_axnep")
+script = ExtResource("13_vggmq")
 
 [node name="Moon" type="Node2D" parent="Shifter"]
 position = Vector2(-24, 0)
@@ -171,11 +173,13 @@ shape = SubResource("CircleShape2D_doqu3")
 [node name="Planet Sparkles" type="GPUParticles2D" parent="Shifter/Moon"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_8ne21")
-amount = 12
+amount = 18
 process_material = ExtResource("6_7ttlt")
 texture = ExtResource("6_3uxkg")
 lifetime = 0.8
 script = ExtResource("9_0ljh3")
+speedInfluence = 30.0
+speedVariance = 6.0
 
 [node name="Shadow" type="Sprite2D" parent="Shifter/Moon"]
 modulate = Color(1, 1, 1, 0.576471)
@@ -193,16 +197,14 @@ collide_with_areas = true
 z_index = -1
 material = SubResource("CanvasItemMaterial_tlaso")
 position = Vector2(3.8147e-06, 0)
-rotation = 0.785398
-scale = Vector2(1, 1)
 emitting = false
 amount = 4
 process_material = SubResource("ShaderMaterial_2vo4t")
 texture = ExtResource("12_h6bdw")
-lifetime = 0.4
+lifetime = 0.48
 one_shot = true
 explosiveness = 1.0
-script = ExtResource("13_axnep")
+script = ExtResource("13_vggmq")
 
 [node name="Mid Point" type="Sprite2D" parent="Shifter"]
 visible = false
@@ -213,9 +215,9 @@ dot = ExtResource("3_0wj7l")
 arrow = ExtResource("6_pdekc")
 
 [connection signal="MoonLocked" from="." to="Shifter/Moon" method="LockSprite"]
-[connection signal="MoonLocked" from="." to="Shifter/Moon/Lock Effect" method="restart"]
+[connection signal="MoonLocked" from="." to="Shifter/Moon/Lock Effect" method="_OnPlay"]
 [connection signal="SunLocked" from="." to="Shifter/Sun" method="LockSprite"]
-[connection signal="SunLocked" from="." to="Shifter/Sun/Lock Effect" method="restart"]
+[connection signal="SunLocked" from="." to="Shifter/Sun/Lock Effect" method="_OnPlay"]
 [connection signal="Unlock" from="." to="Shifter/Sun" method="UnlockSprite"]
 [connection signal="Unlock" from="." to="Shifter/Moon" method="UnlockSprite"]
 [connection signal="OnCollide" from="Shifter/Sun/WallCollide" to="." method="Die"]
