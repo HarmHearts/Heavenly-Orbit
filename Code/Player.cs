@@ -25,6 +25,8 @@ public partial class Player : Node2D
 	[Export]
 	private float slipInfluence;
 	[Export]
+	private float gravityFriction;
+	[Export]
     private Node2D sun;
 	[Export]
     private ShapeCast2D sunCast;
@@ -170,6 +172,7 @@ public partial class Player : Node2D
 		if (_floorFriction <= 0) return;
 		//do slipping
 		frictionMovement += _moveDirection * slipInfluence * (_bodyDistance / maxDistance);
+		frictionMovement += _gravity * gravityFriction * delta;
 		frictionMovement = frictionMovement.MoveToward(Vector2.Zero, _floorFriction * delta);
 		this.Position += frictionMovement * delta;
 		//do ground check

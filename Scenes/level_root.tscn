@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjbs78alm5pt6"]
+[gd_scene load_steps=8 format=3 uid="uid://bjbs78alm5pt6"]
 
 [ext_resource type="PackedScene" uid="uid://cc3des3p24ur2" path="res://Levels/Level Test 2/test_level_2.tscn" id="1_71fng"]
 [ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="1_yjnot"]
@@ -12,11 +12,6 @@ shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
 shader_parameter/palette = ExtResource("4_6xbxu")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_okgdr"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ws5df"]
-size = Vector2(160, 8)
 
 [node name="Level Root" type="Node2D"]
 
@@ -37,19 +32,12 @@ z_index = 100
 texture_filter = 2
 texture_repeat = 1
 material = SubResource("ShaderMaterial_ok7mo")
-offset_left = -80.0
-offset_top = -72.0
-offset_right = 80.0
-offset_bottom = 72.0
+offset_left = -81.0
+offset_top = -73.0
+offset_right = 81.0
+offset_bottom = 73.0
 
 [node name="Background" parent="Main Camera" instance=ExtResource("5_e7du3")]
-
-[node name="HUD Placeholder" type="Sprite2D" parent="Main Camera"]
-modulate = Color(0.447059, 0.447059, 0.447059, 1)
-z_index = 80
-material = SubResource("CanvasItemMaterial_okgdr")
-position = Vector2(0, 68)
-texture = SubResource("PlaceholderTexture2D_ws5df")
 
 [node name="Player" parent="." instance=ExtResource("3_weuc1")]
 position = Vector2(160, 160)

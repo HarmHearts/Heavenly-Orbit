@@ -89,6 +89,7 @@ maxDistance = 34.0
 _maxSpeed = 100.0
 _minSpeed = 32.0
 slipInfluence = 0.4
+gravityFriction = 1.5
 sun = NodePath("Shifter/Sun")
 sunCast = NodePath("Shifter/Sun/FloorChecker")
 moon = NodePath("Shifter/Moon")
