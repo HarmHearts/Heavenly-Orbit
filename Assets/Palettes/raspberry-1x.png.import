@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceejevgq1qe78"
-path="res://.godot/imported/cherrymelon-1x.png-c9e8044b5f2b73c84ce7225b1f0283a7.ctex"
+uid="uid://dkd0imck6tk5y"
+path="res://.godot/imported/raspberry-1x.png-3f33e99b3efd9d62b13082b4db0bf177.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Palettes/cherrymelon-1x.png"
-dest_files=["res://.godot/imported/cherrymelon-1x.png-c9e8044b5f2b73c84ce7225b1f0283a7.ctex"]
+source_file="res://Assets/Palettes/raspberry-1x.png"
+dest_files=["res://.godot/imported/raspberry-1x.png-3f33e99b3efd9d62b13082b4db0bf177.ctex"]
 
 [params]
 
