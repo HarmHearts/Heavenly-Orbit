@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceejevgq1qe78"
-path="res://.godot/imported/cherrymelon-1x.png-c9e8044b5f2b73c84ce7225b1f0283a7.ctex"
+uid="uid://bpykfj4wc17w8"
+path="res://.godot/imported/sparkles.png-f3e03eff94ebebb5e6bcd710030a7171.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Palettes/cherrymelon-1x.png"
-dest_files=["res://.godot/imported/cherrymelon-1x.png-c9e8044b5f2b73c84ce7225b1f0283a7.ctex"]
+source_file="res://Assets/Particles/sparkles.png"
+dest_files=["res://.godot/imported/sparkles.png-f3e03eff94ebebb5e6bcd710030a7171.ctex"]
 
 [params]
 

@@ -59,6 +59,7 @@ public partial class Player : Node2D
 	public float BodyDistanceNormalized { get => (_bodyDistance - minDistance) / (maxDistance - minDistance); }
 	public Vector2 MoveDirection { get => _moveDirection; set => _moveDirection = value.Normalized(); }
 	public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
+	public float MoveSpeedNormalized { get => (_moveSpeed - _minSpeed) / (_maxSpeed - _minSpeed); }
 	/// <summary>
 	/// movement speed and direction combined into one vector
 	/// </summary>
