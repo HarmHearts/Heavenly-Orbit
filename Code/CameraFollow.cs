@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CameraFollow : Node2D
+public partial class CameraFollow : Camera2D
 {
 	[Export]
 	public Node2D target;
@@ -40,5 +40,6 @@ public partial class CameraFollow : Node2D
 		//move camera
         this.Position = this.Position.MoveToward(targetPoint, baseSpeed * (float)delta);
         this.Position = this.Position.Lerp(targetPoint, interpolation * (float)delta);
+		ForceUpdateScroll();
     }
 }
