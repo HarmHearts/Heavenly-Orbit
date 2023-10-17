@@ -1,0 +1,33 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://okjb3s36qq6s"
+path="res://.godot/imported/ChevyRay - Skullboy.ttf-fb9fcf4e5ec0c28100d829217aeb4b6e.fontdata"
+
+[deps]
+
+source_file="res://Assets/Fonts/ChevyRay - Skullboy.ttf"
+dest_files=["res://.godot/imported/ChevyRay - Skullboy.ttf-fb9fcf4e5ec0c28100d829217aeb4b6e.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

@@ -1,0 +1,444 @@
+[gd_scene load_steps=51 format=3 uid="uid://boc38e3fnds1f"]
+
+[ext_resource type="Script" path="res://Code/WorldMapCamera.cs" id="1_5dgp1"]
+[ext_resource type="PackedScene" uid="uid://bllegi12ujyv" path="res://Scenes/Backgrounds/star background.tscn" id="2_kqms6"]
+[ext_resource type="Script" path="res://Code/MapPoint.cs" id="2_lsil8"]
+[ext_resource type="Texture2D" uid="uid://hdt2he315ggj" path="res://Assets/Sprites/world graphic 1.png" id="3_fvloc"]
+[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="3_s3gw4"]
+[ext_resource type="Texture2D" uid="uid://cjqpwn07qee" path="res://Assets/Sprites/tiny sun.png" id="4_m3sjy"]
+[ext_resource type="Texture2D" uid="uid://dvxmnpdcf42rq" path="res://Assets/Backgrounds/map bg 1.png" id="4_mfpfd"]
+[ext_resource type="Script" path="res://Code/WorldMapCursor.cs" id="4_t6ipe"]
+[ext_resource type="Texture2D" uid="uid://cgtyf75l5jqvm" path="res://Assets/Sprites/world graphic 5.png" id="4_v7v0h"]
+[ext_resource type="Texture2D" uid="uid://b4ickxmeag7dd" path="res://Assets/Sprites/tiny moon.png" id="5_3y22k"]
+[ext_resource type="Texture2D" uid="uid://cmkk0i2t8lpvo" path="res://Assets/Backgrounds/map bg 2.png" id="5_sy8gt"]
+[ext_resource type="Texture2D" uid="uid://boankglevnkrw" path="res://Assets/Backgrounds/map bg 3.png" id="6_dnm8w"]
+[ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="8_0myq3"]
+[ext_resource type="Texture2D" uid="uid://bh6gjy8g1p0ik" path="res://Assets/Sprites/marker star.png" id="8_un457"]
+[ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="9_r83so"]
+[ext_resource type="Texture2D" uid="uid://c0kcl5aqgdq1u" path="res://Assets/Sprites/world graphic 3.png" id="10_qi1n4"]
+[ext_resource type="Texture2D" uid="uid://bjdgut4vv5v35" path="res://Assets/Sprites/world graphic 6.png" id="11_txfyu"]
+[ext_resource type="Texture2D" uid="uid://cro8auob11b2n" path="res://Assets/Sprites/world graphic 4.png" id="12_wyr28"]
+[ext_resource type="FontFile" uid="uid://bop1ghmbam1h3" path="res://Assets/Fonts/ChevyRay - Magic Book.ttf" id="17_6vfm7"]
+[ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="17_r1ekd"]
+[ext_resource type="Texture2D" uid="uid://b0hinf22vjuf8" path="res://Assets/Palettes/bubblegum-soft-1x.png" id="21_exnjy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nc8o"]
+resource_local_to_scene = true
+shader = ExtResource("3_s3gw4")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rd83y"]
+resource_local_to_scene = true
+shader = ExtResource("3_s3gw4")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cx1bo"]
+resource_local_to_scene = true
+shader = ExtResource("3_s3gw4")
+shader_parameter/motion = Vector2(0, 0)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iveb8"]
+atlas = ExtResource("8_un457")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5yn2"]
+atlas = ExtResource("8_un457")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqyjr"]
+atlas = ExtResource("8_un457")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5m5a"]
+atlas = ExtResource("8_un457")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_th3kx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iveb8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5yn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqyjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5m5a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uw6t3"]
+atlas = ExtResource("3_fvloc")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2ugt"]
+atlas = ExtResource("3_fvloc")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eg6qq"]
+atlas = ExtResource("3_fvloc")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnk74"]
+atlas = ExtResource("3_fvloc")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rf1jo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw6t3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2ugt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eg6qq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnk74")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_de47p"]
+atlas = ExtResource("4_v7v0h")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcmog"]
+atlas = ExtResource("4_v7v0h")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j21i0"]
+atlas = ExtResource("4_v7v0h")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mnq4"]
+atlas = ExtResource("4_v7v0h")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_acd6t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_de47p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcmog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j21i0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mnq4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxwqi"]
+atlas = ExtResource("11_txfyu")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lquna"]
+atlas = ExtResource("11_txfyu")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyat8"]
+atlas = ExtResource("11_txfyu")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i43ah"]
+atlas = ExtResource("11_txfyu")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6eelt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxwqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lquna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyat8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i43ah")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llaho"]
+atlas = ExtResource("12_wyr28")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d314f"]
+atlas = ExtResource("12_wyr28")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhis2"]
+atlas = ExtResource("12_wyr28")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo0ca"]
+atlas = ExtResource("12_wyr28")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sew3x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llaho")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d314f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhis2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xo0ca")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jx7ii"]
+shader = ExtResource("8_0myq3")
+shader_parameter/palette_size = 4
+shader_parameter/offset = 0.5
+shader_parameter/palette = ExtResource("21_exnjy")
+
+[node name="WorldMap" type="Node2D"]
+
+[node name="Camera" type="Camera2D" parent="."]
+limit_left = -80
+limit_top = -72
+limit_bottom = 72
+limit_smoothed = true
+editor_draw_limits = true
+script = ExtResource("1_5dgp1")
+interpolation = 4.0
+baseSpeed = 10.0
+
+[node name="Background" parent="Camera" instance=ExtResource("2_kqms6")]
+
+[node name="Layer1" parent="Camera/Background" index="0"]
+material = SubResource("ShaderMaterial_5nc8o")
+texture = ExtResource("4_mfpfd")
+
+[node name="Layer2" parent="Camera/Background" index="1"]
+material = SubResource("ShaderMaterial_rd83y")
+texture = ExtResource("5_sy8gt")
+scroll = 0.5
+
+[node name="Layer3" parent="Camera/Background" index="2"]
+material = SubResource("ShaderMaterial_cx1bo")
+texture = ExtResource("6_dnm8w")
+scroll = 1.4
+
+[node name="Cursor" type="Node2D" parent="." node_paths=PackedStringArray("currentPoint")]
+position = Vector2(-112, 0)
+script = ExtResource("4_t6ipe")
+moveTime = 0.7
+spinSpeed = 3.2
+currentPoint = NodePath("../MapPoint")
+
+[node name="Sun" type="Sprite2D" parent="Cursor"]
+z_index = 10
+position = Vector2(6, 0)
+texture = ExtResource("4_m3sjy")
+
+[node name="Moon" type="Sprite2D" parent="Cursor"]
+z_index = 10
+position = Vector2(-6, 0)
+texture = ExtResource("5_3y22k")
+
+[node name="MapPoint" type="Node2D" parent="." node_paths=PackedStringArray("_right")]
+position = Vector2(-8, 16)
+script = ExtResource("2_lsil8")
+_right = NodePath("../MapPoint2")
+_accessible = true
+
+[node name="AnimatedMarker" type="AnimatedSprite2D" parent="MapPoint"]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_th3kx")
+frame_progress = 0.0523754
+script = ExtResource("9_r83so")
+
+[node name="AnimatedGraphic" type="AnimatedSprite2D" parent="MapPoint"]
+sprite_frames = SubResource("SpriteFrames_rf1jo")
+frame_progress = 0.580782
+script = ExtResource("9_r83so")
+
+[node name="MapPoint2" type="Node2D" parent="." node_paths=PackedStringArray("_right", "_left")]
+position = Vector2(48, -16)
+script = ExtResource("2_lsil8")
+_right = NodePath("../MapPoint3")
+_left = NodePath("../MapPoint")
+_accessible = true
+
+[node name="AnimatedMarker" type="AnimatedSprite2D" parent="MapPoint2"]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_th3kx")
+frame_progress = 0.799779
+script = ExtResource("9_r83so")
+
+[node name="AnimatedGraphic" type="AnimatedSprite2D" parent="MapPoint2"]
+sprite_frames = SubResource("SpriteFrames_acd6t")
+frame_progress = 0.334269
+script = ExtResource("9_r83so")
+
+[node name="MapPoint3" type="Node2D" parent="." node_paths=PackedStringArray("_left", "_up", "_down")]
+position = Vector2(112, 0)
+script = ExtResource("2_lsil8")
+_left = NodePath("../MapPoint2")
+_up = NodePath("../MapPoint5")
+_down = NodePath("../MapPoint4")
+_accessible = true
+
+[node name="AnimatedMarker" type="AnimatedSprite2D" parent="MapPoint3"]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_th3kx")
+frame_progress = 0.799779
+script = ExtResource("9_r83so")
+
+[node name="Sprite2D" type="Sprite2D" parent="MapPoint3"]
+texture = ExtResource("10_qi1n4")
+
+[node name="MapPoint4" type="Node2D" parent="." node_paths=PackedStringArray("_left")]
+position = Vector2(176, 16)
+script = ExtResource("2_lsil8")
+_left = NodePath("../MapPoint3")
+_accessible = true
+
+[node name="AnimatedMarker" type="AnimatedSprite2D" parent="MapPoint4"]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_th3kx")
+frame_progress = 0.886962
+script = ExtResource("9_r83so")
+
+[node name="AnimatedGraphic" type="AnimatedSprite2D" parent="MapPoint4"]
+sprite_frames = SubResource("SpriteFrames_6eelt")
+frame_progress = 0.946984
+script = ExtResource("9_r83so")
+
+[node name="MapPoint5" type="Node2D" parent="." node_paths=PackedStringArray("_left")]
+position = Vector2(160, -32)
+script = ExtResource("2_lsil8")
+_left = NodePath("../MapPoint3")
+_accessible = true
+
+[node name="AnimatedMarker" type="AnimatedSprite2D" parent="MapPoint5"]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_th3kx")
+frame_progress = 0.487732
+script = ExtResource("9_r83so")
+
+[node name="AnimatedGraphic" type="AnimatedSprite2D" parent="MapPoint5"]
+sprite_frames = SubResource("SpriteFrames_sew3x")
+frame_progress = 0.950011
+script = ExtResource("9_r83so")
+
+[node name="TextLayer" type="CanvasLayer" parent="."]
+offset = Vector2(-80, -88)
+transform = Transform2D(1, 0, 0, 1, -80, -88)
+
+[node name="ColorRect" type="ColorRect" parent="TextLayer"]
+z_index = 20
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 80.0
+offset_top = 88.0
+offset_right = 80.0
+offset_bottom = 104.0
+grow_horizontal = 2
+color = Color(0.321569, 0.321569, 0.321569, 0)
+
+[node name="WorldTitle" type="RichTextLabel" parent="TextLayer/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 2.0
+offset_right = 80.0
+offset_bottom = 18.0
+grow_horizontal = 2
+pivot_offset = Vector2(80, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("17_6vfm7")
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center] hey man cheg this ouf!"
+scroll_active = false
+shortcut_keys_enabled = false
+
+[node name="ColorRect2" type="ColorRect" parent="TextLayer"]
+z_index = 20
+offset_left = 80.0
+offset_top = 216.0
+offset_right = 240.0
+offset_bottom = 232.0
+color = Color(0.321569, 0.321569, 0.321569, 1)
+
+[node name="WorldInfo" type="RichTextLabel" parent="TextLayer/ColorRect2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_right = 80.0
+offset_bottom = 16.0
+grow_horizontal = 2
+pivot_offset = Vector2(80, 0)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("17_r1ekd")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "its planets man you can go and its there and have a fun! go to it wow yeah okay!"
+scroll_active = false
+shortcut_keys_enabled = false
+
+[node name="PaletteLayer" type="CanvasLayer" parent="."]
+offset = Vector2(-80, -88)
+transform = Transform2D(1, 0, 0, 1, -80, -88)
+
+[node name="PaletteFilter" type="ColorRect" parent="PaletteLayer"]
+z_index = 100
+texture_filter = 2
+texture_repeat = 1
+material = SubResource("ShaderMaterial_jx7ii")
+offset_left = 80.0
+offset_top = 88.0
+offset_right = 240.0
+offset_bottom = 232.0
+
+[editable path="Camera/Background"]
