@@ -314,8 +314,26 @@ public partial class Player : Node2D
 	{
 		EmitSignal(SignalName.PlayerDeath);
 		GD.Print("Oopsy daisy");
-		Bounce(coll); //TEST
+		//Bounce(coll); //TEST
+		WallCollision(coll, sun);
 	}
+
+	public void WallCollision(KinematicCollision2D coll, bool sun)
+	{
+		//check wall type
+        if (coll.GetCollider() is TileMap)
+        {
+			TileMap tileMap = coll.GetCollider() as TileMap;
+			Vector2I tilePoint = tileMap.LocalToMap(tileMap.ToLocal(coll.GetPosition() - (coll.GetNormal() * 4)));
+			TileData hitTile = tileMap.GetCellTileData(0, tilePoint);
+			Variant data = hitTile.GetCustomData("Type");
+			if(data.VariantType is Variant.Type.String && ((string)data).Equals("Bounce"))
+			{
+				GD.Print("Bounce!");
+				Bounce(coll);
+			}
+        }
+    }
 
 	//TODO: WE ALWAYS DO TRUE FOR SUN FALSE FOR MOON WHEN WE DO BOOLS TO DISTINGUISH BODIES
 	private Node2D CheckFloor(bool sun)
