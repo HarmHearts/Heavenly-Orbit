@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1yc35gyfudqr"]
+
+[ext_resource type="Script" path="res://Code/AudioSystem.cs" id="1_4fp2a"]
+
+[node name="AudioSystem" type="Node2D"]
+script = ExtResource("1_4fp2a")
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 4

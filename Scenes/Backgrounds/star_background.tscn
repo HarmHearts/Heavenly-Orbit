@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://iqeesikmb5v7"]
+
+[ext_resource type="PackedScene" uid="uid://c4ujw8ht77ikx" path="res://Scenes/Backgrounds/base_background.tscn" id="1_jvk3i"]
+
+[node name="StarBackground" instance=ExtResource("1_jvk3i")]

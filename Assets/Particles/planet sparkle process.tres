@@ -23,5 +23,5 @@ orbit_velocity_max = 0.0
 damping_min = 2.0
 damping_max = 2.0
 color_initial_ramp = SubResource("GradientTexture1D_saf0k")
-anim_speed_max = 4.0
+anim_speed_max = 2.0
 anim_offset_max = 0.5

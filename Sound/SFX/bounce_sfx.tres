@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ceemg07jiew34"]
+
+[ext_resource type="AudioStream" uid="uid://b54grfqmcddd1" path="res://Assets/SFX/bounce.wav" id="1_db8mi"]
+[ext_resource type="Script" path="res://Code/SoundEffect.cs" id="2_8ol8n"]
+
+[resource]
+script = ExtResource("2_8ol8n")
+name = &"Bounce"
+audioStreams = Array[AudioStream]([ExtResource("1_db8mi")])
+looping = false
+channel = 2

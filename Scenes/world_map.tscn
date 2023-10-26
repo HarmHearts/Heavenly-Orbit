@@ -1,17 +1,12 @@
-[gd_scene load_steps=51 format=3 uid="uid://boc38e3fnds1f"]
+[gd_scene load_steps=44 format=3 uid="uid://boc38e3fnds1f"]
 
 [ext_resource type="Script" path="res://Code/WorldMapCamera.cs" id="1_5dgp1"]
-[ext_resource type="PackedScene" uid="uid://bllegi12ujyv" path="res://Scenes/Backgrounds/star background.tscn" id="2_kqms6"]
 [ext_resource type="Script" path="res://Code/MapPoint.cs" id="2_lsil8"]
 [ext_resource type="Texture2D" uid="uid://hdt2he315ggj" path="res://Assets/Sprites/world graphic 1.png" id="3_fvloc"]
-[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="3_s3gw4"]
 [ext_resource type="Texture2D" uid="uid://cjqpwn07qee" path="res://Assets/Sprites/tiny sun.png" id="4_m3sjy"]
-[ext_resource type="Texture2D" uid="uid://dvxmnpdcf42rq" path="res://Assets/Backgrounds/map bg 1.png" id="4_mfpfd"]
 [ext_resource type="Script" path="res://Code/WorldMapCursor.cs" id="4_t6ipe"]
 [ext_resource type="Texture2D" uid="uid://cgtyf75l5jqvm" path="res://Assets/Sprites/world graphic 5.png" id="4_v7v0h"]
 [ext_resource type="Texture2D" uid="uid://b4ickxmeag7dd" path="res://Assets/Sprites/tiny moon.png" id="5_3y22k"]
-[ext_resource type="Texture2D" uid="uid://cmkk0i2t8lpvo" path="res://Assets/Backgrounds/map bg 2.png" id="5_sy8gt"]
-[ext_resource type="Texture2D" uid="uid://boankglevnkrw" path="res://Assets/Backgrounds/map bg 3.png" id="6_dnm8w"]
 [ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="8_0myq3"]
 [ext_resource type="Texture2D" uid="uid://bh6gjy8g1p0ik" path="res://Assets/Sprites/marker star.png" id="8_un457"]
 [ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="9_r83so"]
@@ -20,28 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://cro8auob11b2n" path="res://Assets/Sprites/world graphic 4.png" id="12_wyr28"]
 [ext_resource type="FontFile" uid="uid://bop1ghmbam1h3" path="res://Assets/Fonts/ChevyRay - Magic Book.ttf" id="17_6vfm7"]
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="17_r1ekd"]
+[ext_resource type="PackedScene" uid="uid://iqeesikmb5v7" path="res://Scenes/Backgrounds/star_background.tscn" id="17_s5l7k"]
 [ext_resource type="Texture2D" uid="uid://b0hinf22vjuf8" path="res://Assets/Palettes/bubblegum-soft-1x.png" id="21_exnjy"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nc8o"]
-resource_local_to_scene = true
-shader = ExtResource("3_s3gw4")
-shader_parameter/motion = Vector2(0, 0)
-shader_parameter/scale = 1.0
-shader_parameter/offset = Vector2(0, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rd83y"]
-resource_local_to_scene = true
-shader = ExtResource("3_s3gw4")
-shader_parameter/motion = Vector2(0, 0)
-shader_parameter/scale = 1.0
-shader_parameter/offset = Vector2(0, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cx1bo"]
-resource_local_to_scene = true
-shader = ExtResource("3_s3gw4")
-shader_parameter/motion = Vector2(0, 0)
-shader_parameter/scale = 1.0
-shader_parameter/offset = Vector2(0, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iveb8"]
 atlas = ExtResource("8_un457")
@@ -241,22 +216,6 @@ script = ExtResource("1_5dgp1")
 interpolation = 4.0
 baseSpeed = 10.0
 
-[node name="Background" parent="Camera" instance=ExtResource("2_kqms6")]
-
-[node name="Layer1" parent="Camera/Background" index="0"]
-material = SubResource("ShaderMaterial_5nc8o")
-texture = ExtResource("4_mfpfd")
-
-[node name="Layer2" parent="Camera/Background" index="1"]
-material = SubResource("ShaderMaterial_rd83y")
-texture = ExtResource("5_sy8gt")
-scroll = 0.5
-
-[node name="Layer3" parent="Camera/Background" index="2"]
-material = SubResource("ShaderMaterial_cx1bo")
-texture = ExtResource("6_dnm8w")
-scroll = 1.4
-
 [node name="Cursor" type="Node2D" parent="." node_paths=PackedStringArray("currentPoint")]
 position = Vector2(-112, 0)
 script = ExtResource("4_t6ipe")
@@ -441,4 +400,4 @@ offset_top = 88.0
 offset_right = 240.0
 offset_bottom = 232.0
 
-[editable path="Camera/Background"]
+[node name="BaseBackground" parent="." instance=ExtResource("17_s5l7k")]

@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/level_root.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+AudioSystem="*res://Scenes/Constructs/audio_system.tscn"
+
 [display]
 
 window/size/viewport_width=160
@@ -29,7 +33,7 @@ project/assembly_name="Heavenly Orbit Port"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ldtk-importer/plugin.cfg")
+enabled=PackedStringArray("res://addons/dictionary_inspector/plugin.cfg")
 
 [input]
 

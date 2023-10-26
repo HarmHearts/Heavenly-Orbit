@@ -39,11 +39,8 @@ public partial class Player : Node2D
 	/// <summary>
 	/// represents radius not diameter, each body is _bodyDistance pixels away from the center
 	/// </summary>
-    private float _bodyDistance = 24;
-    private bool _locked;
-    /// <summary>
-    /// true for sun false for moon
-    /// </summary>
+	private float _bodyDistance = 16;
+	private bool _locked;
     private bool _lockedBody;
     private Vector2 _moveDirection;
     private float _moveSpeed;
@@ -144,6 +141,7 @@ public partial class Player : Node2D
         else shifter.Position = new Vector2(_bodyDistance, 0);
         //quantize launch direction
         float launchAngle = Mathf.DegToRad(Mathf.Round(this.RotationDegrees / quantization) * quantization);
+		//quantize launch speed?
 		//calculate launch vector
         if (_rotationSpeed > 0) _moveDirection = Vector2.FromAngle(launchAngle + 1.570796f);
         else _moveDirection = Vector2.FromAngle(launchAngle - 1.570796f);
@@ -194,6 +192,26 @@ public partial class Player : Node2D
         this.Position += _moveDirection * (_moveSpeed * delta);
     }
 
+	private void Bounce(KinematicCollision2D coll)
+	{
+		//move out of wall
+        this.Position += coll.GetNormal() * coll.GetDepth() * 2;
+		this.Rotation -= (coll.GetDepth() / _bodyDistance) * Mathf.Sign(_rotationSpeed);
+        //play sound
+        AudioSystem.PlaySFX("Bounce");
+        //do bounce
+        if (_locked)
+		{
+			_rotationSpeed *= -1;
+			return;
+		}
+		//calculate rebound angle
+		_moveDirection = -_moveDirection.Reflect(coll.GetNormal());
+        //quantize angle
+		_moveDirection = Vector2.FromAngle(Mathf.DegToRad(Mathf.Round(Mathf.RadToDeg(_moveDirection.Angle()) / quantization) * quantization));
+        _rotationSpeed *= -1;
+	}
+
     public override void _Input(InputEvent @event)
     {
 		//get lock actions
@@ -209,6 +227,7 @@ public partial class Player : Node2D
 			if(_locked && _lockedBody)
 			{
 				UnlockBody();
+				AudioSystem.PlaySFX("Launch");
 			}
 		}
         if (@event.IsActionPressed("Btn_B"))
@@ -223,6 +242,7 @@ public partial class Player : Node2D
             if (_locked && !_lockedBody)
             {
                 UnlockBody();
+                AudioSystem.PlaySFX("Launch");
             }
         }
         //get distance input state
@@ -269,6 +289,7 @@ public partial class Player : Node2D
 		this.Position = sun.GlobalPosition;
         frictionMovement = Velocity;
         EmitSignal(SignalName.SunLocked);
+		AudioSystem.PlaySFX("Lock");
 	}
 
     private void LockMoon()
@@ -286,12 +307,14 @@ public partial class Player : Node2D
         this.Position = moon.GlobalPosition;
 		frictionMovement = Velocity;
         EmitSignal(SignalName.MoonLocked);
+        AudioSystem.PlaySFX("Lock");
     }
 
-	public void Die(KinematicCollision2D coll, bool moon)
+	public void Die(KinematicCollision2D coll, bool sun)
 	{
 		EmitSignal(SignalName.PlayerDeath);
 		GD.Print("Oopsy daisy");
+		Bounce(coll); //TEST
 	}
 
 	//TODO: WE ALWAYS DO TRUE FOR SUN FALSE FOR MOON WHEN WE DO BOOLS TO DISTINGUISH BODIES

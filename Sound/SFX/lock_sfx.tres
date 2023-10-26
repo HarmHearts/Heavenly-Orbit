@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dwgwpfawigwmm"]
+
+[ext_resource type="AudioStream" uid="uid://2pb5pn6aa7ta" path="res://Assets/SFX/lock.wav" id="1_bblvo"]
+[ext_resource type="Script" path="res://Code/SoundEffect.cs" id="2_tnur0"]
+
+[resource]
+script = ExtResource("2_tnur0")
+name = &"Lock"
+audioStreams = Array[AudioStream]([ExtResource("1_bblvo")])
+looping = false
+channel = 0

@@ -1,23 +1,23 @@
 [gd_scene load_steps=10 format=3 uid="uid://bjbs78alm5pt6"]
 
-[ext_resource type="PackedScene" uid="uid://cc3des3p24ur2" path="res://Levels/Level Test 2/test_level_2.tscn" id="1_71fng"]
+[ext_resource type="PackedScene" uid="uid://c4ujw8ht77ikx" path="res://Scenes/Backgrounds/base_background.tscn" id="1_uk122"]
 [ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="1_yjnot"]
 [ext_resource type="Script" path="res://Code/CameraFollow.cs" id="2_njdxo"]
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_525p8"]
 [ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
 [ext_resource type="Script" path="res://Code/DebugText.cs" id="4_6nhu4"]
-[ext_resource type="Texture2D" uid="uid://drxlg70c08b4w" path="res://Assets/Palettes/blush-gb-1x.png" id="4_6xbxu"]
-[ext_resource type="PackedScene" uid="uid://dtxckn4yqoad6" path="res://Scenes/Backgrounds/grid background.tscn" id="5_e7du3"]
+[ext_resource type="Texture2D" uid="uid://c5175x3l5jino" path="res://Assets/Palettes/eb-gb-mint-flavour-1x.png" id="7_s07lm"]
+[ext_resource type="PackedScene" uid="uid://ypq81uet3eg4" path="res://Levels/asteroid_test_level.tscn" id="9_osmgq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ok7mo"]
 shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
-shader_parameter/palette = ExtResource("4_6xbxu")
+shader_parameter/palette = ExtResource("7_s07lm")
 
 [node name="Level Root" type="Node2D"]
 
-[node name="test level 2" parent="." instance=ExtResource("1_71fng")]
+[node name="BaseBackground" parent="." instance=ExtResource("1_uk122")]
 
 [node name="Main Camera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(160, 160)
@@ -28,11 +28,9 @@ interpolation = 3.0
 baseSpeed = 12.0
 lookAhead = 0.75
 rotationReach = 28.0
-
-[node name="Background" parent="Main Camera" instance=ExtResource("5_e7du3")]
+rotationAhead = 0.4
 
 [node name="Player" parent="." instance=ExtResource("3_weuc1")]
-position = Vector2(160, 160)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 offset = Vector2(-80, -88)
@@ -68,4 +66,4 @@ offset_top = 88.0
 offset_right = 240.0
 offset_bottom = 232.0
 
-[editable path="test level 2"]
+[node name="asteroid_test_level" parent="." instance=ExtResource("9_osmgq")]

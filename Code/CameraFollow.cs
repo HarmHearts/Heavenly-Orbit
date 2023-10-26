@@ -13,6 +13,10 @@ public partial class CameraFollow : Camera2D
 	public float lookAhead;
 	[Export]
 	public float rotationReach;
+	[Export]
+	public float rotationAhead;
+	[Export]
+	public bool following;
 
 	private Player playerScript;
 
@@ -20,6 +24,8 @@ public partial class CameraFollow : Camera2D
 	public override void _Ready()
 	{
 		playerScript = target as Player;
+		this.Position = target.Position;
+		following = true;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,12 +40,18 @@ public partial class CameraFollow : Camera2D
 		}
 		else
 		{
-			if(!playerScript.LockedBody) targetPoint += target.Transform.X * rotationReach * playerScript.BodyDistanceNormalized;
-			else targetPoint += -target.Transform.X * rotationReach * playerScript.BodyDistanceNormalized;
+			if(!playerScript.LockedBody) targetPoint += target.Transform.Rotated(playerScript.RotationSpeed * rotationAhead).X * rotationReach * playerScript.BodyDistanceNormalized;
+			else targetPoint += -target.Transform.Rotated(playerScript.RotationSpeed * rotationAhead).X * rotationReach * playerScript.BodyDistanceNormalized;
         }
 		//move camera
-        this.Position = this.Position.MoveToward(targetPoint, baseSpeed * (float)delta);
-        this.Position = this.Position.Lerp(targetPoint, interpolation * (float)delta);
+		if(following)
+		{
+            this.Position = this.Position.MoveToward(targetPoint, baseSpeed * (float)delta);
+            this.Position = this.Position.Lerp(targetPoint, interpolation * (float)delta);
+        }
+		//set pixel offset
+		//
+		//this.Offset = this.GlobalPosition.Round() - this.GlobalPosition;
 		ForceUpdateScroll();
     }
 }
