@@ -378,6 +378,8 @@ public partial class Player : Node2D
 		shape.ForceShapecastUpdate();
 		int ct = shape.GetCollisionCount();
 
+		String resultPriority = null;
+
 		for (int i = 0; i < ct; i++)
 		{
             Node2D body = shape.GetCollider(i) as Node2D;
@@ -390,13 +392,18 @@ public partial class Player : Node2D
                     TileData hitTile = map.GetCellTileData(0, tilePos);
                     if (hitTile == null) continue;
                     Variant data = hitTile.GetCustomData("Type");
-                    return (string)data;
+					if (((string)data).Equals("Floor")) return "Floor";
+					else
+					{
+						resultPriority = (string)data;
+						continue;
+					}
                 }
 				//if body is movingplatform
 				return "Floor";
             }
         }
-		return null;
+		return resultPriority;
 	}
 
 	public Vector2 GetPlanetMotion(bool sun)
@@ -419,6 +426,9 @@ public partial class Player : Node2D
 	{
 		switch(type)
 		{
+			case "Floor":
+				RemoveIce();
+				break;
 			case "Ice":
 				ApplyIce();
 				break;
@@ -441,5 +451,6 @@ public partial class Player : Node2D
 	private void RemoveIce()
 	{
 		_floorFriction = 0;
+		frictionMovement = Vector2.Zero;
 	}
 }

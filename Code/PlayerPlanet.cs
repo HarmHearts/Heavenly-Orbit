@@ -8,6 +8,8 @@ public partial class PlayerPlanet : Node2D
 	[Export]
 	public Texture2D lockedPlanet;
 	[Export]
+	public Texture2D shockedPlanet;
+	[Export]
 	public bool planetToggle;
 
 	private Sprite2D planetSprite;
@@ -52,4 +54,9 @@ public partial class PlayerPlanet : Node2D
 	{
 		planetSprite.Texture = normalPlanet;
 	}
+
+	public void ShockSprite()
+	{
+        planetSprite.Texture = shockedPlanet;
+    }
 }

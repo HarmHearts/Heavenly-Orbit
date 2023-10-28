@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cu7x7xk1argu5"]
+[gd_scene load_steps=26 format=3 uid="uid://cu7x7xk1argu5"]
 
 [ext_resource type="Texture2D" uid="uid://bn3n1fwtuw88s" path="res://Assets/Sprites/sun.png" id="1_1e3ep"]
 [ext_resource type="Script" path="res://Code/Player.cs" id="1_n51g8"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://df82x2oukibo4" path="res://Assets/Sprites/moon.png" id="2_lhbqr"]
 [ext_resource type="Texture2D" uid="uid://c10xbur6i7ccn" path="res://Assets/Sprites/mid dot.png" id="3_0wj7l"]
 [ext_resource type="Texture2D" uid="uid://bdd6p56hcdfu2" path="res://Assets/Sprites/sun locked.png" id="4_gl447"]
+[ext_resource type="Texture2D" uid="uid://553p5mtsn16n" path="res://Assets/Sprites/sun_shock.png" id="5_ixo1o"]
 [ext_resource type="Texture2D" uid="uid://dhiymltefay0p" path="res://Assets/Particles/sparkle.png" id="6_3uxkg"]
 [ext_resource type="Material" uid="uid://cl5nj4cuu64n8" path="res://Assets/Particles/planet sparkle process.tres" id="6_7ttlt"]
 [ext_resource type="Texture2D" uid="uid://ckaf710l3p524" path="res://Assets/Sprites/mid arrow.png" id="6_pdekc"]
@@ -17,6 +18,7 @@
 [ext_resource type="Shader" uid="uid://v8ah7ioi5d3w" path="res://Assets/Particles/spread burst particles.tres" id="11_ow4id"]
 [ext_resource type="Texture2D" uid="uid://bpykfj4wc17w8" path="res://Assets/Particles/sparkles.png" id="12_h6bdw"]
 [ext_resource type="Script" path="res://Code/ParticleBurstEffect.cs" id="13_vggmq"]
+[ext_resource type="Texture2D" uid="uid://d0iitf6536thr" path="res://Assets/Sprites/moon_shock.png" id="16_3kra6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_doqu3"]
 resource_local_to_scene = true
@@ -102,6 +104,7 @@ position = Vector2(24, 0)
 script = ExtResource("2_1wwcp")
 normalPlanet = ExtResource("1_1e3ep")
 lockedPlanet = ExtResource("4_gl447")
+shockedPlanet = ExtResource("5_ixo1o")
 planetToggle = true
 
 [node name="Sun Sprite" type="Sprite2D" parent="Shifter/Sun"]
@@ -156,6 +159,7 @@ position = Vector2(-24, 0)
 script = ExtResource("2_1wwcp")
 normalPlanet = ExtResource("2_lhbqr")
 lockedPlanet = ExtResource("7_r8o2w")
+shockedPlanet = ExtResource("16_3kra6")
 
 [node name="Moon Sprite" type="Sprite2D" parent="Shifter/Moon"]
 texture = ExtResource("2_lhbqr")
@@ -205,6 +209,7 @@ explosiveness = 1.0
 script = ExtResource("13_vggmq")
 
 [node name="Mid Point" type="Sprite2D" parent="Shifter"]
+visible = false
 z_index = -1
 texture = ExtResource("6_pdekc")
 script = ExtResource("7_x21q5")
@@ -213,6 +218,8 @@ arrow = ExtResource("6_pdekc")
 
 [connection signal="MoonLocked" from="." to="Shifter/Moon" method="LockSprite"]
 [connection signal="MoonLocked" from="." to="Shifter/Moon/Lock Effect" method="_OnPlay"]
+[connection signal="PlayerDeath" from="." to="Shifter/Sun" method="ShockSprite"]
+[connection signal="PlayerDeath" from="." to="Shifter/Moon" method="ShockSprite"]
 [connection signal="SunLocked" from="." to="Shifter/Sun" method="LockSprite"]
 [connection signal="SunLocked" from="." to="Shifter/Sun/Lock Effect" method="_OnPlay"]
 [connection signal="Unlock" from="." to="Shifter/Sun" method="UnlockSprite"]
