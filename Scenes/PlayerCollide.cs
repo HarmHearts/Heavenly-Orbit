@@ -8,14 +8,17 @@ public partial class PlayerCollide : AnimatableBody2D
 
     [Export]
     private bool sun;
+
+    private Player player;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        player = this.Owner as Player;
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
-        KinematicCollision2D coll = MoveAndCollide(Vector2.Zero, true);
+        KinematicCollision2D coll = MoveAndCollide(player.GetPlanetMotion(sun) * (float)delta * 4, true);
 
         if (coll != null)
         {

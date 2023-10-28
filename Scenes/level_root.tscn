@@ -6,14 +6,14 @@
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_525p8"]
 [ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
 [ext_resource type="Script" path="res://Code/DebugText.cs" id="4_6nhu4"]
-[ext_resource type="Texture2D" uid="uid://c5175x3l5jino" path="res://Assets/Palettes/eb-gb-mint-flavour-1x.png" id="7_s07lm"]
+[ext_resource type="Texture2D" uid="uid://ie6b4rucipn1" path="res://Assets/Palettes/cool-sweater-1x.png" id="7_lrn1f"]
 [ext_resource type="PackedScene" uid="uid://ypq81uet3eg4" path="res://Levels/asteroid_test_level.tscn" id="9_osmgq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ok7mo"]
 shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
-shader_parameter/palette = ExtResource("7_s07lm")
+shader_parameter/palette = ExtResource("7_lrn1f")
 
 [node name="Level Root" type="Node2D"]
 
@@ -31,6 +31,7 @@ rotationReach = 28.0
 rotationAhead = 0.4
 
 [node name="Player" parent="." instance=ExtResource("3_weuc1")]
+_rotationSpeed = 2.2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 offset = Vector2(-80, -88)

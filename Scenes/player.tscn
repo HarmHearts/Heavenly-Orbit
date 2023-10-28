@@ -29,7 +29,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nha4a"]
-radius = 4.0
+radius = 3.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tlaso"]
 particles_animation = true
@@ -76,7 +76,7 @@ shader_parameter/color_value = Color(1, 1, 1, 1)
 shader_parameter/gravity = Vector3(0, -1e-06, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jv4h"]
-radius = 4.0
+radius = 3.0
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("sun", "sunCast", "moon", "moonCast", "shifter")]
 script = ExtResource("1_n51g8")
@@ -217,5 +217,5 @@ arrow = ExtResource("6_pdekc")
 [connection signal="SunLocked" from="." to="Shifter/Sun/Lock Effect" method="_OnPlay"]
 [connection signal="Unlock" from="." to="Shifter/Sun" method="UnlockSprite"]
 [connection signal="Unlock" from="." to="Shifter/Moon" method="UnlockSprite"]
-[connection signal="OnCollide" from="Shifter/Sun/WallCollide" to="." method="Die"]
-[connection signal="OnCollide" from="Shifter/Moon/WallCollide" to="." method="Die"]
+[connection signal="OnCollide" from="Shifter/Sun/WallCollide" to="." method="OnCollision"]
+[connection signal="OnCollide" from="Shifter/Moon/WallCollide" to="." method="OnCollision"]
