@@ -31,10 +31,6 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Heavenly Orbit Port"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/dictionary_inspector/plugin.cfg")
-
 [input]
 
 Btn_A={

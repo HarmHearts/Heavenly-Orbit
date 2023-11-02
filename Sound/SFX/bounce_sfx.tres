@@ -1,11 +1,11 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ceemg07jiew34"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://u3w3011s5jyc"]
 
-[ext_resource type="AudioStream" uid="uid://b54grfqmcddd1" path="res://Assets/SFX/bounce.wav" id="1_db8mi"]
-[ext_resource type="Script" path="res://Code/SoundEffect.cs" id="2_8ol8n"]
+[ext_resource type="AudioStream" uid="uid://b54grfqmcddd1" path="res://Assets/SFX/bounce.wav" id="1_8nqd6"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_vwdwl"]
 
 [resource]
-script = ExtResource("2_8ol8n")
+script = ExtResource("2_vwdwl")
 name = &"Bounce"
-audioStreams = Array[AudioStream]([ExtResource("1_db8mi")])
+audioList = Array[AudioStream]([ExtResource("1_8nqd6")])
+channel = 0
 looping = false
-channel = 2

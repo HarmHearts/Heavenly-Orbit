@@ -22,6 +22,8 @@ public partial class AudioSystem : Node
 	}
 
 	public static void LoadSFX(string path)
+
+
 	{
 		soundEffects = new Dictionary<StringName, SoundEffect>();
 		using var dir = DirAccess.Open(path);

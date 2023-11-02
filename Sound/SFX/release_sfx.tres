@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://14e2kt40vt2s"]
+
+[ext_resource type="AudioStream" uid="uid://dp58avw1bqlip" path="res://Assets/SFX/release.wav" id="1_bvaee"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_yar8m"]
+
+[resource]
+script = ExtResource("2_yar8m")
+name = &"Launch"
+audioList = Array[AudioStream]([ExtResource("1_bvaee")])
+channel = 0
+looping = false

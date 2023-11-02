@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://lfokgmbjpnv"]
+
+[ext_resource type="PackedScene" uid="uid://c4ujw8ht77ikx" path="res://Scenes/Backgrounds/base_background.tscn" id="1_kw3hm"]
+[ext_resource type="Texture2D" uid="uid://b4jb8myrajbjl" path="res://Assets/Backgrounds/cloud bg 1.png" id="2_xh0du"]
+[ext_resource type="Texture2D" uid="uid://dpsdseg3pdij2" path="res://Assets/Backgrounds/cloud bg 2.png" id="3_t7bvp"]
+[ext_resource type="Texture2D" uid="uid://cryqhus3rcjcb" path="res://Assets/Backgrounds/cloud bg 3.png" id="4_nqnh2"]
+
+[node name="CloudBackground" instance=ExtResource("1_kw3hm")]
+
+[node name="Sprite2D" parent="ParallaxBackground/ParallaxLayer" index="0"]
+texture = ExtResource("2_xh0du")
+
+[node name="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" index="0"]
+texture = ExtResource("3_t7bvp")
+
+[node name="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" index="0"]
+texture = ExtResource("4_nqnh2")

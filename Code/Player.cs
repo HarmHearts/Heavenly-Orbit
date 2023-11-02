@@ -141,13 +141,9 @@ public partial class Player : Node2D
         //set shifter position
         if (_lockedBody) shifter.Position = new Vector2(-_bodyDistance, 0);
         else shifter.Position = new Vector2(_bodyDistance, 0);
-        //quantize launch direction
-        float launchAngle = Mathf.DegToRad(Mathf.Round(this.RotationDegrees / quantization) * quantization);
+        //quantize launch vector
+		_moveDirection = QuantizeVector(this.Transform.Y) * (_lockedBody ? -1 : 1) * (_rotationSpeed > 0 ? 1 : -1);
 		//quantize launch speed?
-		//calculate launch vector
-        if (_rotationSpeed > 0) _moveDirection = Vector2.FromAngle(launchAngle + 1.570796f);
-        else _moveDirection = Vector2.FromAngle(launchAngle - 1.570796f);
-        if (_lockedBody) _moveDirection *= -1;
         _moveSpeed = Mathf.Abs(_rotationSpeed * (_bodyDistance));
 		if(_moveSpeed < _minSpeed) _moveSpeed = _minSpeed;
     }
@@ -180,7 +176,7 @@ public partial class Player : Node2D
 		if (floorType == null)
 		{
 			UnlockBody();
-			Velocity = frictionMovement;
+			Velocity = QuantizeVector(frictionMovement) * frictionMovement.Length();
 		}
 		else ResolveFloorType(floorType, _lockedBody);
 	}
@@ -220,7 +216,7 @@ public partial class Player : Node2D
 				_moveDirection = (_moveDirection + coll.GetNormal()).Normalized();
 			}
             //quantize angle
-            _moveDirection = Vector2.FromAngle(Mathf.DegToRad(Mathf.Round(Mathf.RadToDeg(_moveDirection.Angle()) / quantization) * quantization));
+            _moveDirection = QuantizeVector(_moveDirection);
             _rotationSpeed *= -1;
         }
         //rotate out of wall
@@ -451,6 +447,10 @@ public partial class Player : Node2D
 	private void RemoveIce()
 	{
 		_floorFriction = 0;
-		frictionMovement = Vector2.Zero;
 	}
+
+	private Vector2 QuantizeVector(Vector2 value)
+	{
+		return Vector2.FromAngle(Mathf.DegToRad(Mathf.Round(Mathf.RadToDeg(value.Angle()) / quantization) * quantization));
+    }
 }

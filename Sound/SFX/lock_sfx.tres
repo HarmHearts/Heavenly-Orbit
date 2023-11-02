@@ -1,11 +1,11 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dwgwpfawigwmm"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bnmnapif2h7i5"]
 
-[ext_resource type="AudioStream" uid="uid://2pb5pn6aa7ta" path="res://Assets/SFX/lock.wav" id="1_bblvo"]
-[ext_resource type="Script" path="res://Code/SoundEffect.cs" id="2_tnur0"]
+[ext_resource type="AudioStream" uid="uid://2pb5pn6aa7ta" path="res://Assets/SFX/lock.wav" id="1_ok8h6"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_d7ar0"]
 
 [resource]
-script = ExtResource("2_tnur0")
+script = ExtResource("2_d7ar0")
 name = &"Lock"
-audioStreams = Array[AudioStream]([ExtResource("1_bblvo")])
-looping = false
+audioList = Array[AudioStream]([ExtResource("1_ok8h6")])
 channel = 0
+looping = false
