@@ -12,16 +12,28 @@ public partial class PlayerPlanet : Node2D
 	[Export]
 	public bool planetToggle;
 
+	private Vector2 _gravity;
+
 	private Sprite2D planetSprite;
 	private Player player;
 
-	PackedScene deathExplosion = GD.Load<PackedScene>("res://Scenes/Constructs/big_explosion.tscn");
+    public Vector2 Gravity
+    {
+        get => _gravity;
+        set
+        {
+            _gravity = value;
+            player.CalculateGravity();
+        }
+    }
+
+    PackedScene deathExplosion = GD.Load<PackedScene>("res://Scenes/Constructs/big_explosion.tscn");
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		planetSprite = this.GetChild(0) as Sprite2D;
-		player = GetTree().CurrentScene as Player;
+		player = this.Owner as Player;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

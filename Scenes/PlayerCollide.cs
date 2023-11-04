@@ -18,6 +18,7 @@ public partial class PlayerCollide : AnimatableBody2D
 
     public override void _Process(double delta)
     {
+        //collision check
         KinematicCollision2D coll = MoveAndCollide(player.GetPlanetMotion(sun) * (float)delta * 4, true);
 
         if (coll != null)

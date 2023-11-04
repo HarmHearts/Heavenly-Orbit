@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckshy43txn4c0"]
+
+[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="1_1ce16"]
+[ext_resource type="Texture2D" uid="uid://bw6xsk2ikixpv" path="res://Assets/Sprites/gravity_wave.png" id="2_ahlph"]
+[ext_resource type="Script" path="res://Code/GravityZone.cs" id="3_qc7wg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bk0a2"]
+resource_local_to_scene = true
+shader = ExtResource("1_1ce16")
+shader_parameter/motion = Vector2(0, -40)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bj8es"]
+resource_local_to_scene = true
+size = Vector2(64, 64)
+
+[node name="GravityZone" type="TextureRect"]
+z_index = -3
+material = SubResource("ShaderMaterial_bk0a2")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -72.0
+offset_right = -16.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ahlph")
+stretch_mode = 1
+script = ExtResource("3_qc7wg")
+gravity = Vector2(0, 30)
+
+[node name="TriggerArea" type="Area2D" parent="."]
+collision_layer = 8
+input_pickable = false
+gravity_point_center = Vector2(0, 30)
+gravity_direction = Vector2(0, 30)
+gravity = 0.0
+
+[node name="Collider" type="CollisionShape2D" parent="TriggerArea"]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_bj8es")
+
+[connection signal="item_rect_changed" from="." to="." method="Resize" flags=18]
+[connection signal="body_entered" from="TriggerArea" to="." method="OnEntered" flags=18]
+[connection signal="body_exited" from="TriggerArea" to="." method="OnExited" flags=18]

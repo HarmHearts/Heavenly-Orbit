@@ -105,8 +105,8 @@ public partial class Player : Node2D
 		if (!alive) return;
 		//always be rotating
 		this.Rotation += _rotationSpeed * (float)delta;
-		//set distance between bodies
-		PositionBodies((float)delta);
+        //set distance between bodies
+        PositionBodies((float)delta);
 		//locked behaviors
 		if(_locked)
 		{
@@ -120,6 +120,28 @@ public partial class Player : Node2D
             FreeMovement((float)delta);
         }
 		if(bounceTimer > 0) bounceTimer -= (float)delta;
+    }
+
+	public void CalculateGravity()
+	{
+        //calculate gravity
+        Vector2 newGravity = Vector2.Zero;
+        bool splitGravity = false;
+        if (((PlayerPlanet)sun).Gravity != Vector2.Zero)
+        {
+            newGravity += ((PlayerPlanet)sun).Gravity;
+            splitGravity = true;
+        }
+        if (((PlayerPlanet)moon).Gravity != Vector2.Zero)
+        {
+            newGravity += ((PlayerPlanet)moon).Gravity;
+        }
+        else
+        {
+            splitGravity = false;
+        }
+        if (splitGravity) newGravity /= 2;
+        _gravity = newGravity;
     }
 
 	private void PositionBodies(float delta)

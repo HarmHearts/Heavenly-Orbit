@@ -133,7 +133,8 @@ shader_parameter/color_value = Color(1, 1, 1, 1)
 shader_parameter/gravity = Vector3(0, -1e-06, 0)
 
 [node name="BigExplosion" type="GPUParticles2D"]
-z_index = -1
+z_index = 12
+z_as_relative = false
 material = SubResource("CanvasItemMaterial_vieif")
 emitting = false
 amount = 4

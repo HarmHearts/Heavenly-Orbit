@@ -118,6 +118,7 @@ script = ExtResource("8_fipn0")
 sun = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Sun/WallCollide"]
+position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_doqu3")
 
 [node name="PlanetSparkles" type="GPUParticles2D" parent="Shifter/Sun"]
