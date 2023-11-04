@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://bnviftyvnd085"]
+
+[ext_resource type="Texture2D" uid="uid://kwlihsjtgnhi" path="res://Assets/Sprites/crystal.png" id="1_n8lma"]
+[ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="2_812hx"]
+[ext_resource type="Script" path="res://Code/CrystalCollectible.cs" id="3_j4ngt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkbkf"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vpsw"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wfrd"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0ri8"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toeak"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqs4a"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxwp8"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rms4t"]
+atlas = ExtResource("1_n8lma")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3oh4q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkbkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vpsw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wfrd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0ri8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_toeak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqs4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxwp8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rms4t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d6jf7"]
+radius = 8.0
+
+[node name="Crystal" type="AnimatedSprite2D"]
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_3oh4q")
+frame_progress = 0.546033
+script = ExtResource("2_812hx")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+script = ExtResource("3_j4ngt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_d6jf7")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="OnBodyEntered"]

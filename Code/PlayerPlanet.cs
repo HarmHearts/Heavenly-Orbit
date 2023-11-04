@@ -15,12 +15,7 @@ public partial class PlayerPlanet : Node2D
 	private Sprite2D planetSprite;
 	private Player player;
 
-	[Signal]
-	public delegate void WallCollisionEventHandler();
-	[Signal]
-	public delegate void BounceCollisionEventHandler(Vector2 normal);
-	[Signal]
-	public delegate void UnlockEventHandler();
+	PackedScene deathExplosion = GD.Load<PackedScene>("res://Scenes/Constructs/big_explosion.tscn");
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -58,5 +53,13 @@ public partial class PlayerPlanet : Node2D
 	public void ShockSprite()
 	{
         planetSprite.Texture = shockedPlanet;
+    }
+
+	public void Explode()
+	{
+		planetSprite.Texture = null;
+		this.AddChild(deathExplosion.Instantiate());
+		((Node2D)this.FindChild("Shadow")).Visible = false;
+        ((Node2D)this.FindChild("PlanetSparkles")).Visible = false;
     }
 }

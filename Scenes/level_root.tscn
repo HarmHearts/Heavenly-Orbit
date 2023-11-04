@@ -1,23 +1,20 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjbs78alm5pt6"]
+[gd_scene load_steps=11 format=3 uid="uid://bjbs78alm5pt6"]
 
 [ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="1_yjnot"]
 [ext_resource type="Script" path="res://Code/CameraFollow.cs" id="2_njdxo"]
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_525p8"]
 [ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
 [ext_resource type="Script" path="res://Code/DebugText.cs" id="4_6nhu4"]
-[ext_resource type="Texture2D" uid="uid://6vsrj1ixov8t" path="res://Assets/Palettes/GBPalette-5.png" id="7_ine0v"]
+[ext_resource type="Texture2D" uid="uid://bd41ykn6qj7sh" path="res://Assets/Palettes/minty-fresh-1x.png" id="8_3udvi"]
 [ext_resource type="PackedScene" uid="uid://qc3kdv8ink1s" path="res://Scenes/Backgrounds/grid_background.tscn" id="8_uk67e"]
-[ext_resource type="Texture2D" uid="uid://bt53ktxev24xs" path="res://Assets/Slices/special_floor_finish.png" id="9_ng3jy"]
+[ext_resource type="Texture2D" uid="uid://d3peiy60j8jvg" path="res://Assets/Sprites/wipe_transition.png" id="9_6wlua"]
 [ext_resource type="PackedScene" uid="uid://ypq81uet3eg4" path="res://Levels/asteroid_test_level.tscn" id="9_osmgq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ok7mo"]
 shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
-shader_parameter/palette = ExtResource("7_ine0v")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sml3y"]
-size = Vector2(32, 32)
+shader_parameter/palette = ExtResource("8_3udvi")
 
 [node name="Level Root" type="Node2D"]
 
@@ -35,17 +32,25 @@ rotationAhead = 0.4
 [node name="Player" parent="." instance=ExtResource("3_weuc1")]
 _rotationSpeed = 2.2
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-offset = Vector2(-80, -88)
-transform = Transform2D(1, 0, 0, 1, -80, -88)
+[node name="asteroid_test_level" parent="." instance=ExtResource("9_osmgq")]
 
-[node name="Debug Text" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+[node name="GridBackground" parent="." instance=ExtResource("8_uk67e")]
+
+[node name="GameOverlayCanvas" type="CanvasLayer" parent="."]
+
+[node name="WindowSpaceContainer" type="Container" parent="GameOverlayCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DebugText" type="RichTextLabel" parent="GameOverlayCanvas/WindowSpaceContainer" node_paths=PackedStringArray("player")]
 z_index = 200
 custom_minimum_size = Vector2(158, 142)
-offset_left = 81.0
-offset_top = 89.0
-offset_right = 239.0
-offset_bottom = 231.0
+layout_mode = 2
 theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
@@ -57,38 +62,32 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 script = ExtResource("4_6nhu4")
-player = NodePath("../../Player")
+player = NodePath("../../../Player")
 
-[node name="Palette Filter" type="ColorRect" parent="CanvasLayer"]
+[node name="ScreenSpaceContainer" type="AspectRatioContainer" parent="GameOverlayCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1111
+stretch_mode = 1
+
+[node name="PaletteFilter" type="ColorRect" parent="GameOverlayCanvas/ScreenSpaceContainer"]
 z_index = 100
 texture_filter = 2
 texture_repeat = 1
 material = SubResource("ShaderMaterial_ok7mo")
-offset_left = 80.0
-offset_top = 88.0
-offset_right = 240.0
-offset_bottom = 232.0
+layout_mode = 2
 
-[node name="asteroid_test_level" parent="." instance=ExtResource("9_osmgq")]
+[node name="FadeRect" type="ColorRect" parent="GameOverlayCanvas/ScreenSpaceContainer"]
+visible = false
+layout_mode = 2
+color = Color(0, 0, 0, 0)
 
-[node name="GridBackground" parent="." instance=ExtResource("8_uk67e")]
-
-[node name="FinishLine" type="NinePatchRect" parent="."]
-offset_left = 496.0
-offset_top = -56.0
-offset_right = 528.0
-offset_bottom = -24.0
-texture = ExtResource("9_ng3jy")
-region_rect = Rect2(0, 0, 48, 48)
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="Area2D" type="Area2D" parent="FinishLine"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishLine/Area2D"]
-position = Vector2(16, 16)
-shape = SubResource("RectangleShape2D_sml3y")
+[node name="FadeWipe" type="TextureRect" parent="GameOverlayCanvas"]
+visible = false
+offset_left = -208.0
+offset_bottom = 144.0
+texture = ExtResource("9_6wlua")
+stretch_mode = 2

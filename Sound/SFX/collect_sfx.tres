@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://57ufaejdasb7"]
+
+[ext_resource type="AudioStream" uid="uid://d3uw534v5yjxs" path="res://Assets/SFX/collect.wav" id="1_kbdvt"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_ogr7f"]
+
+[resource]
+script = ExtResource("2_ogr7f")
+name = &"Collect"
+audioList = Array[AudioStream]([ExtResource("1_kbdvt")])
+channel = 0
+looping = false

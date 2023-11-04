@@ -111,6 +111,7 @@ planetToggle = true
 texture = ExtResource("1_1e3ep")
 
 [node name="WallCollide" type="AnimatableBody2D" parent="Shifter/Sun"]
+position = Vector2(1, 0)
 collision_mask = 28
 sync_to_physics = false
 script = ExtResource("8_fipn0")
@@ -119,7 +120,7 @@ sun = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Sun/WallCollide"]
 shape = SubResource("CircleShape2D_doqu3")
 
-[node name="Planet Sparkles" type="GPUParticles2D" parent="Shifter/Sun"]
+[node name="PlanetSparkles" type="GPUParticles2D" parent="Shifter/Sun"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_8ne21")
 amount = 18
@@ -172,7 +173,7 @@ script = ExtResource("8_fipn0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Moon/WallCollide"]
 shape = SubResource("CircleShape2D_doqu3")
 
-[node name="Planet Sparkles" type="GPUParticles2D" parent="Shifter/Moon"]
+[node name="PlanetSparkles" type="GPUParticles2D" parent="Shifter/Moon"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_8ne21")
 amount = 18

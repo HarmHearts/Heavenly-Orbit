@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=3 uid="uid://jvjsbmp8teck"]
+
+[ext_resource type="Shader" uid="uid://v8ah7ioi5d3w" path="res://Assets/Particles/spread burst particles.tres" id="1_lhven"]
+[ext_resource type="Texture2D" uid="uid://bpykfj4wc17w8" path="res://Assets/Particles/sparkles.png" id="2_3g6g1"]
+[ext_resource type="Script" path="res://Code/ParticleBurstEffect.cs" id="3_72n8t"]
+[ext_resource type="Texture2D" uid="uid://cs8kqhhkjy3x3" path="res://Assets/Particles/small star.png" id="4_3fkkl"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vieif"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m82yf"]
+shader = ExtResource("1_lhven")
+shader_parameter/direction = Vector3(1, 0, 0)
+shader_parameter/spread = 0.0
+shader_parameter/flatness = 0.0
+shader_parameter/initial_linear_velocity_min = 0.0
+shader_parameter/initial_angle_min = 0.0
+shader_parameter/angular_velocity_min = 0.0
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/tangent_accel_min = 0.0
+shader_parameter/damping_min = 0.0
+shader_parameter/scale_min = 1.0
+shader_parameter/hue_variation_min = 0.0
+shader_parameter/anim_speed_min = 1.0
+shader_parameter/anim_offset_min = 0.0
+shader_parameter/initial_linear_velocity_max = 0.0
+shader_parameter/initial_angle_max = 0.0
+shader_parameter/angular_velocity_max = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_max = 0.0
+shader_parameter/scale_max = 1.0
+shader_parameter/hue_variation_max = 0.0
+shader_parameter/anim_speed_max = 2.0
+shader_parameter/anim_offset_max = 0.0
+shader_parameter/lifetime_randomness = 0.2
+shader_parameter/emission_ring_axis = Vector3(0, 0, 1)
+shader_parameter/emission_ring_height = 1.0
+shader_parameter/emission_ring_radius = 0.0
+shader_parameter/emission_ring_inner_radius = 0.0
+shader_parameter/angle_step = 90.0
+shader_parameter/color_value = Color(1, 1, 1, 1)
+shader_parameter/gravity = Vector3(0, -1e-06, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3u5ae"]
+shader = ExtResource("1_lhven")
+shader_parameter/direction = Vector3(1, 0, 0)
+shader_parameter/spread = 0.0
+shader_parameter/flatness = 0.0
+shader_parameter/initial_linear_velocity_min = 30.0
+shader_parameter/initial_angle_min = 0.0
+shader_parameter/angular_velocity_min = 0.0
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/tangent_accel_min = 0.0
+shader_parameter/damping_min = 0.0
+shader_parameter/scale_min = 1.0
+shader_parameter/hue_variation_min = 0.0
+shader_parameter/anim_speed_min = 1.0
+shader_parameter/anim_offset_min = 0.0
+shader_parameter/initial_linear_velocity_max = 0.0
+shader_parameter/initial_angle_max = 0.0
+shader_parameter/angular_velocity_max = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_max = 0.0
+shader_parameter/scale_max = 1.0
+shader_parameter/hue_variation_max = 0.0
+shader_parameter/anim_speed_max = 1.0
+shader_parameter/anim_offset_max = 0.0
+shader_parameter/lifetime_randomness = 0.2
+shader_parameter/emission_ring_axis = Vector3(0, 0, 1)
+shader_parameter/emission_ring_height = 1.0
+shader_parameter/emission_ring_radius = 0.0
+shader_parameter/emission_ring_inner_radius = 0.0
+shader_parameter/angle_step = 90.0
+shader_parameter/color_value = Color(1, 1, 1, 1)
+shader_parameter/gravity = Vector3(0, -1e-06, 0)
+
+[node name="CollectSparkle" type="GPUParticles2D"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_vieif")
+emitting = false
+amount = 1
+process_material = SubResource("ShaderMaterial_m82yf")
+texture = ExtResource("4_3fkkl")
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("3_72n8t")
+playOnReady = true
+killOnFinish = true
+
+[node name="Glitter" type="GPUParticles2D" parent="."]
+z_index = -1
+material = SubResource("CanvasItemMaterial_vieif")
+emitting = false
+amount = 4
+process_material = SubResource("ShaderMaterial_3u5ae")
+texture = ExtResource("2_3g6g1")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0

@@ -1,0 +1,11 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://d1rgf2cv2ea78"]
+
+[ext_resource type="PackedScene" uid="uid://bnviftyvnd085" path="res://Scenes/Constructs/crystal.tscn" id="1_s3g3u"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_rjl7q"]
+resource_name = "Entities"
+scenes/1/scene = ExtResource("1_s3g3u")
+scenes/1/display_placeholder = ExtResource("1_s3g3u")
+
+[resource]
+sources/0 = SubResource("TileSetScenesCollectionSource_rjl7q")

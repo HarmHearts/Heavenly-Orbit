@@ -46,6 +46,7 @@ public partial class Player : Node2D
     private float _moveSpeed;
 	private Vector2 frictionMovement;
 	private float bounceTimer;
+	private bool alive = true;
 
 	//properties
 	public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
@@ -101,6 +102,7 @@ public partial class Player : Node2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
 	{
+		if (!alive) return;
 		//always be rotating
 		this.Rotation += _rotationSpeed * (float)delta;
 		//set distance between bodies
@@ -172,13 +174,11 @@ public partial class Player : Node2D
 		frictionMovement = frictionMovement.MoveToward(Vector2.Zero, _floorFriction * delta);
 		this.Position += frictionMovement * delta;
         //do ground check
-        String floorType = CheckFloor(_lockedBody);
-		if (floorType == null)
+		if (!CheckFloor(_lockedBody))
 		{
 			UnlockBody();
 			Velocity = QuantizeVector(frictionMovement) * frictionMovement.Length();
 		}
-		else ResolveFloorType(floorType, _lockedBody);
 	}
 
 	private void FreeMovement(float delta)
@@ -230,6 +230,7 @@ public partial class Player : Node2D
 
     public override void _Input(InputEvent @event)
     {
+		if (!alive) return;
 		//get lock actions
 		if(@event.IsActionPressed("Btn_A"))
 		{
@@ -294,39 +295,41 @@ public partial class Player : Node2D
 	private void LockSun()
 	{
         //do lockability check here
-        String floorType = CheckFloor(true);
-        if (floorType == null) return;
+        if (!CheckFloor(true)) return;
+		if(!alive) return;
 
         if (_locked)
 		{
-			UnlockBody();
+			this.Position = sun.GlobalPosition;
+			shifter.Position = new Vector2(-_bodyDistance, 0);
 		}
 		_locked = true;
 		_lockedBody = true;
 		this.Position = sun.GlobalPosition;
         frictionMovement = Velocity;
-        //do floor types
-        ResolveFloorType(floorType, true);
+        //do floor type check
+        CheckFloor(true);
         EmitSignal(SignalName.SunLocked);
 		AudioSystem.PlaySFX("Lock");
 	}
 
     private void LockMoon()
     {
-		//do lockability check here
-		String floorType = CheckFloor(false);
-        if (floorType == null) return;
+        //do lockability check here
+        if (!CheckFloor(false)) return;
+        if (!alive) return;
 
         if (_locked)
         {
-            UnlockBody();
+            this.Position = moon.GlobalPosition;
+            shifter.Position = new Vector2(_bodyDistance, 0);
         }
         _locked = true;
         _lockedBody = false;
         this.Position = moon.GlobalPosition;
 		frictionMovement = Velocity;
-		//do floor types
-		ResolveFloorType(floorType, false);
+		//do floor type check
+		CheckFloor(false);
         EmitSignal(SignalName.MoonLocked);
         AudioSystem.PlaySFX("Lock");
     }
@@ -334,10 +337,14 @@ public partial class Player : Node2D
 	private void Die(bool sun)
 	{
 		GD.Print("Fuck!");
+		AudioSystem.PlaySFX("Explode");
+        alive = false;
 		EmitSignal(SignalName.PlayerDeath);
 		_moveDirection = Vector2.Zero;
 		_rotationSpeed = 0;
-	}
+		if (sun) ((PlayerPlanet)this.sun).Explode();
+		else ((PlayerPlanet)this.moon).Explode();
+    }
 
 	public void OnCollision(KinematicCollision2D coll, bool sun)
 	{
@@ -366,15 +373,13 @@ public partial class Player : Node2D
     }
 
 	//TODO: WE ALWAYS DO TRUE FOR SUN FALSE FOR MOON WHEN WE DO BOOLS TO DISTINGUISH BODIES
-	private String CheckFloor(bool sun)
+	private bool CheckFloor(bool sun)
 	{
         ShapeCast2D shape = sun ? sunCast : moonCast;
 		Node2D res = null;
 
 		shape.ForceShapecastUpdate();
 		int ct = shape.GetCollisionCount();
-
-		String resultPriority = null;
 
 		for (int i = 0; i < ct; i++)
 		{
@@ -384,22 +389,18 @@ public partial class Player : Node2D
 				if(body is TileMap)
 				{
                     TileMap map = body as TileMap;
-                    Vector2I tilePos = map.LocalToMap(shape.GetCollisionPoint(i));
+                    Vector2I tilePos = map.LocalToMap(sun ? this.sun.GlobalPosition : this.moon.GlobalPosition);
                     TileData hitTile = map.GetCellTileData(0, tilePos);
                     if (hitTile == null) continue;
                     Variant data = hitTile.GetCustomData("Type");
-					if (((string)data).Equals("Floor")) return "Floor";
-					else
-					{
-						resultPriority = (string)data;
-						continue;
-					}
+					ResolveFloorType((string)data, sun);
+					return true;
                 }
 				//if body is movingplatform
-				return "Floor";
+				//return true;
             }
         }
-		return resultPriority;
+		return false;
 	}
 
 	public Vector2 GetPlanetMotion(bool sun)
@@ -446,7 +447,7 @@ public partial class Player : Node2D
 
 	private void RemoveIce()
 	{
-		_floorFriction = 0;
+		_floorFriction = -10;
 	}
 
 	private Vector2 QuantizeVector(Vector2 value)
