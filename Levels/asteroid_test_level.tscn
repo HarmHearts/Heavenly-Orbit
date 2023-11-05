@@ -1,18 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ypq81uet3eg4"]
+[gd_scene load_steps=6 format=3 uid="uid://ypq81uet3eg4"]
 
 [ext_resource type="TileSet" uid="uid://c4axw2th8i46m" path="res://Tilesets/floor_tiles.tres" id="1_mi0qy"]
 [ext_resource type="TileSet" uid="uid://gfn80634q6u0" path="res://Tilesets/wall_tiles.tres" id="2_5xhaw"]
 [ext_resource type="TileSet" uid="uid://d1rgf2cv2ea78" path="res://Tilesets/entity_tiles.tres" id="3_0uw8r"]
 [ext_resource type="PackedScene" uid="uid://c8mf34x5rt2cg" path="res://Scenes/Constructs/finish_line.tscn" id="4_cpuud"]
 [ext_resource type="PackedScene" uid="uid://ckshy43txn4c0" path="res://Scenes/Constructs/gravity_zone.tscn" id="5_mvjbs"]
-[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="6_kln2p"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qd58y"]
-resource_local_to_scene = true
-shader = ExtResource("6_kln2p")
-shader_parameter/motion = Vector2(0, -40)
-shader_parameter/scale = 1.0
-shader_parameter/offset = Vector2(0, 0)
 
 [node name="Level1-1" type="Node2D"]
 
@@ -42,9 +34,7 @@ offset_right = 560.0
 offset_bottom = 48.0
 
 [node name="GravityZone" parent="." instance=ExtResource("5_mvjbs")]
-material = SubResource("ShaderMaterial_qd58y")
-offset_left = 368.0
-offset_top = -176.0
+offset_left = 352.0
+offset_top = -224.0
 offset_right = 528.0
 offset_bottom = -32.0
-gravity = Vector2(0, 40)

@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [Tool]
-public partial class GravityZone : TextureRect
+public partial class GravityZone : NinePatchRect
 {
 	[Export]
 	public Vector2 gravity;
@@ -13,6 +13,9 @@ public partial class GravityZone : TextureRect
         CollisionShape2D shape = this.FindChild("Collider") as CollisionShape2D;
         ((RectangleShape2D)shape.Shape).Size = this.Size;
         shape.Position = this.Size / 2;
+        TextureRect fill = this.FindChild("Fill") as TextureRect;
+        fill.Size = this.Size - new Vector2(8, 8);
+        fill.Position = new Vector2(4, 4);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,9 +26,12 @@ public partial class GravityZone : TextureRect
     public void Resize()
     {
         if (!Engine.IsEditorHint()) return;
-        CollisionShape2D shape = this.FindChild("Collider") as CollisionShape2D;
+        CollisionShape2D shape = this.FindChild("Collider", true) as CollisionShape2D;
         ((RectangleShape2D)shape.Shape).Size = this.Size;
         shape.Position = this.Size / 2;
+        TextureRect fill = this.FindChild("Fill") as TextureRect;
+        fill.Size = this.Size - new Vector2(8, 8);
+        fill.Position = new Vector2(4, 4);
     }
 
 	public void OnEntered(Node2D body)

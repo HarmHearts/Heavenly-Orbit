@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_525p8"]
 [ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
 [ext_resource type="Script" path="res://Code/DebugText.cs" id="4_6nhu4"]
-[ext_resource type="Texture2D" uid="uid://bd41ykn6qj7sh" path="res://Assets/Palettes/minty-fresh-1x.png" id="8_3udvi"]
+[ext_resource type="Texture2D" uid="uid://c8w270g8rttuo" path="res://Assets/Palettes/rgr-papercut4-1x.png" id="8_ohnl0"]
 [ext_resource type="PackedScene" uid="uid://qc3kdv8ink1s" path="res://Scenes/Backgrounds/grid_background.tscn" id="8_uk67e"]
 [ext_resource type="Texture2D" uid="uid://d3peiy60j8jvg" path="res://Assets/Sprites/wipe_transition.png" id="9_6wlua"]
 [ext_resource type="PackedScene" uid="uid://ypq81uet3eg4" path="res://Levels/asteroid_test_level.tscn" id="9_osmgq"]
@@ -14,7 +14,7 @@
 shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
-shader_parameter/palette = ExtResource("8_3udvi")
+shader_parameter/palette = ExtResource("8_ohnl0")
 
 [node name="Level Root" type="Node2D"]
 
