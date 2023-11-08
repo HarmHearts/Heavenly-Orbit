@@ -36,7 +36,6 @@ public partial class GravityZone : NinePatchRect
 
 	public void OnEntered(Node2D body)
 	{
-		GD.Print("A");
 		if (body is PlayerCollide)
 		{
 			((PlayerPlanet)body.GetParent()).Gravity = this.gravity;

@@ -328,6 +328,7 @@ public partial class Player : Node2D
 		_locked = true;
 		_lockedBody = true;
 		this.Position = sun.GlobalPosition;
+        shifter.Position = new Vector2(-_bodyDistance, 0);
         frictionMovement = Velocity;
         //do floor type check
         CheckFloor(true);
@@ -349,7 +350,8 @@ public partial class Player : Node2D
         _locked = true;
         _lockedBody = false;
         this.Position = moon.GlobalPosition;
-		frictionMovement = Velocity;
+        shifter.Position = new Vector2(_bodyDistance, 0);
+        frictionMovement = Velocity;
 		//do floor type check
 		CheckFloor(false);
         EmitSignal(SignalName.MoonLocked);
@@ -411,7 +413,7 @@ public partial class Player : Node2D
 				if(body is TileMap)
 				{
                     TileMap map = body as TileMap;
-                    Vector2I tilePos = map.LocalToMap(sun ? this.sun.GlobalPosition : this.moon.GlobalPosition);
+                    Vector2I tilePos = map.LocalToMap(sun ? map.ToLocal(this.sun.GlobalPosition) : map.ToLocal(this.moon.GlobalPosition));
                     TileData hitTile = map.GetCellTileData(0, tilePos);
                     if (hitTile == null) continue;
                     Variant data = hitTile.GetCustomData("Type");
