@@ -1,0 +1,143 @@
+[gd_scene load_steps=5 format=3 uid="uid://dveixos5xshvr"]
+
+[ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="1_8miun"]
+[ext_resource type="Texture2D" uid="uid://c5e6pwmybkqin" path="res://Assets/Sprites/timer_icon.png" id="1_bu4ic"]
+[ext_resource type="Texture2D" uid="uid://b5bvpdxaqn21c" path="res://Assets/Sprites/gem_icon.png" id="3_lhdod"]
+[ext_resource type="FontFile" uid="uid://dsb5i04jeilcq" path="res://Assets/Fonts/ChevyRay - Curse.ttf" id="4_n4t8o"]
+
+[node name="GameplayHUD" type="CanvasLayer"]
+
+[node name="TopBar" type="AspectRatioContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1111
+stretch_mode = 1
+
+[node name="Background" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TopBarBG" type="ColorRect" parent="TopBar/Background"]
+custom_minimum_size = Vector2(160, 8)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TimerBox" type="HBoxContainer" parent="TopBar"]
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 4
+
+[node name="TimerIcon" type="TextureRect" parent="TopBar/TimerBox"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+texture = ExtResource("1_bu4ic")
+stretch_mode = 2
+
+[node name="Timer" type="RichTextLabel" parent="TopBar/TimerBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.611765, 0.611765, 0.611765, 1)
+theme_override_colors/font_shadow_color = Color(0.305882, 0.305882, 0.305882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("1_8miun")
+theme_override_font_sizes/normal_font_size = 8
+text = "1:00.000"
+fit_content = true
+autowrap_mode = 0
+
+[node name="CrystalsBox" type="HBoxContainer" parent="TopBar"]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/separation = 4
+
+[node name="CrystalIcon" type="TextureRect" parent="TopBar/CrystalsBox"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+texture = ExtResource("3_lhdod")
+stretch_mode = 2
+
+[node name="Crystals" type="RichTextLabel" parent="TopBar/CrystalsBox"]
+unique_name_in_owner = true
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.611765, 0.611765, 0.611765, 1)
+theme_override_colors/font_shadow_color = Color(0.305882, 0.305882, 0.305882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("1_8miun")
+theme_override_font_sizes/normal_font_size = 8
+text = "20/20"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="TitleContainer" type="AspectRatioContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1111
+
+[node name="MarginContainer" type="MarginContainer" parent="TitleContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TitleContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="WorldTitle" type="RichTextLabel" parent="TitleContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.647059, 0.647059, 0.647059, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.305882, 0.305882, 0.305882, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("1_8miun")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center] World 1 - Level 1"
+fit_content = true
+autowrap_mode = 0
+
+[node name="LevelTitle" type="RichTextLabel" parent="TitleContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.309804, 0.309804, 0.309804, 1)
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("4_n4t8o")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center] Level Title Placeholder"
+fit_content = true
+scroll_active = false
+scroll_following = true

@@ -213,6 +213,7 @@ explosiveness = 1.0
 script = ExtResource("13_vggmq")
 
 [node name="Mid Point" type="Sprite2D" parent="Shifter"]
+visible = false
 z_index = -1
 texture = ExtResource("6_pdekc")
 script = ExtResource("7_x21q5")

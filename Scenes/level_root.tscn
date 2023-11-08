@@ -5,16 +5,16 @@
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_525p8"]
 [ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
 [ext_resource type="Script" path="res://Code/DebugText.cs" id="4_6nhu4"]
-[ext_resource type="Texture2D" uid="uid://c8w270g8rttuo" path="res://Assets/Palettes/rgr-papercut4-1x.png" id="8_ohnl0"]
+[ext_resource type="Texture2D" uid="uid://sxlfo13qldqi" path="res://Assets/Palettes/classic-gb.png" id="8_ng5je"]
 [ext_resource type="PackedScene" uid="uid://qc3kdv8ink1s" path="res://Scenes/Backgrounds/grid_background.tscn" id="8_uk67e"]
-[ext_resource type="Texture2D" uid="uid://d3peiy60j8jvg" path="res://Assets/Sprites/wipe_transition.png" id="9_6wlua"]
+[ext_resource type="PackedScene" uid="uid://dveixos5xshvr" path="res://Scenes/Screens/gameplay_hud.tscn" id="9_klyx0"]
 [ext_resource type="PackedScene" uid="uid://ypq81uet3eg4" path="res://Levels/asteroid_test_level.tscn" id="9_osmgq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ok7mo"]
 shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
-shader_parameter/palette = ExtResource("8_ohnl0")
+shader_parameter/palette = ExtResource("8_ng5je")
 
 [node name="Level Root" type="Node2D"]
 
@@ -37,6 +37,7 @@ _rotationSpeed = 2.2
 [node name="GridBackground" parent="." instance=ExtResource("8_uk67e")]
 
 [node name="GameOverlayCanvas" type="CanvasLayer" parent="."]
+layer = 10
 
 [node name="WindowSpaceContainer" type="Container" parent="GameOverlayCanvas"]
 anchors_preset = 15
@@ -80,14 +81,4 @@ texture_repeat = 1
 material = SubResource("ShaderMaterial_ok7mo")
 layout_mode = 2
 
-[node name="FadeRect" type="ColorRect" parent="GameOverlayCanvas/ScreenSpaceContainer"]
-visible = false
-layout_mode = 2
-color = Color(0, 0, 0, 0)
-
-[node name="FadeWipe" type="TextureRect" parent="GameOverlayCanvas"]
-visible = false
-offset_left = -208.0
-offset_bottom = 144.0
-texture = ExtResource("9_6wlua")
-stretch_mode = 2
+[node name="GameplayHUD" parent="." instance=ExtResource("9_klyx0")]
