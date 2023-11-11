@@ -7,6 +7,8 @@ public partial class GravityZone : NinePatchRect
 	[Export]
 	public Vector2 gravity;
 
+    private PackedScene pulseEffect = GD.Load<PackedScene>("res://Scenes/Constructs/pulse_effect.tscn");
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -34,11 +36,20 @@ public partial class GravityZone : NinePatchRect
         fill.Position = new Vector2(4, 4);
     }
 
+    public void MakePulse(Vector2 pos)
+    {
+        Node2D effect = pulseEffect.Instantiate() as Node2D;
+        this.AddChild(effect);
+        effect.GlobalPosition = GetClosestPointOnEdge(pos);
+    }
+
 	public void OnEntered(Node2D body)
 	{
 		if (body is PlayerCollide)
 		{
 			((PlayerPlanet)body.GetParent()).Gravity = this.gravity;
+            AudioSystem.PlaySFX("Gravity");
+            MakePulse(body.GlobalPosition);
 		}
 	}
 
@@ -49,7 +60,19 @@ public partial class GravityZone : NinePatchRect
 			if (((PlayerPlanet)body.GetParent()).Gravity == this.gravity)
 			{
                 ((PlayerPlanet)body.GetParent()).Gravity = Vector2.Zero;
+                AudioSystem.PlaySFX("Gravity");
+                MakePulse(body.GlobalPosition);
             }
         }
+    }
+
+    public Vector2 GetClosestPointOnEdge(Vector2 point)
+    {
+        float topPos = this.GlobalPosition.Y;
+        float bottomPos = this.GlobalPosition.Y + this.Size.Y;
+        float leftPos = this.GlobalPosition.X;
+        float rightPos = this.GlobalPosition.X + this.Size.X;
+
+        return new Vector2(Mathf.Clamp(point.X, leftPos, rightPos), Mathf.Clamp(point.Y, topPos, bottomPos));
     }
 }

@@ -5,15 +5,19 @@ using System.IO;
 
 public partial class AudioSystem : Node
 {
-	private static AudioStreamPlayer sfxStream;
-	private static Dictionary<StringName, SoundEffect> soundEffects;
+	private static AudioStreamPlayer sfxStreamPulse;
+    private static AudioStreamPlayer sfxStreamWave;
+    private static AudioStreamPlayer sfxStreamNoise;
+    private static Dictionary<StringName, SoundEffect> soundEffects;
 	private static Dictionary<StringName, AudioStreamPlayer> loopingEffects;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		GD.Randomize();
-		sfxStream = this.FindChild("SFXPlayer", true) as AudioStreamPlayer;
-		LoadSFX("res://Sound/SFX/");
+		sfxStreamPulse = this.FindChild("SFXPlayerPulse", true) as AudioStreamPlayer;
+        sfxStreamWave = this.FindChild("SFXPlayerWave", true) as AudioStreamPlayer;
+        sfxStreamNoise = this.FindChild("SFXPlayerNoise", true) as AudioStreamPlayer;
+        LoadSFX("res://Sound/SFX/");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,7 +35,8 @@ public partial class AudioSystem : Node
 		{
 			foreach(string file in dir.GetFiles())
 			{
-				SoundEffect newEffect = GD.Load<SoundEffect>(path + file);
+				GD.Print("Loading sound effect " + path + file);
+				SoundEffect newEffect = ResourceLoader.Load<SoundEffect>(path + file.TrimSuffix(".remap"));
 				soundEffects.Add(newEffect.name, newEffect);
 			}
 		}
@@ -47,15 +52,30 @@ public partial class AudioSystem : Node
 			if (loopingEffects.ContainsKey(name)) return;
             AudioStreamPlayer newPlayer = new AudioStreamPlayer();
             newPlayer.Stream = target.GetAudio();
-            sfxStream.GetParent().AddChild(newPlayer);
+            sfxStreamPulse.GetParent().AddChild(newPlayer);
             newPlayer.Play();
 			loopingEffects.Add(name, newPlayer);
         }
 		//if one shot sound
 		else
 		{
-            sfxStream.Stream = target.GetAudio();
-            sfxStream.Play();
+			switch(target.channel)
+			{
+				case SoundEffect.AudioChannel.Pulse:
+                    sfxStreamPulse.Stream = target.GetAudio();
+                    sfxStreamPulse.Play();
+					break;
+				case SoundEffect.AudioChannel.Wave:
+                    sfxStreamWave.Stream = target.GetAudio();
+                    sfxStreamWave.Play();
+                    break;
+                case SoundEffect.AudioChannel.Noise:
+                    sfxStreamNoise.Stream = target.GetAudio();
+                    sfxStreamNoise.Play();
+                    break;
+                default:
+					break;
+			}
         }
     }
 

@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://78l6gixs3555"]
+
+[ext_resource type="Script" path="res://Code/GameplayManager.cs" id="1_6idu5"]
+[ext_resource type="PackedScene" uid="uid://7iqbmq0ln1vf" path="res://Scenes/Constructs/gameplay_camera.tscn" id="2_h08qm"]
+[ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/Constructs/player.tscn" id="3_7408n"]
+[ext_resource type="PackedScene" uid="uid://dveixos5xshvr" path="res://Scenes/Screens/gameplay_hud.tscn" id="3_g1vxf"]
+[ext_resource type="Texture2D" uid="uid://kx45aw1xkutc" path="res://Assets/Palettes/lemon-lime-1x.png" id="6_mxjkc"]
+[ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="6_s2wfe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6uflq"]
+shader = ExtResource("6_s2wfe")
+shader_parameter/palette_size = 4
+shader_parameter/offset = 0.5
+shader_parameter/palette = ExtResource("6_mxjkc")
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_6idu5")
+levelsPath = "res://Scenes/Levels/"
+targetLevel = "mechanics_test_level"
+backgroundsPath = "res://Scenes/Backgrounds/"
+
+[node name="Camera" parent="." instance=ExtResource("2_h08qm")]
+
+[node name="Player" parent="." instance=ExtResource("3_7408n")]
+
+[node name="GameplayHUD" parent="." instance=ExtResource("3_g1vxf")]
+
+[node name="GameOverlayCanvas" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ScreenSpaceContainer" type="AspectRatioContainer" parent="GameOverlayCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1111
+stretch_mode = 1
+
+[node name="PaletteFilter" type="ColorRect" parent="GameOverlayCanvas/ScreenSpaceContainer"]
+z_index = 100
+texture_filter = 2
+texture_repeat = 1
+material = SubResource("ShaderMaterial_6uflq")
+layout_mode = 2

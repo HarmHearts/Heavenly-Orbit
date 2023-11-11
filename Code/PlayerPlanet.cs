@@ -17,6 +17,8 @@ public partial class PlayerPlanet : Node2D
 	private Sprite2D planetSprite;
 	private Player player;
 
+    PackedScene deathExplosion = GD.Load<PackedScene>("res://Scenes/Constructs/big_explosion.tscn");
+
     public Vector2 Gravity
     {
         get => _gravity;
@@ -24,10 +26,12 @@ public partial class PlayerPlanet : Node2D
         {
             _gravity = value;
             player.CalculateGravity();
+			EmitSignal(SignalName.GravityField);
         }
     }
 
-    PackedScene deathExplosion = GD.Load<PackedScene>("res://Scenes/Constructs/big_explosion.tscn");
+    [Signal]
+    public delegate void GravityFieldEventHandler(); 
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -73,5 +77,12 @@ public partial class PlayerPlanet : Node2D
 		this.AddChild(deathExplosion.Instantiate());
 		((Node2D)this.FindChild("Shadow")).Visible = false;
         ((Node2D)this.FindChild("PlanetSparkles")).Visible = false;
+    }
+
+	public void Reset()
+	{
+        planetSprite.Texture = normalPlanet;
+        ((Node2D)this.FindChild("Shadow")).Visible = true;
+        ((Node2D)this.FindChild("PlanetSparkles")).Visible = true;
     }
 }

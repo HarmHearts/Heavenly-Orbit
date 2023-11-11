@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 
 public partial class Player : Node2D
@@ -80,10 +81,14 @@ public partial class Player : Node2D
     public bool LockedBody { get => _lockedBody; set => _lockedBody = value; }
 	public Vector2 Gravity { get => _gravity; set => _gravity = value; }
 	public float FloorFriction { get => _floorFriction; set => _floorFriction = value; }
+    public bool InputEnabled { get; set; } = true;
 
 	//input stuff
 	private bool upHeld;
 	private bool downHeld;
+
+    //platform stuff
+    private MovingPlatform currentPlatform;
 
 	[Signal]
 	public delegate void SunLockedEventHandler();
@@ -112,6 +117,7 @@ public partial class Player : Node2D
 		{
 			SetShifter();
 			CalculateLaunchVector();
+            MoveWithPlatform();
 			FrictionMovement((float)delta);
         }
 		//unlocked behaviors
@@ -122,7 +128,64 @@ public partial class Player : Node2D
 		if(bounceTimer > 0) bounceTimer -= (float)delta;
     }
 
-	public void CalculateGravity()
+    public override void _Input(InputEvent @event)
+    {
+        if (!alive) return;
+        if (!InputEnabled) return;
+        //get lock actions
+        if (@event.IsActionPressed("Btn_A"))
+        {
+            if (!_locked || (_locked && !_lockedBody))
+            {
+                LockSun();
+            }
+        }
+        if (@event.IsActionReleased("Btn_A"))
+        {
+            if (_locked && _lockedBody)
+            {
+                UnlockBody();
+                AudioSystem.PlaySFX("Launch");
+            }
+        }
+        if (@event.IsActionPressed("Btn_B"))
+        {
+            if (!_locked || (_locked && _lockedBody))
+            {
+                LockMoon();
+            }
+        }
+        if (@event.IsActionReleased("Btn_B"))
+        {
+            if (_locked && !_lockedBody)
+            {
+                UnlockBody();
+                AudioSystem.PlaySFX("Launch");
+            }
+        }
+        //get distance input state
+        if (@event.IsActionPressed("Dpad_Up"))
+        {
+            upHeld = true;
+            downHeld = false;
+        }
+        else if (@event.IsActionReleased("Dpad_Up"))
+        {
+            upHeld = false;
+        }
+        if (@event.IsActionPressed("Dpad_Down"))
+        {
+            downHeld = true;
+            upHeld = false;
+        }
+        else if (@event.IsActionReleased("Dpad_Down"))
+        {
+            downHeld = false;
+        }
+    }
+
+    #region movement
+    public void CalculateGravity()
 	{
         //calculate gravity
         Vector2 newGravity = Vector2.Zero;
@@ -167,9 +230,18 @@ public partial class Player : Node2D
         else shifter.Position = new Vector2(_bodyDistance, 0);
         //quantize launch vector
 		_moveDirection = QuantizeVector(this.Transform.Y) * (_lockedBody ? -1 : 1) * (_rotationSpeed > 0 ? 1 : -1);
-		//quantize launch speed?
         _moveSpeed = Mathf.Abs(_rotationSpeed * (_bodyDistance));
 		if(_moveSpeed < _minSpeed) _moveSpeed = _minSpeed;
+    }
+
+    private void MoveWithPlatform()
+    {
+        if (currentPlatform == null) return;
+        this.Position += currentPlatform.motionVector;
+        _moveSpeed = Mathf.Abs(_rotationSpeed * (_bodyDistance));
+        if (LockedBody) _moveSpeed += currentPlatform.speed * -this.Transform.Y.Dot(currentPlatform.motionVector.Normalized());
+        else _moveSpeed += currentPlatform.speed * this.Transform.Y.Dot(currentPlatform.motionVector.Normalized());
+        if (_moveSpeed < _minSpeed) _moveSpeed = _minSpeed;
     }
 
 	private void SetShifter()
@@ -190,6 +262,10 @@ public partial class Player : Node2D
 	{
 		//don't do slippery movement if friction is turned off
 		if (_floorFriction <= 0) return;
+        if(currentPlatform != null)
+        {
+            frictionMovement += currentPlatform.motionVector;
+        }
 		//do slipping
 		frictionMovement += _moveDirection * slipInfluence * (_bodyDistance / maxDistance);
 		frictionMovement += _gravity * gravityFriction * delta;
@@ -250,64 +326,10 @@ public partial class Player : Node2D
         bounceTimer = 0.2f;
     }
 
-    public override void _Input(InputEvent @event)
-    {
-		if (!alive) return;
-		//get lock actions
-		if(@event.IsActionPressed("Btn_A"))
-		{
-			if(!_locked || (_locked && !_lockedBody))
-			{
-				LockSun();
-			}
-		}
-		if(@event.IsActionReleased("Btn_A"))
-		{
-			if(_locked && _lockedBody)
-			{
-				UnlockBody();
-				AudioSystem.PlaySFX("Launch");
-			}
-		}
-        if (@event.IsActionPressed("Btn_B"))
-        {
-            if (!_locked || (_locked && _lockedBody))
-            {
-                LockMoon();
-            }
-        }
-        if (@event.IsActionReleased("Btn_B"))
-        {
-            if (_locked && !_lockedBody)
-            {
-                UnlockBody();
-                AudioSystem.PlaySFX("Launch");
-            }
-        }
-        //get distance input state
-        if (@event.IsActionPressed("Dpad_Up"))
-        {
-            upHeld = true;
-			downHeld = false;
-        }
-		else if (@event.IsActionReleased("Dpad_Up"))
-		{
-			upHeld = false;
-		}
-        if (@event.IsActionPressed("Dpad_Down"))
-        {
-            downHeld = true;
-            upHeld = false;
-        }
-        else if (@event.IsActionReleased("Dpad_Down"))
-        {
-            downHeld = false;
-        }
-    }
-
 	private void UnlockBody()
 	{
         this.Position = sun.GlobalPosition.Lerp(moon.GlobalPosition, 0.5f);
+        currentPlatform = null;
         shifter.Position = Vector2.Zero;
 		_locked = false;
 		RemoveIce();
@@ -331,7 +353,7 @@ public partial class Player : Node2D
         shifter.Position = new Vector2(-_bodyDistance, 0);
         frictionMovement = Velocity;
         //do floor type check
-        CheckFloor(true);
+        //CheckFloor(true);
         EmitSignal(SignalName.SunLocked);
 		AudioSystem.PlaySFX("Lock");
 	}
@@ -353,79 +375,47 @@ public partial class Player : Node2D
         shifter.Position = new Vector2(_bodyDistance, 0);
         frictionMovement = Velocity;
 		//do floor type check
-		CheckFloor(false);
+		//CheckFloor(false);
         EmitSignal(SignalName.MoonLocked);
         AudioSystem.PlaySFX("Lock");
     }
 
-	private void Die(bool sun)
+    #endregion
+
+    public void Reset()
+    {
+        alive = true;
+        _locked = false;
+        this.GlobalRotation = 0;
+        _moveDirection = Vector2.Zero;
+        _moveSpeed = 0;
+        _rotationSpeed = 2; //TEMPORARY: REPLACE WITH LEVEL ROTATION LATER
+        _bodyDistance = 16;
+        sun.Position = new Vector2(_bodyDistance, 0);
+        moon.Position = new Vector2(-_bodyDistance, 0);
+        shifter.Position = Vector2.Zero;
+        upHeld = false;
+        downHeld = false;
+        _floorFriction = -10;
+        _gravity = Vector2.Zero;
+        currentPlatform = null;
+        ((PlayerPlanet)this.sun).Reset();
+        ((PlayerPlanet)this.moon).Reset();
+    }
+
+    private void Die(bool sun)
 	{
+        if (!alive) return;
 		GD.Print("Fuck!");
 		AudioSystem.PlaySFX("Explode");
         alive = false;
 		EmitSignal(SignalName.PlayerDeath);
 		_moveDirection = Vector2.Zero;
 		_rotationSpeed = 0;
+        currentPlatform = null;
 		if (sun) ((PlayerPlanet)this.sun).Explode();
 		else ((PlayerPlanet)this.moon).Explode();
     }
-
-	public void OnCollision(KinematicCollision2D coll, bool sun)
-	{
-		//check wall type
-        if (coll.GetCollider() is TileMap)
-        {
-			TileMap tileMap = coll.GetCollider() as TileMap;
-			Vector2I tilePoint = tileMap.LocalToMap(tileMap.ToLocal(coll.GetPosition() - (coll.GetNormal() * 4)));
-			TileData hitTile = tileMap.GetCellTileData(0, tilePoint);
-			if(hitTile != null)
-			{
-                Variant data = hitTile.GetCustomData("Type");
-                if (data.VariantType is Variant.Type.String && ((string)data).Equals("Bounce"))
-                {
-					//for bounce walls
-                    GD.Print("Bounce!");
-                    Bounce(coll, sun);
-                }
-				else
-				{
-					//for normal walls
-					Die(sun);
-				}
-            }
-        }
-    }
-
-	//TODO: WE ALWAYS DO TRUE FOR SUN FALSE FOR MOON WHEN WE DO BOOLS TO DISTINGUISH BODIES
-	private bool CheckFloor(bool sun)
-	{
-        ShapeCast2D shape = sun ? sunCast : moonCast;
-		Node2D res = null;
-
-		shape.ForceShapecastUpdate();
-		int ct = shape.GetCollisionCount();
-
-		for (int i = 0; i < ct; i++)
-		{
-            Node2D body = shape.GetCollider(i) as Node2D;
-            if (body != null && body.IsInGroup("Floor"))
-			{
-				if(body is TileMap)
-				{
-                    TileMap map = body as TileMap;
-                    Vector2I tilePos = map.LocalToMap(sun ? map.ToLocal(this.sun.GlobalPosition) : map.ToLocal(this.moon.GlobalPosition));
-                    TileData hitTile = map.GetCellTileData(0, tilePos);
-                    if (hitTile == null) continue;
-                    Variant data = hitTile.GetCustomData("Type");
-					ResolveFloorType((string)data, sun);
-					return true;
-                }
-				//if body is movingplatform
-				//return true;
-            }
-        }
-		return false;
-	}
 
 	public Vector2 GetPlanetMotion(bool sun)
 	{
@@ -443,8 +433,58 @@ public partial class Player : Node2D
 		return result;
 	}
 
-	private void ResolveFloorType(String type, bool sun)
+    private Vector2 QuantizeVector(Vector2 value)
+    {
+        return Vector2.FromAngle(Mathf.DegToRad(Mathf.Round(Mathf.RadToDeg(value.Angle()) / quantization) * quantization));
+    }
+
+    #region floor
+    private bool CheckFloor(bool sun)
+    {
+        ShapeCast2D shape = sun ? sunCast : moonCast;
+
+        shape.ForceShapecastUpdate();
+        int ct = shape.GetCollisionCount();
+
+        for (int i = 0; i < ct; i++)
+        {
+            Node2D body = shape.GetCollider(i) as Node2D;
+            if (body != null && body.IsInGroup("Floor"))
+            {
+                //if floor hit is tilemap
+                if (body is TileMap)
+                {
+                    currentPlatform = null;
+                    TileMap map = body as TileMap;
+                    Vector2I tilePos = map.LocalToMap(sun ? map.ToLocal(this.sun.GlobalPosition) : map.ToLocal(this.moon.GlobalPosition));
+                    TileData hitTile = map.GetCellTileData(0, tilePos);
+                    if (hitTile == null) continue;
+                    Variant data = hitTile.GetCustomData("Type");
+                    ResolveFloorType((string)data, sun);
+                    return true;
+                }
+                //if floor hit is movingplatform
+                else if(body is Area2D && body.GetParentOrNull<MovingPlatform>() is MovingPlatform)
+                {
+                    if(currentPlatform == null)
+                    {
+                        currentPlatform = body.GetParentOrNull<MovingPlatform>();
+                        return true;
+                    }
+                    else if(body.GetParentOrNull<MovingPlatform>() == currentPlatform)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        currentPlatform = null;
+        return false;
+    }
+
+    private void ResolveFloorType(String type, bool sun)
 	{
+        GD.Print("Floor " + type);
 		switch(type)
 		{
 			case "Floor":
@@ -455,10 +495,12 @@ public partial class Player : Node2D
 				break;
 			case "SunFloor":
 				if (!sun) Die(sun);
+                RemoveIce();
 				break;
 			case "MoonFloor":
 				if (sun) Die(sun);
-				break;
+                RemoveIce();
+                break;
 			default:
 				break;
 		}
@@ -474,8 +516,38 @@ public partial class Player : Node2D
 		_floorFriction = -10;
 	}
 
-	private Vector2 QuantizeVector(Vector2 value)
-	{
-		return Vector2.FromAngle(Mathf.DegToRad(Mathf.Round(Mathf.RadToDeg(value.Angle()) / quantization) * quantization));
+    #endregion
+
+    #region callbacks
+    public void OnCollision(KinematicCollision2D coll, bool sun)
+    {
+        GD.Print(coll.GetCollider().GetType());
+        //check wall type
+        if (coll.GetCollider() is TileMap)
+        {
+            TileMap tileMap = coll.GetCollider() as TileMap;
+            Vector2I tilePoint = tileMap.LocalToMap(tileMap.ToLocal(coll.GetPosition() - (coll.GetNormal() * 4)));
+            TileData hitTile = tileMap.GetCellTileData(0, tilePoint);
+            if (hitTile != null)
+            {
+                Variant data = hitTile.GetCustomData("Type");
+                if (data.VariantType is Variant.Type.String && ((string)data).Equals("Bounce"))
+                {
+                    //for bounce walls
+                    GD.Print("Bounce!");
+                    Bounce(coll, sun);
+                }
+                else
+                {
+                    //for normal walls
+                    Die(sun);
+                }
+            }
+        }
+        else if(coll.GetCollider() is StaticBody2D)
+        {
+            Die(sun);
+        }
     }
+    #endregion
 }

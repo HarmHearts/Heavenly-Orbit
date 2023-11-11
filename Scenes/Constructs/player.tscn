@@ -145,7 +145,7 @@ target_position = Vector2(0, 0)
 collision_mask = 2
 collide_with_areas = true
 
-[node name="Lock Effect" type="GPUParticles2D" parent="Shifter/Sun"]
+[node name="LockEffect" type="GPUParticles2D" parent="Shifter/Sun"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_tlaso")
 emitting = false
@@ -199,7 +199,7 @@ target_position = Vector2(0, 0)
 collision_mask = 2
 collide_with_areas = true
 
-[node name="Lock Effect" type="GPUParticles2D" parent="Shifter/Moon"]
+[node name="LockEffect" type="GPUParticles2D" parent="Shifter/Moon"]
 z_index = -1
 material = SubResource("CanvasItemMaterial_tlaso")
 position = Vector2(3.8147e-06, 0)
@@ -213,7 +213,6 @@ explosiveness = 1.0
 script = ExtResource("13_vggmq")
 
 [node name="Mid Point" type="Sprite2D" parent="Shifter"]
-visible = false
 z_index = -1
 texture = ExtResource("6_pdekc")
 script = ExtResource("7_x21q5")
@@ -221,11 +220,11 @@ dot = ExtResource("3_0wj7l")
 arrow = ExtResource("6_pdekc")
 
 [connection signal="MoonLocked" from="." to="Shifter/Moon" method="LockSprite"]
-[connection signal="MoonLocked" from="." to="Shifter/Moon/Lock Effect" method="_OnPlay"]
+[connection signal="MoonLocked" from="." to="Shifter/Moon/LockEffect" method="_OnPlay"]
 [connection signal="PlayerDeath" from="." to="Shifter/Sun" method="ShockSprite"]
 [connection signal="PlayerDeath" from="." to="Shifter/Moon" method="ShockSprite"]
 [connection signal="SunLocked" from="." to="Shifter/Sun" method="LockSprite"]
-[connection signal="SunLocked" from="." to="Shifter/Sun/Lock Effect" method="_OnPlay"]
+[connection signal="SunLocked" from="." to="Shifter/Sun/LockEffect" method="_OnPlay"]
 [connection signal="Unlock" from="." to="Shifter/Sun" method="UnlockSprite"]
 [connection signal="Unlock" from="." to="Shifter/Moon" method="UnlockSprite"]
 [connection signal="OnCollide" from="Shifter/Sun/WallCollide" to="." method="OnCollision"]

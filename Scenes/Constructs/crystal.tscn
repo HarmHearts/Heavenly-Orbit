@@ -71,7 +71,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_d6jf7"]
 radius = 8.0
 
-[node name="Crystal" type="AnimatedSprite2D"]
+[node name="Crystal" type="AnimatedSprite2D" groups=["Crystal"]]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_3oh4q")
 frame_progress = 0.546033

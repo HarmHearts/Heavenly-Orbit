@@ -7,6 +7,8 @@
 [node name="BaseBackground" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+offset = Vector2(64, 64)
+transform = Transform2D(1, 0, 0, 1, 64, 64)
 scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]

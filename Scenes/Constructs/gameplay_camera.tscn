@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://7iqbmq0ln1vf"]
+
+[ext_resource type="Script" path="res://Code/CameraFollow.cs" id="1_erhi3"]
+
+[node name="Main Camera" type="Camera2D" node_paths=PackedStringArray("target")]
+position = Vector2(160, 160)
+editor_draw_limits = true
+script = ExtResource("1_erhi3")
+target = NodePath("")
+interpolation = 3.0
+baseSpeed = 12.0
+lookAhead = 0.75
+rotationReach = 28.0
+rotationAhead = 0.4

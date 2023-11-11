@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://wkfmpk10mlyo"]
+
+[ext_resource type="AudioStream" uid="uid://ccy4g3aqk7kr5" path="res://Assets/SFX/menu select.wav" id="1_xmryn"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_r4del"]
+
+[resource]
+script = ExtResource("2_r4del")
+name = &"Select"
+audioList = Array[AudioStream]([ExtResource("1_xmryn")])
+channel = 0
+looping = false

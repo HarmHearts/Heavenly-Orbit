@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://bxw05bkwn663l"]
+
+[ext_resource type="Script" path="res://Code/Level.cs" id="1_o8so6"]
+[ext_resource type="Texture2D" uid="uid://b37mwun3qeupt" path="res://Tilesets/floor_test.png" id="2_74spi"]
+[ext_resource type="Texture2D" uid="uid://fl7qslwwffy" path="res://Tilesets/wall_test.png" id="3_3exyy"]
+[ext_resource type="TileSet" uid="uid://c4axw2th8i46m" path="res://Tilesets/floor_tiles.tres" id="4_aiqg8"]
+[ext_resource type="TileSet" uid="uid://gfn80634q6u0" path="res://Tilesets/wall_tiles.tres" id="5_1a8cm"]
+[ext_resource type="TileSet" uid="uid://d1rgf2cv2ea78" path="res://Tilesets/entity_tiles.tres" id="6_5tmvf"]
+[ext_resource type="Texture2D" uid="uid://dum2km5wwh2hl" path="res://Assets/Sprites/player_start.png" id="7_0suy0"]
+[ext_resource type="PackedScene" uid="uid://c8mf34x5rt2cg" path="res://Scenes/Constructs/finish_line.tscn" id="8_14d2o"]
+
+[node name="LevelRoot" type="Node2D"]
+script = ExtResource("1_o8so6")
+levelName = "Default"
+background = "star_background"
+initialPlayerSpin = true
+floorTexture = ExtResource("2_74spi")
+wallTexture = ExtResource("3_3exyy")
+wrapBounds = Vector2(1024, 1024)
+
+[node name="Floor" type="TileMap" parent="." groups=["Floor"]]
+z_index = -10
+tile_set = ExtResource("4_aiqg8")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65538, 0, 6, -65537, 65536, 1, -131072, 65536, 1, -131071, 65536, 1, -65535, 65536, 1, 1, 65536, 7, 65537, 65536, 1, 65536, 65536, 1, 131071, 65536, 1, 131070, 0, 6, 65534, 65536, 1, -2, 65536, 1, -1, 0, 6, -65536, 0, 6, 0, 65536, 1, 65535, 65536, 1, -131075, 0, 0, -131074, 65536, 0, -131073, 65536, 0, -196608, 65536, 0, -196607, 65536, 0, -196606, 131072, 0, -131070, 131072, 1, -65534, 131072, 1, 2, 131072, 1, 65538, 131072, 1, 131074, 131072, 2, 131073, 65536, 2, 131072, 65536, 2, 196607, 65536, 2, 196606, 65536, 2, 196605, 0, 2, 131069, 0, 1, 65533, 0, 1, -3, 0, 1, -65539, 0, 1)
+
+[node name="Wall" type="TileMap" parent="." groups=["Wall"]]
+z_index = 10
+tile_set = ExtResource("5_1a8cm")
+format = 2
+
+[node name="Entities" type="TileMap" parent="."]
+tile_set = ExtResource("6_5tmvf")
+format = 2
+
+[node name="PlayerStart" type="Marker2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerStart"]
+z_index = -4
+z_as_relative = false
+texture = ExtResource("7_0suy0")
+
+[node name="FinishLine" parent="." instance=ExtResource("8_14d2o")]
+unique_name_in_owner = true
+offset_left = 128.0
+offset_top = -32.0
+offset_right = 192.0
+offset_bottom = 32.0

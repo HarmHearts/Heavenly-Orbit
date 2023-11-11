@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2ygfq2etu708"]
+
+[ext_resource type="Texture2D" uid="uid://bkdmn21fu832m" path="res://Assets/Sprites/connector line.png" id="1_cyw3v"]
+[ext_resource type="Script" path="res://Code/PlatformRailLine.cs" id="2_4urve"]
+
+[sub_resource type="Curve2D" id="Curve2D_6jckk"]
+resource_local_to_scene = true
+bake_interval = 8.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 128, 0, 0, 0, 0, 0, 128, 128, 0, 0, 0, 0, 0, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 0)
+}
+point_count = 5
+
+[node name="PlatformPath" type="Path2D"]
+position = Vector2(-64, -64)
+curve = SubResource("Curve2D_6jckk")
+
+[node name="RailLine" type="Line2D" parent="."]
+z_index = -20
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 2
+width = 16.0
+texture = ExtResource("1_cyw3v")
+texture_mode = 1
+script = ExtResource("2_4urve")

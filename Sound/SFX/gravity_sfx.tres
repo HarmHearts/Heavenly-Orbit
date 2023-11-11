@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://2nf7gsv66xle"]
+
+[ext_resource type="AudioStream" uid="uid://bgva8oqdjf3jw" path="res://Assets/SFX/gravity.wav" id="1_7oxxd"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_5xms1"]
+
+[resource]
+script = ExtResource("2_5xms1")
+name = &"Gravity"
+audioList = Array[AudioStream]([ExtResource("1_7oxxd")])
+channel = 1
+looping = false

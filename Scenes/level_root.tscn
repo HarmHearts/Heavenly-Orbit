@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://bjbs78alm5pt6"]
 
+[ext_resource type="PackedScene" uid="uid://7iqbmq0ln1vf" path="res://Scenes/Constructs/gameplay_camera.tscn" id="1_js463"]
 [ext_resource type="Shader" path="res://Shaders/palette.gdshader" id="1_yjnot"]
-[ext_resource type="Script" path="res://Code/CameraFollow.cs" id="2_njdxo"]
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_525p8"]
-[ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/player.tscn" id="3_weuc1"]
+[ext_resource type="PackedScene" uid="uid://cu7x7xk1argu5" path="res://Scenes/Constructs/player.tscn" id="3_weuc1"]
 [ext_resource type="Script" path="res://Code/DebugText.cs" id="4_6nhu4"]
-[ext_resource type="Texture2D" uid="uid://sxlfo13qldqi" path="res://Assets/Palettes/classic-gb.png" id="8_ng5je"]
+[ext_resource type="Texture2D" uid="uid://ie6b4rucipn1" path="res://Assets/Palettes/cool-sweater-1x.png" id="8_3u1uu"]
 [ext_resource type="PackedScene" uid="uid://qc3kdv8ink1s" path="res://Scenes/Backgrounds/grid_background.tscn" id="8_uk67e"]
 [ext_resource type="PackedScene" uid="uid://dveixos5xshvr" path="res://Scenes/Screens/gameplay_hud.tscn" id="9_klyx0"]
 [ext_resource type="PackedScene" uid="uid://ypq81uet3eg4" path="res://Levels/asteroid_test_level.tscn" id="9_osmgq"]
@@ -14,20 +14,11 @@
 shader = ExtResource("1_yjnot")
 shader_parameter/palette_size = 4
 shader_parameter/offset = 0.5
-shader_parameter/palette = ExtResource("8_ng5je")
+shader_parameter/palette = ExtResource("8_3u1uu")
 
 [node name="Level Root" type="Node2D"]
 
-[node name="Main Camera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(160, 160)
-editor_draw_limits = true
-script = ExtResource("2_njdxo")
-target = NodePath("../Player")
-interpolation = 3.0
-baseSpeed = 12.0
-lookAhead = 0.75
-rotationReach = 28.0
-rotationAhead = 0.4
+[node name="Main Camera" parent="." instance=ExtResource("1_js463")]
 
 [node name="Player" parent="." instance=ExtResource("3_weuc1")]
 _rotationSpeed = 2.2

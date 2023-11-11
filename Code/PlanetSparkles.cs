@@ -17,7 +17,7 @@ public partial class PlanetSparkles : GpuParticles2D
 	public override void _Ready()
 	{
 		particle = this.ProcessMaterial as ParticleProcessMaterial;
-        player = this.GetTree().CurrentScene.FindChild("Player") as Player;
+        player = this.Owner as Player;
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://pq4jt8g175hh"]
+
+[ext_resource type="Texture2D" uid="uid://ddt0qsv5jndmy" path="res://Assets/Sprites/rail_cap.png" id="1_nfcwe"]
+
+[node name="RailCap" type="Sprite2D"]
+z_index = -12
+z_as_relative = false
+texture = ExtResource("1_nfcwe")

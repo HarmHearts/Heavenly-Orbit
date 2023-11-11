@@ -23,14 +23,17 @@ public partial class CameraFollow : Camera2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		playerScript = target as Player;
-		this.Position = target.Position;
-		following = true;
+		if(target != null)
+		{
+			SetTarget(this.target as Player);
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		//cancel if not active
+		if (!following) return;
 		//calculate target point
 		Vector2 targetPoint = target.Position;
 		//lookahead
@@ -53,5 +56,13 @@ public partial class CameraFollow : Camera2D
 		//
 		//this.Offset = this.GlobalPosition.Round() - this.GlobalPosition;
 		ForceUpdateScroll();
+    }
+
+	public void SetTarget(Player target)
+	{
+        following = true;
+        this.target = target;
+		playerScript = target;
+        this.Position = target.Position;
     }
 }

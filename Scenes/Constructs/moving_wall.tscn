@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf84gpkp6qyfi"]
+
+[ext_resource type="Script" path="res://Code/MovingPlatform.cs" id="1_mrs76"]
+[ext_resource type="Texture2D" uid="uid://cug3apiystnby" path="res://Assets/Slices/special_wall_moving.png" id="2_xebn3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_62qo6"]
+resource_local_to_scene = true
+size = Vector2(32, 32)
+
+[node name="MovingWall" type="PathFollow2D" groups=["Wall"]]
+position = Vector2(128, 0)
+rotates = false
+script = ExtResource("1_mrs76")
+speed = 32.0
+moving = true
+
+[node name="PlatformGraphic" type="NinePatchRect" parent="." groups=["Wall"]]
+z_index = -10
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_xebn3")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Area2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" groups=["Wall"]]
+shape = SubResource("RectangleShape2D_62qo6")

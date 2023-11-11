@@ -20,4 +20,14 @@ public partial class SoundEffect : Resource
         int index = (int)(GD.Randi() % audioList.Count);
         return audioList[index];
     }
+
+    public SoundEffect() : this($"Default", null, AudioChannel.Wave, false) { }
+
+    public SoundEffect(StringName name, Array<AudioStream> audioList, AudioChannel channel, bool looping)
+    {
+        this.name = name;
+        this.audioList = audioList;
+        this.channel = channel;
+        this.looping = looping;
+    }
 }

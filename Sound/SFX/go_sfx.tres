@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://shstayv2twki"]
+
+[ext_resource type="AudioStream" uid="uid://byi3cen8rebix" path="res://Assets/SFX/go.wav" id="1_06frd"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_q0e8b"]
+
+[resource]
+script = ExtResource("2_q0e8b")
+name = &"Go!"
+audioList = Array[AudioStream]([ExtResource("1_06frd")])
+channel = 0
+looping = false
