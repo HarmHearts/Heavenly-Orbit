@@ -61,9 +61,11 @@ script = ExtResource("3_t257j")
 targetAnimation = &"finish_line"
 
 [node name="TriggerArea" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="Collider" type="CollisionShape2D" parent="TriggerArea"]
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_hhtya")
 
 [connection signal="item_rect_changed" from="." to="." method="Resize"]
+[connection signal="body_entered" from="TriggerArea" to="." method="OnEntered"]

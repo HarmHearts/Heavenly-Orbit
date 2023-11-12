@@ -80,7 +80,7 @@ shader_parameter/gravity = Vector3(0, -1e-06, 0)
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jv4h"]
 radius = 3.0
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("sun", "sunCast", "moon", "moonCast", "shifter")]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("sun", "sunCast", "moon", "moonCast", "shifter") groups=["Player"]]
 script = ExtResource("1_n51g8")
 _rotationSpeed = 2.0
 quantization = 22.5
@@ -97,9 +97,9 @@ moon = NodePath("Shifter/Moon")
 moonCast = NodePath("Shifter/Moon/FloorChecker")
 shifter = NodePath("Shifter")
 
-[node name="Shifter" type="Node2D" parent="."]
+[node name="Shifter" type="Node2D" parent="." groups=["Player"]]
 
-[node name="Sun" type="Node2D" parent="Shifter"]
+[node name="Sun" type="Node2D" parent="Shifter" groups=["Player"]]
 unique_name_in_owner = true
 position = Vector2(24, 0)
 script = ExtResource("2_1wwcp")
@@ -108,21 +108,21 @@ lockedPlanet = ExtResource("4_gl447")
 shockedPlanet = ExtResource("5_ixo1o")
 planetToggle = true
 
-[node name="Sun Sprite" type="Sprite2D" parent="Shifter/Sun"]
+[node name="Sun Sprite" type="Sprite2D" parent="Shifter/Sun" groups=["Player"]]
 texture = ExtResource("1_1e3ep")
 
-[node name="WallCollide" type="AnimatableBody2D" parent="Shifter/Sun"]
+[node name="WallCollide" type="AnimatableBody2D" parent="Shifter/Sun" groups=["Player"]]
 position = Vector2(1, 0)
 collision_mask = 28
 sync_to_physics = false
 script = ExtResource("8_fipn0")
 sun = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Sun/WallCollide"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Sun/WallCollide" groups=["Player"]]
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_doqu3")
 
-[node name="PlanetSparkles" type="GPUParticles2D" parent="Shifter/Sun"]
+[node name="PlanetSparkles" type="GPUParticles2D" parent="Shifter/Sun" groups=["Player"]]
 z_index = -1
 material = SubResource("CanvasItemMaterial_8ne21")
 amount = 18
@@ -134,18 +134,18 @@ speedInfluence = 30.0
 speedVariance = 6.0
 bodyToggle = true
 
-[node name="Shadow" type="Sprite2D" parent="Shifter/Sun"]
+[node name="Shadow" type="Sprite2D" parent="Shifter/Sun" groups=["Player"]]
 modulate = Color(1, 1, 1, 0.576471)
 z_index = -2
 texture = ExtResource("8_3r75p")
 
-[node name="FloorChecker" type="ShapeCast2D" parent="Shifter/Sun"]
+[node name="FloorChecker" type="ShapeCast2D" parent="Shifter/Sun" groups=["Player"]]
 shape = SubResource("CircleShape2D_nha4a")
 target_position = Vector2(0, 0)
 collision_mask = 2
 collide_with_areas = true
 
-[node name="LockEffect" type="GPUParticles2D" parent="Shifter/Sun"]
+[node name="LockEffect" type="GPUParticles2D" parent="Shifter/Sun" groups=["Player"]]
 z_index = -1
 material = SubResource("CanvasItemMaterial_tlaso")
 emitting = false
@@ -157,7 +157,7 @@ one_shot = true
 explosiveness = 1.0
 script = ExtResource("13_vggmq")
 
-[node name="Moon" type="Node2D" parent="Shifter"]
+[node name="Moon" type="Node2D" parent="Shifter" groups=["Player"]]
 unique_name_in_owner = true
 position = Vector2(-24, 0)
 script = ExtResource("2_1wwcp")
@@ -165,18 +165,18 @@ normalPlanet = ExtResource("2_lhbqr")
 lockedPlanet = ExtResource("7_r8o2w")
 shockedPlanet = ExtResource("16_3kra6")
 
-[node name="Moon Sprite" type="Sprite2D" parent="Shifter/Moon"]
+[node name="Moon Sprite" type="Sprite2D" parent="Shifter/Moon" groups=["Player"]]
 texture = ExtResource("2_lhbqr")
 
-[node name="WallCollide" type="AnimatableBody2D" parent="Shifter/Moon"]
+[node name="WallCollide" type="AnimatableBody2D" parent="Shifter/Moon" groups=["Player"]]
 collision_mask = 28
 sync_to_physics = false
 script = ExtResource("8_fipn0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Moon/WallCollide"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shifter/Moon/WallCollide" groups=["Player"]]
 shape = SubResource("CircleShape2D_doqu3")
 
-[node name="PlanetSparkles" type="GPUParticles2D" parent="Shifter/Moon"]
+[node name="PlanetSparkles" type="GPUParticles2D" parent="Shifter/Moon" groups=["Player"]]
 z_index = -1
 material = SubResource("CanvasItemMaterial_8ne21")
 amount = 18
@@ -187,19 +187,19 @@ script = ExtResource("9_0ljh3")
 speedInfluence = 30.0
 speedVariance = 6.0
 
-[node name="Shadow" type="Sprite2D" parent="Shifter/Moon"]
+[node name="Shadow" type="Sprite2D" parent="Shifter/Moon" groups=["Player"]]
 modulate = Color(1, 1, 1, 0.576471)
 z_index = -2
 texture = ExtResource("8_3r75p")
 
-[node name="FloorChecker" type="ShapeCast2D" parent="Shifter/Moon"]
+[node name="FloorChecker" type="ShapeCast2D" parent="Shifter/Moon" groups=["Player"]]
 shape = SubResource("CircleShape2D_6jv4h")
 exclude_parent = false
 target_position = Vector2(0, 0)
 collision_mask = 2
 collide_with_areas = true
 
-[node name="LockEffect" type="GPUParticles2D" parent="Shifter/Moon"]
+[node name="LockEffect" type="GPUParticles2D" parent="Shifter/Moon" groups=["Player"]]
 z_index = -1
 material = SubResource("CanvasItemMaterial_tlaso")
 position = Vector2(3.8147e-06, 0)
@@ -212,7 +212,7 @@ one_shot = true
 explosiveness = 1.0
 script = ExtResource("13_vggmq")
 
-[node name="Mid Point" type="Sprite2D" parent="Shifter"]
+[node name="Mid Point" type="Sprite2D" parent="Shifter" groups=["Player"]]
 z_index = -1
 texture = ExtResource("6_pdekc")
 script = ExtResource("7_x21q5")

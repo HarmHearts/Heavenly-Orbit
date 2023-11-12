@@ -1,0 +1,292 @@
+[gd_scene load_steps=22 format=3 uid="uid://c8sjm6ifdfdaj"]
+
+[ext_resource type="Script" path="res://Code/VictoryPlayer.cs" id="1_043p4"]
+[ext_resource type="Texture2D" uid="uid://f0fc4tf7c76l" path="res://Assets/Sprites/big_sun.png" id="1_dlcve"]
+[ext_resource type="Texture2D" uid="uid://bn3n1fwtuw88s" path="res://Assets/Sprites/sun.png" id="1_evo64"]
+[ext_resource type="PackedScene" uid="uid://jvjsbmp8teck" path="res://Scenes/Constructs/collect_sparkle.tscn" id="2_aq5am"]
+[ext_resource type="Texture2D" uid="uid://bq4llmp2x8bow" path="res://Assets/Sprites/biggest_sun.png" id="3_ayp3k"]
+[ext_resource type="Texture2D" uid="uid://df82x2oukibo4" path="res://Assets/Sprites/moon.png" id="4_g3jbu"]
+[ext_resource type="Texture2D" uid="uid://ca55yikxum43p" path="res://Assets/Sprites/big_moon.png" id="5_ea820"]
+[ext_resource type="Texture2D" uid="uid://boy0riabu41p7" path="res://Assets/Sprites/biggest_moon.png" id="6_goga5"]
+[ext_resource type="Texture2D" uid="uid://dhiymltefay0p" path="res://Assets/Particles/sparkle.png" id="7_gkwqm"]
+[ext_resource type="Script" path="res://Code/UprightSprite.cs" id="7_vmqjg"]
+[ext_resource type="Texture2D" uid="uid://cs8kqhhkjy3x3" path="res://Assets/Particles/small star.png" id="10_15rb1"]
+[ext_resource type="Texture2D" uid="uid://cb37783o7x7qi" path="res://Assets/Particles/big star.png" id="11_gga5r"]
+
+[sub_resource type="Animation" id="Animation_d5lt0"]
+resource_name = "player_victory"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spinner/Sun/SunSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_evo64"), ExtResource("1_dlcve"), ExtResource("3_ayp3k"), null]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spinner/Moon/MoonSprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_g3jbu"), ExtResource("5_ea820"), ExtResource("6_goga5"), null]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spinner/Sun:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.73208, 3.73213),
+"update": 0,
+"values": [Vector2(8, 0), Vector2(100, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Spinner/Moon:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.73208, 3.73213),
+"update": 0,
+"values": [Vector2(-8, 0), Vector2(-100, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Spinner:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1.56917, 1.68179),
+"update": 0,
+"values": [0.0, 13.9626]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Spinner/Sun/SunSprite:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.45, 0.7, 0.85, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(1, 1), Vector2(0.8, 0.8), Vector2(1, 1), Vector2(0.8, 0.8), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Spinner/Moon/MoonSprite:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.45, 0.7, 0.85, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(1, 1), Vector2(0.8, 0.8), Vector2(1, 1), Vector2(0.8, 0.8), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s0qdm"]
+_data = {
+"player_victory": SubResource("Animation_d5lt0")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mg1ik"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Gradient" id="Gradient_4qar8"]
+offsets = PackedFloat32Array(0, 0.995204, 1)
+colors = PackedColorArray(0.66, 0.66, 0.66, 1, 0.880144, 0.880144, 0.880144, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_saf0k"]
+gradient = SubResource("Gradient_4qar8")
+width = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bcoit"]
+lifetime_randomness = 0.26
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 12.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 2.0
+damping_max = 2.0
+color_initial_ramp = SubResource("GradientTexture1D_saf0k")
+anim_speed_max = 2.0
+anim_offset_max = 0.5
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a0y73"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lsceg"]
+lifetime_randomness = 0.26
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 12.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 2.0
+damping_max = 2.0
+color_initial_ramp = SubResource("GradientTexture1D_saf0k")
+anim_speed_min = 2.0
+anim_speed_max = 4.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vndj2"]
+lifetime_randomness = 0.26
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 12.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 2.0
+damping_max = 2.0
+color_initial_ramp = SubResource("GradientTexture1D_saf0k")
+anim_speed_min = 2.0
+anim_speed_max = 4.0
+
+[node name="VictoryPlayer" type="Node2D" node_paths=PackedStringArray("sun", "moon", "sun", "moon")]
+z_index = 20
+z_as_relative = false
+position = Vector2(80, 64)
+script = ExtResource("1_043p4")
+sun = NodePath("Spinner/Sun")
+moon = NodePath("Spinner/Moon")
+minDistance = 7.0
+maxDistance = 34.0
+sun = NodePath("Spinner/Sun")
+moon = NodePath("Spinner/Moon")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+speed_scale = 0.28
+libraries = {
+"": SubResource("AnimationLibrary_s0qdm")
+}
+
+[node name="Spinner" type="Node2D" parent="."]
+
+[node name="Sun" type="Node2D" parent="Spinner"]
+position = Vector2(8, 0)
+
+[node name="SunSprite" type="Sprite2D" parent="Spinner/Sun"]
+texture = ExtResource("1_evo64")
+script = ExtResource("7_vmqjg")
+
+[node name="PlanetSparkles" type="GPUParticles2D" parent="Spinner/Sun"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_mg1ik")
+amount = 36
+process_material = SubResource("ParticleProcessMaterial_bcoit")
+texture = ExtResource("7_gkwqm")
+lifetime = 0.8
+
+[node name="PlanetSparkles2" type="GPUParticles2D" parent="Spinner/Sun"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_lsceg")
+texture = ExtResource("10_15rb1")
+lifetime = 1.3
+
+[node name="PlanetSparkles3" type="GPUParticles2D" parent="Spinner/Sun"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_vndj2")
+texture = ExtResource("11_gga5r")
+lifetime = 1.3
+
+[node name="CollectSparkle" parent="Spinner/Sun" instance=ExtResource("2_aq5am")]
+position = Vector2(-8, 0)
+killOnFinish = false
+
+[node name="Moon" type="Node2D" parent="Spinner"]
+position = Vector2(-8, 0)
+
+[node name="MoonSprite" type="Sprite2D" parent="Spinner/Moon"]
+texture = ExtResource("4_g3jbu")
+script = ExtResource("7_vmqjg")
+
+[node name="PlanetSparkles" type="GPUParticles2D" parent="Spinner/Moon"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 36
+process_material = SubResource("ParticleProcessMaterial_bcoit")
+texture = ExtResource("7_gkwqm")
+lifetime = 0.8
+
+[node name="PlanetSparkles3" type="GPUParticles2D" parent="Spinner/Moon"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_lsceg")
+texture = ExtResource("10_15rb1")
+lifetime = 1.3
+
+[node name="PlanetSparkles4" type="GPUParticles2D" parent="Spinner/Moon"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_vndj2")
+texture = ExtResource("11_gga5r")
+lifetime = 1.3
+
+[node name="CollectSparkle2" parent="Spinner/Moon" instance=ExtResource("2_aq5am")]
+position = Vector2(8, 0)
+killOnFinish = false

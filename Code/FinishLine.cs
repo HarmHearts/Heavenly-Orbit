@@ -4,6 +4,9 @@ using System;
 [Tool]
 public partial class FinishLine : NinePatchRect
 {
+	private bool win = false;
+	[Signal]
+	public delegate void OnWinEventHandler();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -25,4 +28,13 @@ public partial class FinishLine : NinePatchRect
         ((RectangleShape2D)shape.Shape).Size = this.Size;
 		shape.Position = this.Size / 2;
     }
+
+	public void OnEntered(Node2D body)
+	{
+		if(body.IsInGroup("Player") && !win)
+		{
+			win = true;
+			EmitSignal(SignalName.OnWin);
+		}
+	}
 }

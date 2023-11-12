@@ -1,0 +1,112 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyhv0qhpfmatv"]
+
+[ext_resource type="Texture2D" uid="uid://dmoca1e3lubgm" path="res://Assets/Sprites/star_tile.png" id="1_mqal0"]
+[ext_resource type="Texture2D" uid="uid://ycglmh51tgvl" path="res://Assets/Slices/text_box.png" id="1_mr2mx"]
+[ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_xrh6o"]
+[ext_resource type="FontFile" uid="uid://dsb5i04jeilcq" path="res://Assets/Fonts/ChevyRay - Curse.ttf" id="3_y16ca"]
+
+[node name="PauseScreen" type="CanvasLayer"]
+
+[node name="AspectContainer" type="AspectRatioContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1112
+stretch_mode = 1
+
+[node name="TopBarClearance" type="HBoxContainer" parent="AspectContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TopBarBG" type="ColorRect" parent="AspectContainer/TopBarClearance"]
+custom_minimum_size = Vector2(160, 8)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+
+[node name="TextureRect" type="TextureRect" parent="AspectContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1_mqal0")
+stretch_mode = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="AspectContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 8
+
+[node name="ColorRect" type="ColorRect" parent="AspectContainer/MarginContainer3"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="AspectContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="AspectContainer/MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("1_mr2mx")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectContainer/MarginContainer2/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectContainer/MarginContainer2/NinePatchRect/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Pause" type="RichTextLabel" parent="AspectContainer/MarginContainer2/NinePatchRect/MarginContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_y16ca")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center] PAUSED"
+fit_content = true
+scroll_active = false
+scroll_following = true
+
+[node name="Paused" type="RichTextLabel" parent="AspectContainer/MarginContainer2/NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_xrh6o")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]You Have PAUSED Your Game Muy Lourde"
+fit_content = true

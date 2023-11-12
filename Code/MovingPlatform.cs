@@ -28,5 +28,24 @@ public partial class MovingPlatform : PathFollow2D
 			motionVector -= this.GlobalPosition;
 			motionVector *= -1;
 		}
+		else
+		{
+			motionVector = Vector2.Zero;
+		}
+	}
+
+	public void StartMovement()
+	{
+		moving = true;
+	}
+
+	public void ToggleMovement()
+	{
+		moving = !moving;
+	}
+
+	public void Reverse()
+	{
+		reverse = !reverse;
 	}
 }

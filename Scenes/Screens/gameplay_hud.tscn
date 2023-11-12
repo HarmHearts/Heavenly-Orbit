@@ -51,6 +51,7 @@ _data = {
 }
 
 [node name="GameplayHUD" type="CanvasLayer"]
+layer = 2
 
 [node name="TopBar" type="AspectRatioContainer" parent="."]
 anchors_preset = 15
@@ -192,6 +193,7 @@ theme_override_constants/margin_bottom = 48
 
 [node name="TitleContainer" type="VBoxContainer" parent="TitleContainer/MarginContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 
@@ -296,3 +298,34 @@ targetAnimation = &"text_flash"
 [node name="GoTimer" type="Timer" parent="TitleContainer/MarginContainer/GoContainer"]
 wait_time = 1.4
 one_shot = true
+
+[node name="FinishContainer" type="VBoxContainer" parent="TitleContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Finish" type="RichTextLabel" parent="TitleContainer/MarginContainer/FinishContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.309804, 0.309804, 0.309804, 1)
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("4_n4t8o")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center] -FINISH!-"
+fit_content = true
+scroll_active = false
+scroll_following = true
+
+[node name="TextFlasher" type="AnimationPlayer" parent="TitleContainer/MarginContainer/FinishContainer/Finish"]
+speed_scale = 3.0
+libraries = {
+"": SubResource("AnimationLibrary_hmol6")
+}
+script = ExtResource("5_pbiqu")
+targetAnimation = &"text_flash"

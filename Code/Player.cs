@@ -47,10 +47,11 @@ public partial class Player : Node2D
     private float _moveSpeed;
 	private Vector2 frictionMovement;
 	private float bounceTimer;
-	private bool alive = true;
+	public bool alive = true;
 
 	//properties
 	public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
+    public float CurrentRotation { get => this.GetChild<Node2D>(0).Rotation; }
     /// <summary>
     /// represents radius not diameter, each body is _bodyDistance pixels away from the center
     /// </summary>
@@ -275,6 +276,7 @@ public partial class Player : Node2D
 		if (!CheckFloor(_lockedBody))
 		{
 			UnlockBody();
+            AudioSystem.PlaySFX("Launch");
 			Velocity = QuantizeVector(frictionMovement) * frictionMovement.Length();
 		}
 	}
@@ -433,6 +435,11 @@ public partial class Player : Node2D
 		return result;
 	}
 
+    public void ForceUnlock()
+    {
+        UnlockBody();
+    }
+
     private Vector2 QuantizeVector(Vector2 value)
     {
         return Vector2.FromAngle(Mathf.DegToRad(Mathf.Round(Mathf.RadToDeg(value.Angle()) / quantization) * quantization));
@@ -484,7 +491,6 @@ public partial class Player : Node2D
 
     private void ResolveFloorType(String type, bool sun)
 	{
-        GD.Print("Floor " + type);
 		switch(type)
 		{
 			case "Floor":
@@ -534,7 +540,6 @@ public partial class Player : Node2D
                 if (data.VariantType is Variant.Type.String && ((string)data).Equals("Bounce"))
                 {
                     //for bounce walls
-                    GD.Print("Bounce!");
                     Bounce(coll, sun);
                 }
                 else
