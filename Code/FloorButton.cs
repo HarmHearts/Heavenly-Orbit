@@ -4,11 +4,11 @@ using System;
 public partial class FloorButton : Node2D
 {
 	[Export]
-	private bool pressed;
-	[Export]
 	private bool sticky;
 
-	[Signal]
+    private bool pressed;
+
+    [Signal]
 	public delegate void ButtonPressedEventHandler();
 
 	// Called when the node enters the scene tree for the first time.

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://bvxrd1p6xqvms"]
 
-[ext_resource type="AudioStream" uid="uid://b4dn44cwwamt2" path="res://Assets/SFX/sparkle.wav" id="1_mqqxo"]
+[ext_resource type="AudioStream" uid="uid://d04kepukjniq8" path="res://Assets/SFX/Super Mario World Music_ Level Complete.ogg" id="1_l87w4"]
 [ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_4wqua"]
 
 [resource]
 script = ExtResource("2_4wqua")
 name = &"Victory"
-audioList = Array[AudioStream]([ExtResource("1_mqqxo")])
-channel = 0
+audioList = Array[AudioStream]([ExtResource("1_l87w4")])
+channel = 2
 looping = false

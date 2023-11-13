@@ -1,10 +1,18 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://d1rgf2cv2ea78"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://d1rgf2cv2ea78"]
 
 [ext_resource type="PackedScene" uid="uid://bnviftyvnd085" path="res://Scenes/Constructs/crystal.tscn" id="1_s3g3u"]
+[ext_resource type="PackedScene" uid="uid://cu51o2plhkij5" path="res://Scenes/Constructs/toggle_wall.tscn" id="2_lvcsx"]
+[ext_resource type="PackedScene" uid="uid://ce8rbb5l74oi" path="res://Scenes/Constructs/toggle_wall_off.tscn" id="3_kh4l1"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_rjl7q"]
 resource_name = "Entities"
 scenes/1/scene = ExtResource("1_s3g3u")
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ov11i"]
+resource_name = "Togglable"
+scenes/1/scene = ExtResource("2_lvcsx")
+scenes/2/scene = ExtResource("3_kh4l1")
+
 [resource]
 sources/0 = SubResource("TileSetScenesCollectionSource_rjl7q")
+sources/2 = SubResource("TileSetScenesCollectionSource_ov11i")

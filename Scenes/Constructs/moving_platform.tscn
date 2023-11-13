@@ -7,7 +7,7 @@
 resource_local_to_scene = true
 size = Vector2(32, 32)
 
-[node name="MovingPlatform" type="PathFollow2D" groups=["Wall"]]
+[node name="MovingPlatform" type="PathFollow2D" groups=["Toggle", "Wall"]]
 position = Vector2(128, 0)
 rotates = false
 script = ExtResource("1_20n0o")

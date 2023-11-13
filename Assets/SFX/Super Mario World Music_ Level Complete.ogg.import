@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d04kepukjniq8"
+path="res://.godot/imported/Super Mario World Music_ Level Complete.ogg-9655a82795a65fe8d3d8e07c7cc9d6d6.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/SFX/Super Mario World Music_ Level Complete.ogg"
+dest_files=["res://.godot/imported/Super Mario World Music_ Level Complete.ogg-9655a82795a65fe8d3d8e07c7cc9d6d6.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

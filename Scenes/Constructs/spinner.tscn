@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://cr20sfrgr6jbw"]
+
+[ext_resource type="Texture2D" uid="uid://borevju0wp3v" path="res://Assets/Sprites/spinner.png" id="1_e1ws8"]
+[ext_resource type="Script" path="res://Code/Spinner.cs" id="2_cckrr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbify"]
+atlas = ExtResource("1_e1ws8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4okfb"]
+atlas = ExtResource("1_e1ws8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmu63"]
+atlas = ExtResource("1_e1ws8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hp88"]
+atlas = ExtResource("1_e1ws8")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rwoeq"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbify")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmu63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hp88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.28
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t65vf"]
+radius = 12.0
+
+[node name="Spinner" type="AnimatedSprite2D" groups=["Toggle"]]
+z_index = -5
+z_as_relative = false
+sprite_frames = SubResource("SpriteFrames_rwoeq")
+frame_progress = 0.580571
+script = ExtResource("2_cckrr")
+spinSpeed = -2.0
+active = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_t65vf")
+
+[connection signal="body_entered" from="Area2D" to="." method="OnEntered"]

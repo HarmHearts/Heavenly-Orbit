@@ -94,8 +94,9 @@ tracks/5/keys = {
 "values": [Vector2(0, 0), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_5oi12"]
-resource_name = "screen_wipe_grid"
+[sub_resource type="Animation" id="Animation_tyme0"]
+resource_name = "screen_fade_quick"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -103,10 +104,10 @@ tracks/0/path = NodePath("Grid1:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("8_ufy8a"), ExtResource("8_ufy8a")]
+"values": [ExtResource("7_sbpwk"), ExtResource("7_sbpwk")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -115,10 +116,10 @@ tracks/1/path = NodePath("Grid2:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("8_ufy8a"), ExtResource("8_ufy8a")]
+"values": [null, null]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -127,46 +128,22 @@ tracks/2/path = NodePath("Grid1:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(-320, 0), Vector2(-288, 0), Vector2(-256, 0), Vector2(-224, 0), Vector2(-192, 0), Vector2(-160, 0), Vector2(-128, 0), Vector2(-96, 0), Vector2(-64, 0), Vector2(-32, 0), Vector2(0, 0)]
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Grid2:position")
+tracks/3/path = NodePath("Grid1:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [Vector2(160, 0), Vector2(128, 0), Vector2(96, 0), Vector2(64, 0), Vector2(32, 0), Vector2(0, 0), Vector2(-32, 0), Vector2(-64, 0), Vector2(-96, 0), Vector2(-128, 0), Vector2(-160, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Grid1:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Grid2:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_lnkp4"]
@@ -245,9 +222,8 @@ tracks/5/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_tyme0"]
-resource_name = "screen_fade_quick"
-length = 0.3
+[sub_resource type="Animation" id="Animation_5oi12"]
+resource_name = "screen_wipe_grid"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -255,10 +231,10 @@ tracks/0/path = NodePath("Grid1:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("7_sbpwk"), ExtResource("7_sbpwk")]
+"values": [ExtResource("8_ufy8a"), ExtResource("8_ufy8a")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -267,10 +243,10 @@ tracks/1/path = NodePath("Grid2:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [null, null]
+"values": [ExtResource("8_ufy8a"), ExtResource("8_ufy8a")]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -279,22 +255,46 @@ tracks/2/path = NodePath("Grid1:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0)]
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-320, 0), Vector2(-288, 0), Vector2(-256, 0), Vector2(-224, 0), Vector2(-192, 0), Vector2(-160, 0), Vector2(-128, 0), Vector2(-96, 0), Vector2(-64, 0), Vector2(-32, 0), Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Grid1:modulate")
+tracks/3/path = NodePath("Grid2:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(160, 0), Vector2(128, 0), Vector2(96, 0), Vector2(64, 0), Vector2(32, 0), Vector2(0, 0), Vector2(-32, 0), Vector2(-64, 0), Vector2(-96, 0), Vector2(-128, 0), Vector2(-160, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Grid1:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Grid2:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g0h0k"]
@@ -306,9 +306,10 @@ _data = {
 }
 
 [node name="Gameplay" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_6idu5")
 levelsPath = "res://Scenes/Levels/"
-targetLevel = "mechanics_test_level"
+targetLevel = "base_level"
 backgroundsPath = "res://Scenes/Backgrounds/"
 
 [node name="Camera" parent="." instance=ExtResource("2_h08qm")]
@@ -319,6 +320,7 @@ position = Vector2(80, 72)
 [node name="GameplayHUD" parent="." instance=ExtResource("3_g1vxf")]
 
 [node name="GameOverlayCanvas" type="CanvasLayer" parent="."]
+process_mode = 3
 layer = 10
 
 [node name="ScreenSpaceContainer" type="AspectRatioContainer" parent="GameOverlayCanvas"]
@@ -351,13 +353,15 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 offset_right = 320.0
 offset_bottom = 288.0
-texture = ExtResource("7_sbpwk")
+texture = ExtResource("7_qac74")
 stretch_mode = 2
 
 [node name="Grid2" type="TextureRect" parent="GameOverlayCanvas/ScreenSpaceContainer/ScreenFade/Control"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 offset_right = 320.0
 offset_bottom = 288.0
+texture = ExtResource("7_qac74")
 stretch_mode = 2
 flip_h = true
 flip_v = true
@@ -371,7 +375,7 @@ libraries = {
 script = ExtResource("9_ooi6a")
 
 [node name="PauseScreen" parent="." instance=ExtResource("11_sskel")]
+process_mode = 2
 layer = 3
-visible = false
 
 [connection signal="PlayerDeath" from="Player" to="." method="ResetTimer" binds= [1.1]]

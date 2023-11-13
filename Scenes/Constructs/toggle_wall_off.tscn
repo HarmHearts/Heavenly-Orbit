@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce8rbb5l74oi"]
+
+[ext_resource type="PackedScene" uid="uid://cu51o2plhkij5" path="res://Scenes/Constructs/toggle_wall.tscn" id="1_r5emd"]
+
+[node name="ToggleWall" instance=ExtResource("1_r5emd")]
+frame = 3
+raised = false

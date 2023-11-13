@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cu51o2plhkij5"]
+
+[ext_resource type="Texture2D" uid="uid://bngc6aln8418x" path="res://Assets/Sprites/wall_toggle.png" id="1_7af4h"]
+[ext_resource type="Script" path="res://Code/ToggleWall.cs" id="2_2mp5o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4u6pc"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7ppn"]
+size = Vector2(16, 16)
+
+[node name="ToggleWall" type="Sprite2D" groups=["Toggle", "Wall"]]
+z_index = -5
+z_as_relative = false
+texture = ExtResource("1_7af4h")
+hframes = 4
+script = ExtResource("2_2mp5o")
+raised = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Wall"]]
+collision_layer = 4
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" groups=["Wall"]]
+shape = SubResource("RectangleShape2D_4u6pc")
+
+[node name="Area2D" type="Area2D" parent="." groups=["Floor"]]
+collision_layer = 2
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" groups=["Floor"]]
+shape = SubResource("RectangleShape2D_h7ppn")

@@ -342,7 +342,7 @@ public partial class Player : Node2D
 	{
         //do lockability check here
         if (!CheckFloor(true)) return;
-		if(!alive) return;
+        if (!alive || !InputEnabled) return;
 
         if (_locked)
 		{
@@ -364,7 +364,7 @@ public partial class Player : Node2D
     {
         //do lockability check here
         if (!CheckFloor(false)) return;
-        if (!alive) return;
+        if (!alive || !InputEnabled) return;
 
         if (_locked)
         {
@@ -408,6 +408,7 @@ public partial class Player : Node2D
     private void Die(bool sun)
 	{
         if (!alive) return;
+        ForceUnlock();
 		GD.Print("Fuck!");
 		AudioSystem.PlaySFX("Explode");
         alive = false;
@@ -476,12 +477,20 @@ public partial class Player : Node2D
                     if(currentPlatform == null)
                     {
                         currentPlatform = body.GetParentOrNull<MovingPlatform>();
+                        ResolveFloorType("Floor", sun);
                         return true;
                     }
                     else if(body.GetParentOrNull<MovingPlatform>() == currentPlatform)
                     {
+                        ResolveFloorType("Floor", sun);
                         return true;
                     }
+                }
+                //if floor is any other floor
+                else if(body is Area2D && body.IsInGroup("Floor"))
+                {
+                    ResolveFloorType("Floor", sun);
+                    return true;
                 }
             }
         }
@@ -527,7 +536,6 @@ public partial class Player : Node2D
     #region callbacks
     public void OnCollision(KinematicCollision2D coll, bool sun)
     {
-        GD.Print(coll.GetCollider().GetType());
         //check wall type
         if (coll.GetCollider() is TileMap)
         {

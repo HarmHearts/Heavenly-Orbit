@@ -1,15 +1,17 @@
 using Godot;
 using System;
 
-public partial class MovingPlatform : PathFollow2D
+public partial class MovingPlatform : PathFollow2D, IToggleable
 {
 	[Export]
 	public float speed;
 	[Export]
-	public bool moving;
+	private bool moving;
 	[Export]
-	public bool reverse;
-    [Export]
+	private bool reverse;
+	[Export]
+	private bool toggleable;
+
     public Vector2 motionVector;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -47,5 +49,10 @@ public partial class MovingPlatform : PathFollow2D
 	public void Reverse()
 	{
 		reverse = !reverse;
+	}
+
+	public void Toggle()
+	{
+		if (toggleable) moving = !moving;
 	}
 }

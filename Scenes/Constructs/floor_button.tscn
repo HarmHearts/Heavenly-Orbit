@@ -7,7 +7,6 @@
 radius = 8.0
 
 [node name="FloorButton" type="Node2D"]
-position = Vector2(24, -24)
 script = ExtResource("1_ig21l")
 
 [node name="ButtonSprite" type="Sprite2D" parent="."]

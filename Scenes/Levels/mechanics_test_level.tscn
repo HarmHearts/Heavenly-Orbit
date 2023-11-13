@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3fslmv18avyo"]
+[gd_scene load_steps=18 format=3 uid="uid://c3fslmv18avyo"]
 
 [ext_resource type="PackedScene" uid="uid://bxw05bkwn663l" path="res://Scenes/Levels/base_level.tscn" id="1_p5fxd"]
 [ext_resource type="Texture2D" uid="uid://3fwjvnacvi51" path="res://Tilesets/floor_dirt.png" id="2_alrcd"]
@@ -6,19 +6,120 @@
 [ext_resource type="PackedScene" uid="uid://d2ygfq2etu708" path="res://Scenes/Constructs/platform_path.tscn" id="3_4xws2"]
 [ext_resource type="Texture2D" uid="uid://mgixil21quem" path="res://Tilesets/wall_checker_white.png" id="3_ejsi4"]
 [ext_resource type="PackedScene" uid="uid://dxsnmmsiqh78l" path="res://Scenes/Constructs/moving_platform.tscn" id="4_livyw"]
+[ext_resource type="PackedScene" uid="uid://cr20sfrgr6jbw" path="res://Scenes/Constructs/spinner.tscn" id="7_2b08r"]
+[ext_resource type="Texture2D" uid="uid://borevju0wp3v" path="res://Assets/Sprites/spinner.png" id="8_jsxdr"]
 
-[sub_resource type="Curve2D" id="Curve2D_hnd0g"]
+[sub_resource type="Curve2D" id="Curve2D_lwwni"]
 resource_local_to_scene = true
 bake_interval = 8.0
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 248, 64, 0, 0, 0, 0, 248, 128, 0, 0, 0, 0, -8, 128, 0, 0, 0, 0, -8, 64, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 120, 64, 0, 0, 0, 0, 248, 64)
+"points": PackedVector2Array(0, 0, 0, 0, 264, 64, 0, 0, 0, 0, 264, 128, 0, 0, 0, 0, -8, 128, 0, 0, 0, 0, -8, 64, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 120, 64, 0, 0, 0, 0, 264, 64)
 }
 point_count = 7
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbify"]
+atlas = ExtResource("8_jsxdr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4okfb"]
+atlas = ExtResource("8_jsxdr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmu63"]
+atlas = ExtResource("8_jsxdr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hp88"]
+atlas = ExtResource("8_jsxdr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_di3ev"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbify")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmu63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hp88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.28
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sscqs"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbify")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmu63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hp88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.28
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r3l1f"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbify")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmu63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hp88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.28
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gw478"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbify")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmu63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hp88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.28
+}]
 
 [node name="LevelRoot" instance=ExtResource("1_p5fxd")]
 levelName = "Testing Space"
 background = "cloud_background"
-initialPlayerSpin = true
 floorTexture = ExtResource("2_alrcd")
 wallTexture = ExtResource("3_ejsi4")
 
@@ -53,11 +154,30 @@ gravity = Vector2(0, -35)
 
 [node name="PlatformPath" parent="." index="8" instance=ExtResource("3_4xws2")]
 position = Vector2(-312, -384)
-curve = SubResource("Curve2D_hnd0g")
+curve = SubResource("Curve2D_lwwni")
 
 [node name="MovingPlatform" parent="PlatformPath" index="1" instance=ExtResource("4_livyw")]
-position = Vector2(248, 64)
+position = Vector2(264, 64)
 
 [node name="MovingPlatform2" parent="PlatformPath" index="2" instance=ExtResource("4_livyw")]
-position = Vector2(-8, 128)
+position = Vector2(7.88185, 128)
 progress = 320.0
+
+[node name="Spinner" parent="." index="9" instance=ExtResource("7_2b08r")]
+position = Vector2(0, -544)
+sprite_frames = SubResource("SpriteFrames_di3ev")
+spinSpeed = -3.0
+
+[node name="Spinner2" parent="." index="10" instance=ExtResource("7_2b08r")]
+position = Vector2(0, -448)
+sprite_frames = SubResource("SpriteFrames_sscqs")
+spinSpeed = 3.0
+
+[node name="Spinner3" parent="." index="11" instance=ExtResource("7_2b08r")]
+position = Vector2(48, -496)
+sprite_frames = SubResource("SpriteFrames_r3l1f")
+spinSpeed = 2.0
+
+[node name="Spinner4" parent="." index="12" instance=ExtResource("7_2b08r")]
+position = Vector2(-48, -496)
+sprite_frames = SubResource("SpriteFrames_gw478")

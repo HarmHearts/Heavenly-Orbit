@@ -1,5 +1,6 @@
 using Godot;
 using System.Diagnostics;
+using System;
 
 public partial class GameplayManager : Node2D
 {
@@ -28,6 +29,7 @@ public partial class GameplayManager : Node2D
 	private bool paused;
 
 	private Timer loadTime;
+    private ScreenFader screenFade;
 
 	//scene references
     private PackedScene loadedLevelScene;
@@ -42,6 +44,7 @@ public partial class GameplayManager : Node2D
 		crystalText = hud.GetNode("%Crystals") as RichTextLabel;
 		titleText = hud.GetNode<RichTextLabel>("%LevelTitle");
 		worldText = hud.GetNode<RichTextLabel>("%WorldTitle");
+        screenFade = GetNode<ScreenFader>("%ScreenFader");
         hud.GetNode("%GoContainer").GetNode<Timer>("GoTimer").Timeout += GoTimeOut;
         LoadLevel();
 	}
@@ -57,8 +60,19 @@ public partial class GameplayManager : Node2D
     {
         if (@event.IsActionPressed("Btn_Start"))
         {
+            if (busy) return;
             if (!paused) PauseGame();
             else UnpauseGame();
+        }
+        if (@event.IsActionReleased("Btn_A"))
+        {
+            hud.GetNode<AnimationPlayer>("%MiniSunAnim").Stop();
+            if ((paused || busy) && player.Locked) player.ForceUnlock();
+        }
+        if (@event.IsActionReleased("Btn_B"))
+        {
+            hud.GetNode<AnimationPlayer>("%MiniMoonAnim").Stop();
+            if ((paused || busy) && player.Locked) player.ForceUnlock();
         }
         if (paused || busy) return;
         if (@event.IsActionPressed("Btn_A") || @event.IsActionPressed("Btn_B"))
@@ -78,17 +92,9 @@ public partial class GameplayManager : Node2D
 		{
 			hud.GetNode<AnimationPlayer>("%MiniSunAnim").Play("flash");
 		}
-		if (@event.IsActionReleased("Btn_A"))
-		{
-			hud.GetNode<AnimationPlayer>("%MiniSunAnim").Stop();
-        }
         if (@event.IsActionPressed("Btn_B") && playing)
         {
             hud.GetNode<AnimationPlayer>("%MiniMoonAnim").Play("flash");
-        }
-        if (@event.IsActionReleased("Btn_B"))
-        {
-            hud.GetNode<AnimationPlayer>("%MiniMoonAnim").Stop();
         }
         if (@event.IsActionPressed("Btn_Select"))
         {
@@ -139,7 +145,7 @@ public partial class GameplayManager : Node2D
         loaded = true;
         busy = false;
         hud.GetNode<CanvasItem>("%FinishContainer").Visible = false;
-        GetNode<ScreenFader>("%ScreenFader").UnfadeScreen("screen_wipe_grid");
+        GetNode<ScreenFader>("%ScreenFader").UnfadeScreen("screen_wipe_grid", true);
         GD.Print("level loaded");
     }
 
@@ -233,7 +239,7 @@ public partial class GameplayManager : Node2D
 
 	public void DeathReset()
 	{
-        GetNode<ScreenFader>("%ScreenFader").FadeScreen("screen_wipe_grid", new Callable(this, MethodName.ReloadLevel));
+        screenFade.FadeScreen("screen_wipe_grid", new Callable(this, MethodName.ReloadLevel), true);
     }
 
     public void Win()
@@ -252,6 +258,7 @@ public partial class GameplayManager : Node2D
         camera.target = newGuy;
         player.Reset();
         player.Position = new Vector2(-9999, 9999);
+        player.InputEnabled = false;
         //trigger finish text
         hud.GetNode<CanvasItem>("%FinishContainer").Visible = true;
         //play sound
@@ -263,20 +270,37 @@ public partial class GameplayManager : Node2D
 
     public void PauseGame()
     {
-        paused = true;
-        GetNode<ScreenFader>("%ScreenFader").FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
-        timer.Stop();
-        player.InputEnabled = false;
-        player.alive = false;
+        try
+        {
+            screenFade.FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
+            timer.Stop();
+            GetTree().Paused = true;
+            player.InputEnabled = false;
+            player.alive = false;
+            paused = true;
+        }
+        catch (TransitionInterruptException e){
+            GD.Print(e);
+            return;
+        }
     }
 
     public void UnpauseGame()
     {
-        paused = false;
-        GetNode<ScreenFader>("%ScreenFader").FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
-        timer.Start();
-        player.InputEnabled = true;
-        player.alive = true;
+        try
+        {
+            screenFade.FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
+            timer.Start();
+            GetTree().Paused = false;
+            player.InputEnabled = true;
+            player.alive = true;
+            paused = false;
+        }
+        catch (TransitionInterruptException e)
+        {
+            GD.Print(e);
+            return;
+        }
     }
 
     public void PauseScreen()
