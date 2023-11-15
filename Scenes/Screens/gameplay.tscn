@@ -309,13 +309,14 @@ _data = {
 process_mode = 1
 script = ExtResource("1_6idu5")
 levelsPath = "res://Scenes/Levels/"
-targetLevel = "base_level"
+targetLevel = "level_1-3"
 backgroundsPath = "res://Scenes/Backgrounds/"
 
 [node name="Camera" parent="." instance=ExtResource("2_h08qm")]
 position = Vector2(80, 72)
 
 [node name="Player" parent="." instance=ExtResource("3_7408n")]
+position = Vector2(999, 999)
 
 [node name="GameplayHUD" parent="." instance=ExtResource("3_g1vxf")]
 
@@ -368,6 +369,7 @@ flip_v = true
 
 [node name="ScreenFader" type="AnimationPlayer" parent="GameOverlayCanvas/ScreenSpaceContainer/ScreenFade/Control"]
 unique_name_in_owner = true
+process_mode = 3
 speed_scale = 1.5
 libraries = {
 "": SubResource("AnimationLibrary_g0h0k")
@@ -375,7 +377,7 @@ libraries = {
 script = ExtResource("9_ooi6a")
 
 [node name="PauseScreen" parent="." instance=ExtResource("11_sskel")]
-process_mode = 2
 layer = 3
+visible = false
 
 [connection signal="PlayerDeath" from="Player" to="." method="ResetTimer" binds= [1.1]]

@@ -8,6 +8,11 @@ public partial class CrystalCollectible : Area2D
     [Signal]
     public delegate void OnCollectEventHandler();
 
+    public override void _Ready()
+    {
+        OnCollect += GetNode<GameplayManager>("/root/Gameplay").CrystalCollected;
+    }
+
     private void OnBodyEntered(PhysicsBody2D body)
     {
         AudioSystem.PlaySFX("Collect");

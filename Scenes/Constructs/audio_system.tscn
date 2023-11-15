@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Code/AudioSystem.cs" id="1_4fp2a"]
 
 [node name="AudioSystem" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_4fp2a")
 
 [node name="SFXPlayerPulse" type="AudioStreamPlayer" parent="."]

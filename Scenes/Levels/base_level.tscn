@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxw05bkwn663l"]
+[gd_scene load_steps=10 format=3 uid="uid://bxw05bkwn663l"]
 
 [ext_resource type="Script" path="res://Code/Level.cs" id="1_osj68"]
 [ext_resource type="Texture2D" uid="uid://b37mwun3qeupt" path="res://Tilesets/floor_test.png" id="2_xn25t"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://c4axw2th8i46m" path="res://Tilesets/floor_tiles.tres" id="4_4rrph"]
 [ext_resource type="TileSet" uid="uid://gfn80634q6u0" path="res://Tilesets/wall_tiles.tres" id="5_kns5f"]
 [ext_resource type="TileSet" uid="uid://d1rgf2cv2ea78" path="res://Tilesets/entity_tiles.tres" id="6_56cor"]
+[ext_resource type="TileSet" uid="uid://bstl3qarn40a7" path="res://Tilesets/deco_tiles.tres" id="7_6g33n"]
 [ext_resource type="Texture2D" uid="uid://dum2km5wwh2hl" path="res://Assets/Sprites/player_start.png" id="7_kcqt3"]
 [ext_resource type="PackedScene" uid="uid://c8mf34x5rt2cg" path="res://Scenes/Constructs/finish_line.tscn" id="8_h3mng"]
 
@@ -30,6 +31,11 @@ format = 2
 
 [node name="Entities" type="TileMap" parent="."]
 tile_set = ExtResource("6_56cor")
+format = 2
+
+[node name="Deco" type="TileMap" parent="."]
+z_index = -9
+tile_set = ExtResource("7_6g33n")
 format = 2
 
 [node name="PlayerStart" type="Marker2D" parent="."]

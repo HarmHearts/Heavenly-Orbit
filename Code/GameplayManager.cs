@@ -1,5 +1,6 @@
 using Godot;
 using System.Diagnostics;
+using System.Linq;
 using System;
 
 public partial class GameplayManager : Node2D
@@ -13,7 +14,7 @@ public partial class GameplayManager : Node2D
 	private int gemCount;
 	private Stopwatch timer;
 	private Node loadedBackground;
-	private Level loadedLevel;
+	public Level loadedLevel;
 	private Player player;
 	private CameraFollow camera;
 	private Node hud;
@@ -26,7 +27,6 @@ public partial class GameplayManager : Node2D
 	private bool initialized;
 	private bool playing;
     private bool busy;
-	private bool paused;
 
 	private Timer loadTime;
     private ScreenFader screenFade;
@@ -61,20 +61,19 @@ public partial class GameplayManager : Node2D
         if (@event.IsActionPressed("Btn_Start"))
         {
             if (busy) return;
-            if (!paused) PauseGame();
-            else UnpauseGame();
+            PauseGame();
         }
         if (@event.IsActionReleased("Btn_A"))
         {
             hud.GetNode<AnimationPlayer>("%MiniSunAnim").Stop();
-            if ((paused || busy) && player.Locked) player.ForceUnlock();
+            if (busy && player.Locked) player.ForceUnlock();
         }
         if (@event.IsActionReleased("Btn_B"))
         {
             hud.GetNode<AnimationPlayer>("%MiniMoonAnim").Stop();
-            if ((paused || busy) && player.Locked) player.ForceUnlock();
+            if (busy && player.Locked) player.ForceUnlock();
         }
-        if (paused || busy) return;
+        if (busy) return;
         if (@event.IsActionPressed("Btn_A") || @event.IsActionPressed("Btn_B"))
         {
             if (!initialized && !playing && loaded)
@@ -98,6 +97,7 @@ public partial class GameplayManager : Node2D
         }
         if (@event.IsActionPressed("Btn_Select"))
         {
+            player.ForceDeath();
         }
     }
 
@@ -116,6 +116,7 @@ public partial class GameplayManager : Node2D
         timer = new Stopwatch();
 		titleText.Text = "[center]" + loadedLevel.levelName;
 		worldText.Text = "[center]World " + (loadedLevel.world == 0 ? "?" : loadedLevel.world) + " - Level " + (loadedLevel.number == 0 ? "?" : loadedLevel.number);
+        GetNode("PauseScreen").GetNode<RichTextLabel>("%InfoText").Text = "[center]-World " + (loadedLevel.world == 0 ? "?" : loadedLevel.world) + " - Level " + (loadedLevel.number == 0 ? "?" : loadedLevel.number) + "-\n" + loadedLevel.levelName;
         LevelImport();
         SpawnPlayer();
         FinishLoad();
@@ -185,7 +186,7 @@ public partial class GameplayManager : Node2D
 		player.InputEnabled = false;
 		initialized = false;
 		playing = false;
-		paused = false;
+		busy = false;
     }
 
 	public void GetReady()
@@ -197,7 +198,7 @@ public partial class GameplayManager : Node2D
         player.InputEnabled = true;
         initialized = true;
 		playing = false;
-		paused = false;
+		busy = false;
     }
 
 	public void LetsGo()
@@ -207,7 +208,7 @@ public partial class GameplayManager : Node2D
         hud.GetNode<CanvasItem>("%TitleContainer").Visible = false;
 		initialized = true;
 		playing = true;
-		paused = false;
+		busy = false;
         timer.Start();
         hud.GetNode("%GoContainer").GetNode<Timer>("GoTimer").Start();
 		AudioSystem.PlaySFX("Go!");
@@ -273,39 +274,25 @@ public partial class GameplayManager : Node2D
         try
         {
             screenFade.FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
-            timer.Stop();
-            GetTree().Paused = true;
-            player.InputEnabled = false;
-            player.alive = false;
-            paused = true;
         }
         catch (TransitionInterruptException e){
             GD.Print(e);
             return;
         }
+        AudioSystem.PlaySFX("Pause");
+        timer.Stop();
+        GetTree().Paused = true;
     }
 
     public void UnpauseGame()
     {
-        try
-        {
-            screenFade.FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
-            timer.Start();
-            GetTree().Paused = false;
-            player.InputEnabled = true;
-            player.alive = true;
-            paused = false;
-        }
-        catch (TransitionInterruptException e)
-        {
-            GD.Print(e);
-            return;
-        }
+        if(playing) timer.Start();
+        PauseScreen();
     }
 
     public void PauseScreen()
     {
         GetNode<CanvasLayer>("PauseScreen").Visible = !GetNode<CanvasLayer>("PauseScreen").Visible;
-        GetNode<ScreenFader>("%ScreenFader").UnfadeScreen("screen_fade_quick");
+        GetNode<ScreenFader>("%ScreenFader").UnfadeScreen("screen_fade_quick", true);
     }
 }

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://2cqi0o1yijvn"]
+
+[ext_resource type="AudioStream" uid="uid://dv1snixjuf5yr" path="res://Assets/SFX/pause.wav" id="1_c4bxa"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_60ltx"]
+
+[resource]
+script = ExtResource("2_60ltx")
+name = &"Pause"
+audioList = Array[AudioStream]([ExtResource("1_c4bxa")])
+channel = 2
+looping = false

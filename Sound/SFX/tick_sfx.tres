@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://vg3thqrtmtgw"]
+
+[ext_resource type="AudioStream" uid="uid://ccmx51vry62bk" path="res://Assets/SFX/menu move.wav" id="1_owvi1"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_mgij1"]
+
+[resource]
+script = ExtResource("2_mgij1")
+name = &"Move"
+audioList = Array[AudioStream]([ExtResource("1_owvi1")])
+channel = 0
+looping = false

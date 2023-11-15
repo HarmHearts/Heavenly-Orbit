@@ -1,0 +1,350 @@
+[gd_scene load_steps=16 format=3 uid="uid://bv7rqfp4fgtyr"]
+
+[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="1_0n6do"]
+[ext_resource type="Texture2D" uid="uid://dmoca1e3lubgm" path="res://Assets/Sprites/star_tile.png" id="2_g6m12"]
+[ext_resource type="Texture2D" uid="uid://ycglmh51tgvl" path="res://Assets/Slices/text_box.png" id="3_b6alt"]
+[ext_resource type="FontFile" uid="uid://dsb5i04jeilcq" path="res://Assets/Fonts/ChevyRay - Curse.ttf" id="4_knmdj"]
+[ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="5_0o1a8"]
+[ext_resource type="Texture2D" uid="uid://dxqwv4dxoe27s" path="res://Assets/Slices/fancy_divider.png" id="6_ck7pp"]
+[ext_resource type="Texture2D" uid="uid://ww80nw1pcrr2" path="res://Assets/Sprites/medal_gold.png" id="7_my4n1"]
+[ext_resource type="Texture2D" uid="uid://cuvveqvg8jvus" path="res://Assets/Sprites/star_cursor.png" id="8_35xjm"]
+[ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="9_p8whh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_804bj"]
+shader = ExtResource("1_0n6do")
+shader_parameter/motion = Vector2(2.5, 2.5)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffr2u"]
+atlas = ExtResource("8_35xjm")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eupek"]
+atlas = ExtResource("8_35xjm")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2ops"]
+atlas = ExtResource("8_35xjm")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwp6i"]
+atlas = ExtResource("8_35xjm")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_106cf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffr2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eupek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2ops")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwp6i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="level_results" type="CanvasLayer"]
+
+[node name="AspectContainer" type="AspectRatioContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1112
+stretch_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="AspectContainer"]
+material = SubResource("ShaderMaterial_804bj")
+layout_mode = 2
+texture = ExtResource("2_g6m12")
+stretch_mode = 1
+
+[node name="ShadowContainer" type="MarginContainer" parent="AspectContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 8
+
+[node name="ColorRect" type="ColorRect" parent="AspectContainer/ShadowContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ContentContainer" type="MarginContainer" parent="AspectContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="AspectContainer/ContentContainer"]
+layout_mode = 2
+texture = ExtResource("3_b6alt")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 2
+
+[node name="LevelClear" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("4_knmdj")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center] LEVEL CLEAR!"
+fit_content = true
+scroll_active = false
+scroll_following = true
+
+[node name="InfoText" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]Level Title Here"
+fit_content = true
+
+[node name="Divider" type="NinePatchRect" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+texture = ExtResource("6_ck7pp")
+patch_margin_left = 16
+patch_margin_right = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="ClearTime" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer"]
+process_mode = 3
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Clear Time:"
+fit_content = true
+
+[node name="TimeText" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+process_mode = 3
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[right]0:00.000"
+fit_content = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="GemsCollected" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer2"]
+process_mode = 3
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Gems Collected:"
+fit_content = true
+
+[node name="GemsText" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+process_mode = 3
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[right]0/0"
+fit_content = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="Rating" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer3"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("4_knmdj")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "RATING:"
+fit_content = true
+scroll_active = false
+scroll_following = true
+
+[node name="MedalTexture" type="TextureRect" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("7_my4n1")
+stretch_mode = 2
+
+[node name="Divider2" type="NinePatchRect" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+patch_margin_left = 16
+patch_margin_right = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Options" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/Options"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Option1" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/Options/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]CONTINUE"
+fit_content = true
+
+[node name="Option2" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/Options/VBoxContainer"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]QUIT"
+fit_content = true
+
+[node name="Cursor" type="Control" parent="."]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 0
+offset_left = 56.0
+offset_top = 99.0
+offset_right = 64.0
+offset_bottom = 107.0
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Cursor"]
+process_mode = 2
+z_index = 2
+position = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_106cf")
+script = ExtResource("9_p8whh")
+
+[node name="ColorRect" type="ColorRect" parent="Cursor"]
+process_mode = 2
+layout_mode = 0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 47.0
+offset_bottom = 2.0
+color = Color(0.635294, 0.635294, 0.635294, 1)
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Cursor"]
+process_mode = 2
+z_index = 2
+position = Vector2(47, 1)
+sprite_frames = SubResource("SpriteFrames_106cf")
+script = ExtResource("9_p8whh")

@@ -1,13 +1,61 @@
-[gd_scene load_steps=6 format=3 uid="uid://cyhv0qhpfmatv"]
+[gd_scene load_steps=15 format=3 uid="uid://cyhv0qhpfmatv"]
 
 [ext_resource type="Script" path="res://Code/PauseScreen.cs" id="1_hy4vp"]
 [ext_resource type="Texture2D" uid="uid://dmoca1e3lubgm" path="res://Assets/Sprites/star_tile.png" id="1_mqal0"]
 [ext_resource type="Texture2D" uid="uid://ycglmh51tgvl" path="res://Assets/Slices/text_box.png" id="1_mr2mx"]
+[ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="2_lcvvk"]
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_xrh6o"]
 [ext_resource type="FontFile" uid="uid://dsb5i04jeilcq" path="res://Assets/Fonts/ChevyRay - Curse.ttf" id="3_y16ca"]
+[ext_resource type="Texture2D" uid="uid://cuvveqvg8jvus" path="res://Assets/Sprites/star_cursor.png" id="6_odmyx"]
+[ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="7_s0yjs"]
 
-[node name="PauseScreen" type="CanvasLayer"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqcxa"]
+shader = ExtResource("2_lcvvk")
+shader_parameter/motion = Vector2(2.5, 2.5)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffr2u"]
+atlas = ExtResource("6_odmyx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eupek"]
+atlas = ExtResource("6_odmyx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2ops"]
+atlas = ExtResource("6_odmyx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwp6i"]
+atlas = ExtResource("6_odmyx")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ihgd0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffr2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eupek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2ops")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwp6i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="PauseScreen" type="CanvasLayer" node_paths=PackedStringArray("cursor")]
+process_mode = 2
 script = ExtResource("1_hy4vp")
+cursor = NodePath("Cursor")
+cursorOffset = Vector2(8, 2)
 
 [node name="AspectContainer" type="AspectRatioContainer" parent="."]
 anchors_preset = 15
@@ -34,6 +82,7 @@ layout_mode = 2
 theme_override_constants/margin_top = 8
 
 [node name="TextureRect" type="TextureRect" parent="AspectContainer/BGContainer"]
+material = SubResource("ShaderMaterial_vqcxa")
 layout_mode = 2
 texture = ExtResource("1_mqal0")
 stretch_mode = 1
@@ -83,12 +132,13 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 2
 
-[node name="Pause" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="PausedText" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/normal_font = ExtResource("3_y16ca")
@@ -99,14 +149,16 @@ fit_content = true
 scroll_active = false
 scroll_following = true
 
-[node name="Paused" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="InfoText" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+process_mode = 3
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
 theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/normal_font = ExtResource("3_xrh6o")
 theme_override_font_sizes/normal_font_size = 8
@@ -114,3 +166,98 @@ bbcode_enabled = true
 text = "[center]World ? - Level ?
 Level Title Here"
 fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+
+[node name="Options" type="VBoxContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Option1" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer/Options"]
+z_index = 1
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_xrh6o")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]RESUME"
+fit_content = true
+
+[node name="Option2" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer/Options"]
+z_index = 1
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_xrh6o")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]RESTART"
+fit_content = true
+
+[node name="Option3" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/MarginContainer/Options"]
+z_index = 1
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_xrh6o")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]QUIT"
+fit_content = true
+
+[node name="Cursor" type="Control" parent="."]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 0
+offset_left = 57.0
+offset_top = 76.0
+offset_right = 65.0
+offset_bottom = 84.0
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Cursor"]
+process_mode = 2
+z_index = 2
+position = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_ihgd0")
+script = ExtResource("7_s0yjs")
+
+[node name="ColorRect" type="ColorRect" parent="Cursor"]
+process_mode = 2
+layout_mode = 0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 47.0
+offset_bottom = 2.0
+color = Color(0.635294, 0.635294, 0.635294, 1)
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Cursor"]
+process_mode = 2
+z_index = 2
+position = Vector2(47, 1)
+sprite_frames = SubResource("SpriteFrames_ihgd0")
+frame = 2
+script = ExtResource("7_s0yjs")

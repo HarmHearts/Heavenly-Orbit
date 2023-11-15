@@ -420,6 +420,21 @@ public partial class Player : Node2D
 		else ((PlayerPlanet)this.moon).Explode();
     }
 
+    public void ForceDeath()
+    {
+        if (!alive) return;
+        ForceUnlock();
+        GD.Print("Shit!");
+        AudioSystem.PlaySFX("Explode");
+        alive = false;
+        EmitSignal(SignalName.PlayerDeath);
+        _moveDirection = Vector2.Zero;
+        _rotationSpeed = 0;
+        currentPlatform = null;
+        ((PlayerPlanet)this.sun).Explode();
+        ((PlayerPlanet)this.moon).Explode();
+    }
+
 	public Vector2 GetPlanetMotion(bool sun)
 	{
 		Vector2 result = Vector2.Zero;
