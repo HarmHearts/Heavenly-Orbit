@@ -7,7 +7,7 @@
 [node name="LevelRoot" instance=ExtResource("1_ddf52")]
 levelName = "Hairpin"
 world = 1
-number = 5
+number = 2
 background = "toys_background"
 initialPlayerSpin = false
 floorTexture = ExtResource("2_28jrq")

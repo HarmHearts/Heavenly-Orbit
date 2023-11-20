@@ -7,6 +7,7 @@ public partial class WorldMapCamera : Camera2D
     private float interpolation;
     [Export]
     private float baseSpeed;
+    [Export]
     private Node2D target;
     private float leftBound;
     private float rightBound;
@@ -16,7 +17,7 @@ public partial class WorldMapCamera : Camera2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		target = GetTree().CurrentScene.FindChild("Cursor", true) as Node2D;
+        target = GetNode<Node2D>("%Cursor");
         leftBound = this.LimitLeft + (GetViewportRect().Size.X / 2);
         rightBound = this.LimitRight - (GetViewportRect().Size.X / 2);
         upBound = this.LimitTop + (GetViewportRect().Size.Y / 2);

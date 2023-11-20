@@ -1,0 +1,551 @@
+[gd_scene load_steps=39 format=3 uid="uid://d0f6r81cja4gn"]
+
+[ext_resource type="Texture2D" uid="uid://beclsin86syny" path="res://Assets/UI/title screen new.png" id="1_5woxh"]
+[ext_resource type="Script" path="res://Code/TitleScreen.cs" id="1_en7el"]
+[ext_resource type="Script" path="res://Code/BGScroll.cs" id="2_31u01"]
+[ext_resource type="FontFile" uid="uid://bop1ghmbam1h3" path="res://Assets/Fonts/ChevyRay - Magic Book.ttf" id="3_0am7c"]
+[ext_resource type="Texture2D" uid="uid://ex6gtjjc1roe" path="res://Assets/Backgrounds/starbg1.png" id="3_qccvk"]
+[ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_sdhrc"]
+[ext_resource type="Script" path="res://Code/PlayOnStart.cs" id="4_1man6"]
+[ext_resource type="Texture2D" uid="uid://dqbsga2iks6ft" path="res://Assets/Backgrounds/starbg2.png" id="4_n0oma"]
+[ext_resource type="Texture2D" uid="uid://cxiruxj8u270g" path="res://Assets/Backgrounds/starbg3.png" id="5_7b7c4"]
+[ext_resource type="Texture2D" uid="uid://ycglmh51tgvl" path="res://Assets/Slices/text_box.png" id="5_14o77"]
+[ext_resource type="Script" path="res://Code/TitlePlayer.cs" id="5_nykbb"]
+[ext_resource type="Texture2D" uid="uid://bn3n1fwtuw88s" path="res://Assets/Sprites/sun.png" id="6_5il00"]
+[ext_resource type="Script" path="res://Code/MenuList.cs" id="6_jgd51"]
+[ext_resource type="Script" path="res://Code/MenuOption.cs" id="7_3ck0u"]
+[ext_resource type="Script" path="res://Code/UprightSprite.cs" id="7_8rn3q"]
+[ext_resource type="Texture2D" uid="uid://dhiymltefay0p" path="res://Assets/Particles/sparkle.png" id="8_tl1m0"]
+[ext_resource type="Texture2D" uid="uid://cs8kqhhkjy3x3" path="res://Assets/Particles/small star.png" id="9_edo5r"]
+[ext_resource type="Texture2D" uid="uid://cuvveqvg8jvus" path="res://Assets/Sprites/star_cursor.png" id="9_hvsdl"]
+[ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="10_6f521"]
+[ext_resource type="Texture2D" uid="uid://df82x2oukibo4" path="res://Assets/Sprites/moon.png" id="10_vg2aq"]
+[ext_resource type="Texture2D" uid="uid://bwl208xodwm5j" path="res://Assets/UI/title_bg.png" id="11_h53gy"]
+
+[sub_resource type="Animation" id="Animation_binom"]
+resource_name = "text_flash"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.65, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hmol6"]
+_data = {
+"text_flash": SubResource("Animation_binom")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffr2u"]
+atlas = ExtResource("9_hvsdl")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eupek"]
+atlas = ExtResource("9_hvsdl")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2ops"]
+atlas = ExtResource("9_hvsdl")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwp6i"]
+atlas = ExtResource("9_hvsdl")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wyyxd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffr2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eupek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2ops")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwp6i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mg1ik"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Gradient" id="Gradient_4qar8"]
+offsets = PackedFloat32Array(0, 0.995204, 1)
+colors = PackedColorArray(0.66, 0.66, 0.66, 1, 0.880144, 0.880144, 0.880144, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_saf0k"]
+gradient = SubResource("Gradient_4qar8")
+width = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bcoit"]
+lifetime_randomness = 0.26
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 12.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 2.0
+damping_max = 2.0
+color_initial_ramp = SubResource("GradientTexture1D_saf0k")
+anim_speed_max = 2.0
+anim_offset_max = 0.5
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a0y73"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lsceg"]
+lifetime_randomness = 0.26
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 12.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 2.0
+damping_max = 2.0
+color_initial_ramp = SubResource("GradientTexture1D_saf0k")
+anim_speed_min = 2.0
+anim_speed_max = 4.0
+
+[sub_resource type="Animation" id="Animation_j74gg"]
+resource_name = "TitleIntro"
+length = 2.0
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitlePlayer:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(0.6, 2.54912),
+"update": 0,
+"values": [Vector2(80, -820), Vector2(80, 75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(0.732043, 0.933033),
+"update": 0,
+"values": [Vector2(80, -700), Vector2(80, 72)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Fade/ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.21),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Canvas/AspectContainer:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.02, 1.18, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(0.0705882, 0.0705882, 0.0705882, 0), Color(0, 0, 0, 0.929412), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rd2pf"]
+_data = {
+"TitleIntro": SubResource("Animation_j74gg")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yimb1"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_07syl"]
+emission_shape = 3
+emission_box_extents = Vector3(80, 80, 0)
+particle_flag_disable_z = true
+direction = Vector3(-1, 1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 160.0
+initial_velocity_max = 160.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+anim_speed_min = 1.6
+anim_speed_max = 1.6
+attractor_interaction_enabled = false
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_en7el")
+
+[node name="StarBackground" type="Node2D" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="StarBackground"]
+offset = Vector2(64, 64)
+transform = Transform2D(1, 0, 0, 1, 64, 64)
+scroll_ignore_camera_zoom = true
+script = ExtResource("2_31u01")
+scroll = Vector2(0, -25)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="StarBackground/ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="StarBackground/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("3_qccvk")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="StarBackground/ParallaxBackground"]
+motion_scale = Vector2(0.34, 0.34)
+motion_mirroring = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="StarBackground/ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("4_n0oma")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="StarBackground/ParallaxBackground"]
+motion_scale = Vector2(0.57, 0.57)
+motion_mirroring = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="StarBackground/ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("5_7b7c4")
+
+[node name="Fade" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Fade"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+layer = -1
+
+[node name="AspectContainer" type="AspectRatioContainer" parent="Canvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1112
+stretch_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Canvas/AspectContainer"]
+layout_mode = 2
+texture = ExtResource("1_5woxh")
+stretch_mode = 2
+
+[node name="PressStart" type="Control" parent="Canvas/AspectContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="StartText" type="RichTextLabel" parent="Canvas/AspectContainer/PressStart"]
+process_mode = 3
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 0
+offset_left = 32.0064
+offset_top = 120.0
+offset_right = 132.006
+offset_bottom = 132.0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("3_0am7c")
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]- Press Start -"
+fit_content = true
+
+[node name="TextFlasher" type="AnimationPlayer" parent="Canvas/AspectContainer/PressStart/StartText"]
+speed_scale = 1.6
+libraries = {
+"": SubResource("AnimationLibrary_hmol6")
+}
+script = ExtResource("4_1man6")
+targetAnimation = &"text_flash"
+
+[node name="MenuCanvas" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+offset = Vector2(200, 0)
+transform = Transform2D(1, 0, 0, 1, 200, 0)
+
+[node name="AspectContainer" type="AspectRatioContainer" parent="MenuCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.1112
+stretch_mode = 1
+
+[node name="TitleMenu" type="MarginContainer" parent="MenuCanvas/AspectContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 8
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MenuCanvas/AspectContainer/TitleMenu"]
+z_index = -2
+layout_mode = 2
+texture = ExtResource("5_14o77")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Options" type="VBoxContainer" parent="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer" node_paths=PackedStringArray("cursor")]
+unique_name_in_owner = true
+z_index = 1
+z_as_relative = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+script = ExtResource("6_jgd51")
+cursor = NodePath("../../../../../Cursor")
+cursorOffset = Vector2(8, 2)
+
+[node name="Continue" type="RichTextLabel" parent="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_sdhrc")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]Continue"
+fit_content = true
+script = ExtResource("7_3ck0u")
+
+[node name="NewGame" type="RichTextLabel" parent="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_sdhrc")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]New Game"
+fit_content = true
+script = ExtResource("7_3ck0u")
+
+[node name="Options" type="RichTextLabel" parent="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_sdhrc")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]Options"
+fit_content = true
+script = ExtResource("7_3ck0u")
+
+[node name="Quit" type="RichTextLabel" parent="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_sdhrc")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]Quit Game"
+fit_content = true
+script = ExtResource("7_3ck0u")
+
+[node name="Cursor" type="Control" parent="MenuCanvas"]
+z_index = -1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 56.0
+offset_top = 88.0
+offset_right = 56.0
+offset_bottom = 88.0
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MenuCanvas/Cursor"]
+z_index = 2
+position = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_wyyxd")
+script = ExtResource("10_6f521")
+
+[node name="ColorRect" type="ColorRect" parent="MenuCanvas/Cursor"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 47.0
+offset_bottom = 2.0
+color = Color(0.635294, 0.635294, 0.635294, 1)
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="MenuCanvas/Cursor"]
+z_index = 2
+position = Vector2(47, 1)
+sprite_frames = SubResource("SpriteFrames_wyyxd")
+speed_scale = -1.0
+script = ExtResource("10_6f521")
+
+[node name="TitlePlayer" type="Node2D" parent="."]
+position = Vector2(80, -820)
+script = ExtResource("5_nykbb")
+_rotationSpeed = 2.6
+
+[node name="Spinner" type="Node2D" parent="TitlePlayer"]
+
+[node name="Sun" type="Node2D" parent="TitlePlayer/Spinner"]
+position = Vector2(24, 0)
+
+[node name="SunSprite" type="Sprite2D" parent="TitlePlayer/Spinner/Sun"]
+texture = ExtResource("6_5il00")
+script = ExtResource("7_8rn3q")
+
+[node name="PlanetSparkles" type="GPUParticles2D" parent="TitlePlayer/Spinner/Sun"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_mg1ik")
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_bcoit")
+texture = ExtResource("8_tl1m0")
+lifetime = 0.8
+
+[node name="PlanetSparkles2" type="GPUParticles2D" parent="TitlePlayer/Spinner/Sun"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_lsceg")
+texture = ExtResource("9_edo5r")
+lifetime = 1.3
+
+[node name="Moon" type="Node2D" parent="TitlePlayer/Spinner"]
+position = Vector2(-24, 0)
+
+[node name="MoonSprite" type="Sprite2D" parent="TitlePlayer/Spinner/Moon"]
+texture = ExtResource("10_vg2aq")
+script = ExtResource("7_8rn3q")
+
+[node name="PlanetSparkles" type="GPUParticles2D" parent="TitlePlayer/Spinner/Moon"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_bcoit")
+texture = ExtResource("8_tl1m0")
+lifetime = 0.8
+
+[node name="PlanetSparkles3" type="GPUParticles2D" parent="TitlePlayer/Spinner/Moon"]
+z_index = -1
+material = SubResource("CanvasItemMaterial_a0y73")
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_lsceg")
+texture = ExtResource("9_edo5r")
+lifetime = 1.3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(80, -700)
+
+[node name="Foreground" type="Sprite2D" parent="."]
+position = Vector2(80, -360)
+texture = ExtResource("11_h53gy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+speed_scale = 0.1
+libraries = {
+"": SubResource("AnimationLibrary_rd2pf")
+}
+script = ExtResource("4_1man6")
+targetAnimation = &"TitleIntro"
+
+[node name="FallingStars" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_yimb1")
+position = Vector2(104, 48)
+amount = 2
+process_material = SubResource("ParticleProcessMaterial_07syl")
+texture = ExtResource("8_tl1m0")
+
+[connection signal="OnSelect" from="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options/Continue" to="." method="Continue"]
+[connection signal="OnSelect" from="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options/NewGame" to="." method="NewGame"]
+[connection signal="OnSelect" from="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options/Options" to="." method="Options"]
+[connection signal="OnSelect" from="MenuCanvas/AspectContainer/TitleMenu/NinePatchRect/MarginContainer/Options/Quit" to="." method="QuitGame"]

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1pgrhi2hkhix"]
+
+[ext_resource type="PackedScene" uid="uid://bxw05bkwn663l" path="res://Scenes/Levels/base_level.tscn" id="1_f0m0s"]
+
+[node name="LevelRoot" instance=ExtResource("1_f0m0s")]
+levelName = "One Giant Step..."
+world = 1
+number = 0

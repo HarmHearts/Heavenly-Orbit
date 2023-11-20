@@ -11,6 +11,7 @@ public partial class GameplayManager : Node2D
 	public string targetLevel;
 	[Export]
 	public string backgroundsPath;
+    public IndexLevel level;
 	private int gemCount;
 	private Stopwatch timer;
 	private Node loadedBackground;
@@ -29,7 +30,6 @@ public partial class GameplayManager : Node2D
     private bool busy;
 
 	private Timer loadTime;
-    private ScreenFader screenFade;
 
 	//scene references
     private PackedScene loadedLevelScene;
@@ -44,9 +44,8 @@ public partial class GameplayManager : Node2D
 		crystalText = hud.GetNode("%Crystals") as RichTextLabel;
 		titleText = hud.GetNode<RichTextLabel>("%LevelTitle");
 		worldText = hud.GetNode<RichTextLabel>("%WorldTitle");
-        screenFade = GetNode<ScreenFader>("%ScreenFader");
         hud.GetNode("%GoContainer").GetNode<Timer>("GoTimer").Timeout += GoTimeOut;
-        LoadLevel();
+        //LoadLevel();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -101,12 +100,12 @@ public partial class GameplayManager : Node2D
         }
     }
 
-    public void LoadLevel()
+    public void LoadLevel(string path)
 	{
-		//StartLoadTimer();
+        targetLevel = path;
 		player.Position = new Vector2(-9999, 9999);
         if (loadedLevel != null) loadedLevel.QueueFree();
-        loadedLevelScene = GD.Load<PackedScene>(levelsPath + "/" + targetLevel + ".tscn");
+        loadedLevelScene = GD.Load<PackedScene>(path);
 		loadedLevel = null;
 		loadedLevel = loadedLevelScene.Instantiate() as Level;
 		this.AddChild(loadedLevel);
@@ -121,6 +120,12 @@ public partial class GameplayManager : Node2D
         SpawnPlayer();
         FinishLoad();
         InitializeLevel();
+    }
+
+    public void LoadLevel(IndexLevel level)
+    {
+        this.level = level;
+        LoadLevel(level.levelPath);
     }
 
 	public void ReloadLevel()
@@ -146,7 +151,7 @@ public partial class GameplayManager : Node2D
         loaded = true;
         busy = false;
         hud.GetNode<CanvasItem>("%FinishContainer").Visible = false;
-        GetNode<ScreenFader>("%ScreenFader").UnfadeScreen("screen_wipe_grid", true);
+        GameOverlay.ScreenFader.UnfadeScreen("screen_wipe_grid", true);
         GD.Print("level loaded");
     }
 
@@ -240,7 +245,7 @@ public partial class GameplayManager : Node2D
 
 	public void DeathReset()
 	{
-        screenFade.FadeScreen("screen_wipe_grid", new Callable(this, MethodName.ReloadLevel), true);
+        GameOverlay.ScreenFader.FadeScreen("screen_wipe_grid", new Callable(this, MethodName.ReloadLevel), true);
     }
 
     public void Win()
@@ -264,16 +269,39 @@ public partial class GameplayManager : Node2D
         hud.GetNode<CanvasItem>("%FinishContainer").Visible = true;
         //play sound
         AudioSystem.PlaySFX("Victory"); //TODO: replace with real win sound
-        //TEST
-        ResetTimer(3.8f);
-        //record results
+        //wait for win animation to end
+        WinTimer(3.8f);
+    }
+
+    private void WinTimer(float time)
+    {
+        if (loadTime != null) loadTime.QueueFree();
+        loadTime = new Timer();
+        this.AddChild(loadTime);
+        loadTime.WaitTime = time;
+        loadTime.OneShot = true;
+        loadTime.Timeout += FinishWin;
+        loadTime.Start();
+    }
+
+    private void FinishWin()
+    {
+        GameManager.SaveFile.AddScore(level.worldNumber, level.levelNumber, new LevelScore(timer.Elapsed.TotalSeconds, gemCount, loadedLevel.gems, 0));
+        GameManager.SaveFile.UnlockLevel(level.worldNumber, level.levelNumber + 1);
+        GameManager.SaveGame();
+        GameOverlay.ScreenFader.FadeScreen("screen_wipe_grid", new Callable(this, MethodName.GoToResults), true);
+    }
+
+    private void GoToResults()
+    {
+        GameManager.LevelResults(timer.Elapsed, gemCount, loadedLevel);
     }
 
     public void PauseGame()
     {
         try
         {
-            screenFade.FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
+            GameOverlay.ScreenFader.FadeScreen("screen_fade_quick", new Callable(this, MethodName.PauseScreen));
         }
         catch (TransitionInterruptException e){
             GD.Print(e);
@@ -293,6 +321,6 @@ public partial class GameplayManager : Node2D
     public void PauseScreen()
     {
         GetNode<CanvasLayer>("PauseScreen").Visible = !GetNode<CanvasLayer>("PauseScreen").Visible;
-        GetNode<ScreenFader>("%ScreenFader").UnfadeScreen("screen_fade_quick", true);
+        GameOverlay.ScreenFader.UnfadeScreen("screen_fade_quick", true);
     }
 }

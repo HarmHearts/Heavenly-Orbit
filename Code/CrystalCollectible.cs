@@ -10,7 +10,7 @@ public partial class CrystalCollectible : Area2D
 
     public override void _Ready()
     {
-        OnCollect += GetNode<GameplayManager>("/root/Gameplay").CrystalCollected;
+        OnCollect += GetNode<GameplayManager>("/root/HeavenlyOrbit/Gameplay").CrystalCollected;
     }
 
     private void OnBodyEntered(PhysicsBody2D body)

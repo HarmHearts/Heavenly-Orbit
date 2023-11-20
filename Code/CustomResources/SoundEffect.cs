@@ -13,6 +13,8 @@ public partial class SoundEffect : Resource
     [Export]
     public AudioChannel channel;
     [Export]
+    public int priority;
+    [Export]
     public bool looping;
 
     public AudioStream GetAudio()
@@ -21,13 +23,14 @@ public partial class SoundEffect : Resource
         return audioList[index];
     }
 
-    public SoundEffect() : this($"Default", null, AudioChannel.Wave, false) { }
+    public SoundEffect() : this($"Default", null, AudioChannel.Wave, 0, false) { }
 
-    public SoundEffect(StringName name, Array<AudioStream> audioList, AudioChannel channel, bool looping)
+    public SoundEffect(StringName name, Array<AudioStream> audioList, AudioChannel channel, int priority, bool looping)
     {
         this.name = name;
         this.audioList = audioList;
         this.channel = channel;
+        this.priority = priority;
         this.looping = looping;
     }
 }

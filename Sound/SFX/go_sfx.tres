@@ -7,5 +7,5 @@
 script = ExtResource("2_q0e8b")
 name = &"Go!"
 audioList = Array[AudioStream]([ExtResource("1_06frd")])
-channel = 0
+channel = 2
 looping = false

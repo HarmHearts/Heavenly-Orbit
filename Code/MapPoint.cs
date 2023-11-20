@@ -3,8 +3,10 @@ using System;
 
 public partial class MapPoint : Node2D
 {
-	//hi ruby <3
-	//Put the fields required to identify a world and such here
+	[Export]
+	public string worldName;
+	[Export]
+	public int worldNumber;
 	[Export]
 	private MapPoint _right;
 	[Export]
@@ -20,11 +22,34 @@ public partial class MapPoint : Node2D
     public MapPoint Left { get => _left; }
     public MapPoint Up { get => _up; }
     public MapPoint Down { get => _down; }
-	public bool Accessible { get => _accessible; set => _accessible = value; }
+	public bool Accessible 
+	{ 
+		get => _accessible; 
+		set 
+		{ 
+			_accessible = value;
+            if (_accessible)
+            {
+                this.Modulate = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                this.Modulate = new Color(0.5f, 0.5f, 0.5f, 1);
+            }
+        } 
+	}
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
+		if (Accessible)
+		{
+			this.Modulate = new Color(1, 1, 1, 1);
+		}
+		else
+		{
+            this.Modulate = new Color(0.5f, 0.5f, 0.5f, 1);
+        }
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

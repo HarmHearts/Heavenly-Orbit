@@ -1,0 +1,105 @@
+[gd_scene load_steps=5 format=3 uid="uid://2y2w6hpa8353"]
+
+[ext_resource type="Texture2D" uid="uid://c0n80ndystere" path="res://Assets/Slices/simple_box.png" id="1_fpb7l"]
+[ext_resource type="Texture2D" uid="uid://ww80nw1pcrr2" path="res://Assets/Sprites/medal_gold.png" id="2_hq1tp"]
+[ext_resource type="Script" path="res://Code/LevelOption.cs" id="2_q1hxs"]
+[ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="3_l4rcv"]
+
+[node name="LevelOption" type="NinePatchRect"]
+modulate = Color(0.458824, 0.458824, 0.458824, 1)
+custom_minimum_size = Vector2(0, 24)
+size_flags_vertical = 0
+texture = ExtResource("1_fpb7l")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+script = ExtResource("2_q1hxs")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Shadow" type="ColorRect" parent="Control"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.458824)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 4
+
+[node name="Medal" type="TextureRect" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("2_hq1tp")
+stretch_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="Title" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+process_mode = 3
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.266667, 0.266667, 0.266667, 1)
+theme_override_colors/font_shadow_color = Color(0.580392, 0.580392, 0.580392, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_l4rcv")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Level Title"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HiScore" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+process_mode = 3
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.266667, 0.266667, 0.266667, 1)
+theme_override_colors/font_shadow_color = Color(0.580392, 0.580392, 0.580392, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("3_l4rcv")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Best Run: 0:00.000 - 0/0"
+fit_content = true
+autowrap_mode = 0

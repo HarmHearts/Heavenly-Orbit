@@ -1,13 +1,17 @@
-[gd_scene load_steps=16 format=3 uid="uid://bv7rqfp4fgtyr"]
+[gd_scene load_steps=20 format=3 uid="uid://bv7rqfp4fgtyr"]
 
 [ext_resource type="Shader" path="res://Shaders/scrollGraphic.gdshader" id="1_0n6do"]
+[ext_resource type="Script" path="res://Code/ResultsScreen.cs" id="1_67rdm"]
 [ext_resource type="Texture2D" uid="uid://dmoca1e3lubgm" path="res://Assets/Sprites/star_tile.png" id="2_g6m12"]
 [ext_resource type="Texture2D" uid="uid://ycglmh51tgvl" path="res://Assets/Slices/text_box.png" id="3_b6alt"]
 [ext_resource type="FontFile" uid="uid://dsb5i04jeilcq" path="res://Assets/Fonts/ChevyRay - Curse.ttf" id="4_knmdj"]
 [ext_resource type="FontFile" uid="uid://c1rc1k5pxbvtq" path="res://Assets/Fonts/ChevyRay - Babyblocks.ttf" id="5_0o1a8"]
 [ext_resource type="Texture2D" uid="uid://dxqwv4dxoe27s" path="res://Assets/Slices/fancy_divider.png" id="6_ck7pp"]
+[ext_resource type="FontFile" uid="uid://bop1ghmbam1h3" path="res://Assets/Fonts/ChevyRay - Magic Book.ttf" id="7_63kuw"]
 [ext_resource type="Texture2D" uid="uid://ww80nw1pcrr2" path="res://Assets/Sprites/medal_gold.png" id="7_my4n1"]
 [ext_resource type="Texture2D" uid="uid://cuvveqvg8jvus" path="res://Assets/Sprites/star_cursor.png" id="8_35xjm"]
+[ext_resource type="Script" path="res://Code/MenuList.cs" id="8_adnnp"]
+[ext_resource type="Script" path="res://Code/MenuOption.cs" id="9_gjwft"]
 [ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="9_p8whh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_804bj"]
@@ -53,6 +57,7 @@ animations = [{
 }]
 
 [node name="level_results" type="CanvasLayer"]
+script = ExtResource("1_67rdm")
 
 [node name="AspectContainer" type="AspectRatioContainer" parent="."]
 anchors_preset = 15
@@ -78,7 +83,7 @@ theme_override_constants/margin_bottom = 8
 
 [node name="ColorRect" type="ColorRect" parent="AspectContainer/ShadowContainer"]
 layout_mode = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.639216)
 
 [node name="ContentContainer" type="MarginContainer" parent="AspectContainer"]
 layout_mode = 2
@@ -251,8 +256,8 @@ theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
 theme_override_constants/shadow_offset_x = -1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/shadow_outline_size = 0
-theme_override_fonts/normal_font = ExtResource("4_knmdj")
-theme_override_font_sizes/normal_font_size = 14
+theme_override_fonts/normal_font = ExtResource("7_63kuw")
+theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "RATING:"
 fit_content = true
@@ -266,25 +271,22 @@ size_flags_horizontal = 8
 texture = ExtResource("7_my4n1")
 stretch_mode = 2
 
-[node name="Divider2" type="NinePatchRect" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-patch_margin_left = 16
-patch_margin_right = 16
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="Options" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="OptionsContainer" type="MarginContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer"]
 z_index = 2
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/Options"]
+[node name="Options" type="VBoxContainer" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/OptionsContainer" node_paths=PackedStringArray("cursor")]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 2
+script = ExtResource("8_adnnp")
+cursor = NodePath("../../../../../../../Cursor")
+cursorOffset = Vector2(24, 2)
+hasControl = true
 
-[node name="Option1" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/Options/VBoxContainer"]
+[node name="Option1" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/OptionsContainer/Options"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 0
@@ -299,8 +301,10 @@ theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
 text = "[center]CONTINUE"
 fit_content = true
+script = ExtResource("9_gjwft")
+accessible = true
 
-[node name="Option2" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/Options/VBoxContainer"]
+[node name="Option2" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/OptionsContainer/Options"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 0
@@ -313,28 +317,45 @@ theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/normal_font = ExtResource("5_0o1a8")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "[center]QUIT"
+text = "[center]RETRY"
 fit_content = true
+script = ExtResource("9_gjwft")
+accessible = true
+
+[node name="Option3" type="RichTextLabel" parent="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/OptionsContainer/Options"]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.294118, 0.294118, 0.294118, 1)
+theme_override_colors/font_shadow_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("5_0o1a8")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]RETURN"
+fit_content = true
+script = ExtResource("9_gjwft")
+accessible = true
 
 [node name="Cursor" type="Control" parent="."]
-process_mode = 2
 layout_mode = 3
 anchors_preset = 0
 offset_left = 56.0
-offset_top = 99.0
-offset_right = 64.0
-offset_bottom = 107.0
+offset_top = 93.0
+offset_right = 56.0
+offset_bottom = 93.0
 size_flags_horizontal = 4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Cursor"]
-process_mode = 2
 z_index = 2
 position = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_106cf")
 script = ExtResource("9_p8whh")
 
 [node name="ColorRect" type="ColorRect" parent="Cursor"]
-process_mode = 2
 layout_mode = 0
 offset_left = -1.0
 offset_top = 1.0
@@ -343,8 +364,10 @@ offset_bottom = 2.0
 color = Color(0.635294, 0.635294, 0.635294, 1)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Cursor"]
-process_mode = 2
 z_index = 2
 position = Vector2(47, 1)
 sprite_frames = SubResource("SpriteFrames_106cf")
+speed_scale = -1.0
 script = ExtResource("9_p8whh")
+
+[connection signal="OnSelect" from="AspectContainer/ContentContainer/NinePatchRect/MarginContainer/VBoxContainer/OptionsContainer/Options/Option3" to="." method="QuitOut"]

@@ -13,6 +13,8 @@
 [node name="LevelRoot" type="Node2D"]
 script = ExtResource("1_osj68")
 levelName = "Default"
+world = 99
+number = 99
 background = "grid_background"
 initialPlayerSpin = true
 floorTexture = ExtResource("2_xn25t")

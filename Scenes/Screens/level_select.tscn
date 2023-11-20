@@ -1,0 +1,212 @@
+[gd_scene load_steps=16 format=3 uid="uid://uvq4xfndgvxs"]
+
+[ext_resource type="Script" path="res://Code/LevelSelect.cs" id="1_jpluo"]
+[ext_resource type="Script" path="res://Code/ListFollowCamera.cs" id="2_q0636"]
+[ext_resource type="Script" path="res://Code/BGScroll.cs" id="2_w0g73"]
+[ext_resource type="Texture2D" uid="uid://fs61et0dkno6" path="res://Assets/Backgrounds/rings bg 1.png" id="3_22eho"]
+[ext_resource type="Texture2D" uid="uid://cbtihgh7e65bw" path="res://Assets/Backgrounds/rings bg 2.png" id="4_1iiop"]
+[ext_resource type="Script" path="res://Code/MenuList.cs" id="4_ge0j0"]
+[ext_resource type="Texture2D" uid="uid://cjpsqv1hbxglq" path="res://Assets/Backgrounds/rings bg 3.png" id="5_6i40p"]
+[ext_resource type="Texture2D" uid="uid://cuvveqvg8jvus" path="res://Assets/Sprites/star_cursor.png" id="5_gpc4s"]
+[ext_resource type="Script" path="res://Code/PlayAnimOnStart.cs" id="6_7pvcr"]
+[ext_resource type="FontFile" uid="uid://dsb5i04jeilcq" path="res://Assets/Fonts/ChevyRay - Curse.ttf" id="8_qfi8l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffr2u"]
+atlas = ExtResource("5_gpc4s")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eupek"]
+atlas = ExtResource("5_gpc4s")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2ops"]
+atlas = ExtResource("5_gpc4s")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwp6i"]
+atlas = ExtResource("5_gpc4s")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i56p5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffr2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eupek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2ops")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwp6i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="level_select" type="Node2D"]
+script = ExtResource("1_jpluo")
+
+[node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(80, 72)
+limit_left = 0
+limit_top = 0
+limit_right = 160
+editor_draw_limits = true
+script = ExtResource("2_q0636")
+target = NodePath("../ListCanvas/Cursor")
+speed = 10.0
+smooth = 2.0
+verticalRange = 16.0
+
+[node name="RingBackground" type="Node2D" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="RingBackground"]
+offset = Vector2(64, 64)
+transform = Transform2D(1, 0, 0, 1, 64, 64)
+scroll_ignore_camera_zoom = true
+script = ExtResource("2_w0g73")
+scroll = Vector2(5, -40)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="RingBackground/ParallaxBackground"]
+motion_scale = Vector2(0.08, 0.08)
+motion_mirroring = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="RingBackground/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("3_22eho")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="RingBackground/ParallaxBackground"]
+motion_scale = Vector2(0.25, 0.25)
+motion_mirroring = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="RingBackground/ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("4_1iiop")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="RingBackground/ParallaxBackground"]
+motion_scale = Vector2(0.6, 0.6)
+motion_mirroring = Vector2(256, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="RingBackground/ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("5_6i40p")
+
+[node name="ListCanvas" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="ListCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+ratio = 1.1112
+stretch_mode = 1
+alignment_vertical = 0
+
+[node name="Control" type="Control" parent="ListCanvas/AspectRatioContainer"]
+custom_minimum_size = Vector2(160, 144)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ListCanvas/AspectRatioContainer/Control"]
+layout_mode = 2
+offset_right = 160.013
+offset_bottom = 16.0
+size_flags_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 16
+
+[node name="Options" type="VBoxContainer" parent="ListCanvas/AspectRatioContainer/Control/MarginContainer" node_paths=PackedStringArray("cursor")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+script = ExtResource("4_ge0j0")
+cursor = NodePath("../../../../Cursor")
+hasControl = true
+
+[node name="Cursor" type="Control" parent="ListCanvas"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ListCanvas/Cursor"]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_i56p5")
+script = ExtResource("6_7pvcr")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="ListCanvas/Cursor"]
+z_index = 2
+position = Vector2(128, 0)
+sprite_frames = SubResource("SpriteFrames_i56p5")
+script = ExtResource("6_7pvcr")
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="ListCanvas/Cursor"]
+z_index = 2
+position = Vector2(128, 22)
+sprite_frames = SubResource("SpriteFrames_i56p5")
+script = ExtResource("6_7pvcr")
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="ListCanvas/Cursor"]
+z_index = 2
+position = Vector2(0, 22)
+sprite_frames = SubResource("SpriteFrames_i56p5")
+script = ExtResource("6_7pvcr")
+
+[node name="FollowCanvas" type="CanvasLayer" parent="."]
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="FollowCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+ratio = 1.1112
+stretch_mode = 1
+alignment_vertical = 0
+
+[node name="Control" type="Control" parent="FollowCanvas/AspectRatioContainer"]
+custom_minimum_size = Vector2(160, 144)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="FollowCanvas/AspectRatioContainer/Control"]
+z_index = 20
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 16.0
+
+[node name="WorldTitle" type="RichTextLabel" parent="FollowCanvas/AspectRatioContainer/Control/ColorRect"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -5.0
+offset_right = 80.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(80, 0)
+theme_override_colors/font_outline_color = Color(0.290196, 0.290196, 0.290196, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("8_qfi8l")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center]Normal World"
+scroll_active = false
+shortcut_keys_enabled = false
+
+[connection signal="OnCancel" from="ListCanvas/AspectRatioContainer/Control/MarginContainer/Options" to="." method="Leave"]

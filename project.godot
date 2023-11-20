@@ -10,14 +10,15 @@ config_version=5
 
 [application]
 
-config/name="Heavenly Orbit Port"
-run/main_scene="res://Scenes/Screens/gameplay.tscn"
+config/name="Heavenly Orbit"
+run/main_scene="res://Scenes/Screens/heavenly_orbit.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-AudioSystem="*res://Scenes/Constructs/audio_system.tscn"
+AudioSystem="*res://Scenes/Preloads/audio_system.tscn"
+GameOverlayCanvas="*res://Scenes/Preloads/game_overlay_canvas.tscn"
 
 [display]
 

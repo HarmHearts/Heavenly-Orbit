@@ -8,4 +8,5 @@ script = ExtResource("2_vwdwl")
 name = &"Bounce"
 audioList = Array[AudioStream]([ExtResource("1_8nqd6")])
 channel = 0
+priority = 0
 looping = false

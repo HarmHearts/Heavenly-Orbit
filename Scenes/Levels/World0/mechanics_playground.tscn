@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://borevju0wp3v" path="res://Assets/Sprites/spinner.png" id="8_jsxdr"]
 [ext_resource type="PackedScene" uid="uid://dajjn5ropi88f" path="res://Scenes/Constructs/floor_button.tscn" id="9_ccftr"]
 
-[sub_resource type="Curve2D" id="Curve2D_axw3b"]
+[sub_resource type="Curve2D" id="Curve2D_5bi7o"]
 resource_local_to_scene = true
 bake_interval = 8.0
 _data = {
@@ -34,7 +34,7 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("8_jsxdr")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_bafmo"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_defn2"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -55,7 +55,7 @@ animations = [{
 "speed": 6.28
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xw52h"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_6kwqj"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -76,7 +76,7 @@ animations = [{
 "speed": 6.28
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_7dn4y"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_eg5kq"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -97,7 +97,7 @@ animations = [{
 "speed": 6.28
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_myw5t"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_bb0sd"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -120,6 +120,8 @@ animations = [{
 
 [node name="LevelRoot" instance=ExtResource("1_p5fxd")]
 levelName = "Testing Space"
+world = 0
+number = 0
 background = "cloud_background"
 floorTexture = ExtResource("2_alrcd")
 wallTexture = ExtResource("3_ejsi4")
@@ -155,7 +157,7 @@ gravity = Vector2(0, -35)
 
 [node name="PlatformPath" parent="." index="8" instance=ExtResource("3_4xws2")]
 position = Vector2(-312, -384)
-curve = SubResource("Curve2D_axw3b")
+curve = SubResource("Curve2D_5bi7o")
 
 [node name="MovingPlatform" parent="PlatformPath" index="1" instance=ExtResource("4_livyw")]
 position = Vector2(264, 64)
@@ -166,22 +168,22 @@ progress = 320.0
 
 [node name="Spinner" parent="." index="9" instance=ExtResource("7_2b08r")]
 position = Vector2(0, -544)
-sprite_frames = SubResource("SpriteFrames_bafmo")
+sprite_frames = SubResource("SpriteFrames_defn2")
 spinSpeed = -3.0
 
 [node name="Spinner2" parent="." index="10" instance=ExtResource("7_2b08r")]
 position = Vector2(0, -448)
-sprite_frames = SubResource("SpriteFrames_xw52h")
+sprite_frames = SubResource("SpriteFrames_6kwqj")
 spinSpeed = 3.0
 
 [node name="Spinner3" parent="." index="11" instance=ExtResource("7_2b08r")]
 position = Vector2(48, -496)
-sprite_frames = SubResource("SpriteFrames_7dn4y")
+sprite_frames = SubResource("SpriteFrames_eg5kq")
 spinSpeed = 2.0
 
 [node name="Spinner4" parent="." index="12" instance=ExtResource("7_2b08r")]
 position = Vector2(-48, -496)
-sprite_frames = SubResource("SpriteFrames_myw5t")
+sprite_frames = SubResource("SpriteFrames_bb0sd")
 
 [node name="FloorButton" parent="." index="13" instance=ExtResource("9_ccftr")]
 position = Vector2(-760, -200)

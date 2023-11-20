@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://chpdaayymbgwl"]
+
+[ext_resource type="AudioStream" uid="uid://v6u45r6p3neg" path="res://Assets/SFX/bump.wav" id="1_tmpij"]
+[ext_resource type="Script" path="res://Code/CustomResources/SoundEffect.cs" id="2_xcm87"]
+
+[resource]
+script = ExtResource("2_xcm87")
+name = &"Bump"
+audioList = Array[AudioStream]([ExtResource("1_tmpij")])
+channel = 0
+priority = 0
+looping = false

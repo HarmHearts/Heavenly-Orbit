@@ -96,7 +96,7 @@ theme_override_constants/margin_bottom = 8
 
 [node name="ColorRect" type="ColorRect" parent="AspectContainer/ShadowContainer"]
 layout_mode = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.615686)
 
 [node name="ContentContainer" type="MarginContainer" parent="AspectContainer"]
 layout_mode = 2
@@ -260,4 +260,5 @@ z_index = 2
 position = Vector2(47, 1)
 sprite_frames = SubResource("SpriteFrames_ihgd0")
 frame = 2
+speed_scale = -1.0
 script = ExtResource("7_s0yjs")

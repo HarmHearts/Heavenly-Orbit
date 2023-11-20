@@ -30,7 +30,10 @@ public partial class PauseScreen : CanvasLayer
                 cursor.GlobalPosition = ((Control)GetNode<Node>("%Options").GetChildren()[optionIndex]).GlobalPosition + cursorOffset;
                 AudioSystem.PlaySFX("Move");
             }
-            //TODO: else play nope sound
+            else
+            {
+                AudioSystem.PlaySFX("Bump");
+            }
         }
         if (@event.IsActionPressed("Dpad_Down"))
         {
@@ -40,7 +43,10 @@ public partial class PauseScreen : CanvasLayer
                 cursor.GlobalPosition = ((Control)GetNode<Node>("%Options").GetChildren()[optionIndex]).GlobalPosition + cursorOffset;
                 AudioSystem.PlaySFX("Move");
             }
-            //TODO: else play nope sound
+            else
+            {
+                AudioSystem.PlaySFX("Bump");
+            }
         }
         if (@event.IsActionPressed("Btn_Start") || @event.IsActionPressed("Btn_B"))
         {
@@ -48,7 +54,8 @@ public partial class PauseScreen : CanvasLayer
         }
         if(@event.IsActionPressed("Btn_A"))
         {
-            switch(optionIndex)
+            AudioSystem.PlaySFX("Select");
+            switch (optionIndex)
             {
                 case 0:
                     Unpause();
@@ -58,7 +65,7 @@ public partial class PauseScreen : CanvasLayer
                     Unpause();
                     break;
                 case 2:
-                    GetTree().Quit();
+                    GameManager.QuitGame();
                     break;
                 default: 
                     break;
@@ -94,7 +101,7 @@ public partial class PauseScreen : CanvasLayer
     {
         try
         {
-            this.GetParent().GetNode<ScreenFader>("%ScreenFader").FadeScreen("screen_fade_quick", new Callable(this.GetParent(), "UnpauseGame"), true);
+            GameOverlay.ScreenFader.FadeScreen("screen_fade_quick", new Callable(this.GetParent(), "UnpauseGame"), true);
         }
         catch (TransitionInterruptException e)
         {
