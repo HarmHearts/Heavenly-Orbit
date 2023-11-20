@@ -114,8 +114,8 @@ public partial class GameplayManager : Node2D
         gemCount = 0;
         timer = new Stopwatch();
 		titleText.Text = "[center]" + loadedLevel.levelName;
-		worldText.Text = "[center]World " + (loadedLevel.world == 0 ? "?" : loadedLevel.world) + " - Level " + (loadedLevel.number == 0 ? "?" : loadedLevel.number);
-        GetNode("PauseScreen").GetNode<RichTextLabel>("%InfoText").Text = "[center]-World " + (loadedLevel.world == 0 ? "?" : loadedLevel.world) + " - Level " + (loadedLevel.number == 0 ? "?" : loadedLevel.number) + "-\n" + loadedLevel.levelName;
+		worldText.Text = "[center]World " + (loadedLevel.world >= 20 ? "?" : loadedLevel.world + 1) + " - Level " + (loadedLevel.number >= 20 ? "?" : loadedLevel.number + 1);
+        GetNode("PauseScreen").GetNode<RichTextLabel>("%InfoText").Text = "[center]-World " + (loadedLevel.world >= 20 ? "?" : loadedLevel.world + 1) + " - Level " + (loadedLevel.number >= 20 ? "?" : loadedLevel.number + 1) + "-\n" + loadedLevel.levelName;
         LevelImport();
         SpawnPlayer();
         FinishLoad();
@@ -286,8 +286,8 @@ public partial class GameplayManager : Node2D
 
     private void FinishWin()
     {
-        GameManager.SaveFile.AddScore(level.worldNumber, level.levelNumber, new LevelScore(timer.Elapsed.TotalSeconds, gemCount, loadedLevel.gems, 0));
-        GameManager.SaveFile.UnlockLevel(level.worldNumber, level.levelNumber + 1);
+        GameManager.GameSave.AddLevelScore(level.worldNumber, level.levelNumber, new LevelScore(timer.Elapsed.TotalSeconds, gemCount, loadedLevel.gems, 0));
+        GameManager.GameSave.ProgressWorld(level.worldNumber, level.levelNumber + 1);
         GameManager.SaveGame();
         GameOverlay.ScreenFader.FadeScreen("screen_wipe_grid", new Callable(this, MethodName.GoToResults), true);
     }

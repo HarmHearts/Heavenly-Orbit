@@ -11,7 +11,7 @@ public partial class WorldMapCursor : Node2D
 	private MapPoint currentPoint;
 	private MapPoint targetPoint;
 	private Tween moveTween;
-    private bool canMove;
+    public bool canMove;
 
     [Signal]
     public delegate void WorldSelectedEventHandler(int world);
@@ -88,14 +88,14 @@ public partial class WorldMapCursor : Node2D
 
     public void SelectLevel()
     {
-        GameManager.SaveFile.currentWorld = currentPoint.worldNumber;
+        GameManager.GameSave.CurrentWorld = currentPoint.worldNumber;
         GameManager.SaveGame();
         GameManager.LevelSelect(currentPoint.worldNumber);
     }
 
     public void Leave()
     {
-        GameManager.SaveFile.currentWorld = currentPoint.worldNumber;
+        GameManager.GameSave.CurrentWorld = currentPoint.worldNumber;
         GameManager.SaveGame();
         GameOverlay.ScreenFader.UnfadeScreen("screen_fade_quick");
         GameManager.TitleScreen();

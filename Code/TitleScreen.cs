@@ -7,7 +7,7 @@ public partial class TitleScreen : Node2D
     public override void _Ready()
     {
         intro = true;
-        if(GameManager.SaveFile == null)
+        if(GameManager.GameSave == null)
         {
             GetNode<Node>("%Continue").Free();
             GetNode<MenuList>("%Options").CallDeferred("Scan");

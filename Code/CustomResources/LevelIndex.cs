@@ -21,7 +21,7 @@ public partial class LevelIndex : Resource
                 {
                     GD.Print("Logging new world " + folder);
                     IndexWorld world = new IndexWorld();
-                    world.worldPath = path + "/" + folder;
+                    world.worldPath = (path + "/" + folder);
                     world.worldNumber = index;
                     //get levels
                     world.levels = new List<IndexLevel>();
@@ -32,11 +32,12 @@ public partial class LevelIndex : Resource
                         int levelIndex = 0;
                         foreach(string file in levelDir.GetFiles())
                         {
-                            GD.Print("Loading level " + file);
-                            PackedScene scene = GD.Load<PackedScene>(path + "/" + folder + "/" + file);
+                            string filePath = (path + "/" + folder + "/" + file).TrimSuffix(".remap");
+                            GD.Print("Loading level " + filePath);
+                            PackedScene scene = GD.Load<PackedScene>(filePath);
                             IndexLevel level = new IndexLevel();
                             level.levelName = scene.GetState().GetNodePropertyValue(0, 0).As<string>();
-                            level.levelPath = path + "/" + folder + "/" + file;
+                            level.levelPath = filePath;
                             level.levelNumber = scene.GetState().GetNodePropertyValue(0, 2).As<int>();
                             levelIndex += 1;
                             level.worldNumber = index;

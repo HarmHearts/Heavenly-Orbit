@@ -16,12 +16,12 @@ public partial class GameManager : Node2D
     private static Node currentScene;
 	private static int currentLevel;
 
-	private static SaveFile _saveFile;
+	private static GameSave _gameSave;
 	private static LevelIndex _levelIndex;
 
-	public static SaveFile SaveFile
+	public static GameSave GameSave
 	{
-		get => _saveFile;
+		get => _gameSave;
 	}
 	public static LevelIndex LevelIndex
 	{
@@ -53,7 +53,7 @@ public partial class GameManager : Node2D
 	public static void SaveGame()
 	{
 		GD.Print("Saving Game");
-        ResourceSaver.Save(_saveFile, SAVE_PATH);
+        ResourceSaver.Save(_gameSave, SAVE_PATH);
     }
 
 	public static void QuitGame()
@@ -87,6 +87,11 @@ public partial class GameManager : Node2D
 
 	public static void LevelSelect(int world)
 	{
+		if(!GameSave.WorldExists(world))
+		{
+			TitleScreen();
+            return;
+		}
         currentScene.QueueFree();
         currentScene = null;
         currentScene = levelSelect.Instantiate();
@@ -99,18 +104,31 @@ public partial class GameManager : Node2D
 	public static void PlayNextLevel() //TODO: add level identifier
 	{
 		currentLevel += 1;
-		PlayLevel(LevelIndex.GetLevel(SaveFile.currentWorld, currentLevel));
+		if(currentLevel >= LevelIndex.GetLevels(GameSave.CurrentWorld).Length) //finish world
+		{
+			currentLevel = 0;
+            GameOverlay.ScreenFader.UnfadeScreen("screen_fade_quick");
+            currentScene.QueueFree();
+            currentScene = null;
+            currentScene = worldMap.Instantiate();
+            currentScene.GetNode<WorldMap>("%Map").worldToUnlock = GameSave.CurrentWorld + 1;
+            instance.AddChild(currentScene);
+        }
+		else //play next level
+		{
+            PlayLevel(LevelIndex.GetLevel(GameSave.CurrentWorld, currentLevel));
+        }
     }
 
 	public static void ReplayLevel()
 	{
-        PlayLevel(LevelIndex.GetLevel(SaveFile.currentWorld, currentLevel));
+        PlayLevel(LevelIndex.GetLevel(GameSave.CurrentWorld, currentLevel));
     }
 
     public static void PlayLevel(IndexLevel level) //TODO: add level identifier
     {
         GD.Print("playing " + level.levelPath);
-		if(!Godot.FileAccess.FileExists(level.levelPath))
+		if (!Godot.FileAccess.FileExists(level.levelPath) && !Godot.FileAccess.FileExists(level.levelPath + ".remap"))
 		{
 			GD.Print("Level does not exist oops");
 			return;
@@ -154,25 +172,13 @@ public partial class GameManager : Node2D
 	{
         if (!Godot.FileAccess.FileExists(SAVE_PATH))
         {
-			_saveFile = null;
+			_gameSave = null;
 			return;
         }
 		else
 		{
 			GD.Print("Save file found. loading save");
-            _saveFile = ResourceLoader.Load<SaveFile>(SAVE_PATH);
-			//TEST
-			int wi = 0;
-			foreach(WorldScore world in _saveFile.scores)
-			{
-				int li = 0;
-				foreach(LevelScore score in  world.levelScores)
-				{
-					GD.Print("We have a score at " + wi + "-" + li);
-					li += 1;
-				}
-				wi += 1;
-			}
+			_gameSave = ResourceLoader.Load<GameSave>(SAVE_PATH);
         }
 	}
 
@@ -180,7 +186,7 @@ public partial class GameManager : Node2D
 	{
 		GD.Print("No save file found. creating new save file");
 		//create new object
-		_saveFile = new SaveFile();
+		_gameSave = new GameSave();
 		//tally all levels and worlds
 		string path = "res://Scenes/Levels";
         using var dir = DirAccess.Open(path);
@@ -191,12 +197,12 @@ public partial class GameManager : Node2D
 				if(folder.Contains("World"))
 				{
 					GD.Print("Logging new world " + folder);
-					_saveFile.AddWorld();
+					_gameSave.AddWorld();
 				}
             }
         }
-		_saveFile.scores[0].unlockIndex = 0;
-		ResourceSaver.Save(_saveFile, SAVE_PATH);
+		_gameSave.ProgressWorld(0, 0);
+		ResourceSaver.Save(_gameSave, SAVE_PATH);
     }
 
 

@@ -269,6 +269,10 @@ texture = ExtResource("4_iygmw")
 unique_name_in_owner = true
 script = ExtResource("5_ajt63")
 
+[node name="UnlockTimer" type="Timer" parent="Map"]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="RailLine" type="Line2D" parent="Map"]
 z_index = -20
 z_as_relative = false

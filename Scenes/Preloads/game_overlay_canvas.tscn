@@ -320,7 +320,7 @@ stretch_mode = 1
 unique_name_in_owner = true
 z_index = 100
 texture_filter = 2
-texture_repeat = 1
+texture_repeat = 2
 material = SubResource("ShaderMaterial_rpmqf")
 layout_mode = 2
 

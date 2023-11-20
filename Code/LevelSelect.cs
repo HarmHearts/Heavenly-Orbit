@@ -22,10 +22,10 @@ public partial class LevelSelect : Node2D
             LevelOption newOption = levelOption.Instantiate() as LevelOption;
             this.GetNode("%Options").AddChild(newOption);
             newOption.level = level;
-            newOption.levelScore = GameManager.SaveFile.GetScore(worldNum, level.levelNumber);
+            newOption.levelScore = GameManager.GameSave.GetLevelScore(worldNum, level.levelNumber);
             newOption.CallDeferred("Configure");
             newOption.OnSelect += LevelSelected;
-            if(!GameManager.SaveFile.IsLevelUnlocked(worldNum, level.levelNumber))
+            if(!GameManager.GameSave.IsLevelUnlocked(worldNum, level.levelNumber))
             {
                 newOption.CallDeferred("Disable");
             }
